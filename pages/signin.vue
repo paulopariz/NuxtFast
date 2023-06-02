@@ -28,6 +28,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 export default {
+  middleware: "blockRoute",
   data() {
     return {
       email: "",
@@ -43,7 +44,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((user) => {
           console.log(user);
-          this.$router.push("/account");
+          // this.$router.push("/account");
         })
         .catch((error) => {
           this.errors = error;

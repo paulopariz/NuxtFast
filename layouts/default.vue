@@ -3,6 +3,7 @@
     <nav class="flex items-center gap-8 px-20 bg-gray-200 py-4">
       <nuxt-link v-if="!user" to="/signin">Sign In</nuxt-link>
       <nuxt-link v-if="!user" to="/signup">Sign Up</nuxt-link>
+      <nuxt-link to="/account">Accont</nuxt-link>
       <nuxt-link to="/">Home</nuxt-link>
 
       <button v-if="user" @click="signout">Sign Out</button>
@@ -25,12 +26,10 @@ export default {
 
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if (!user) {
-        this.$router.push("/signup");
-        console.log("deslogado");
+      if (user) {
+        console.log(user);
+        this.user = user;
       }
-      this.user = user;
     });
   },
 
@@ -42,7 +41,7 @@ export default {
         .then((result) => {
           console.log(result);
           this.user = "";
-          this.$router.push("/signup");
+          this.$router.push("/signin");
         });
     },
   },
