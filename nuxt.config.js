@@ -3,7 +3,7 @@ export default {
   head: {
     title: "Overview-Nuxt.js",
     htmlAttrs: {
-      lang: "en",
+      lang: "pt-br",
     },
     meta: [
       { charset: "utf-8" },
@@ -19,13 +19,21 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
+  loading: {
+    color: "#059669",
+  },
+
+  router: {
+    // middleware: ["auth"],
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["~/assets/css/tailwind.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     // ...outros plugins
-    { src: "~/plugins/firebase.js" },
+    "~/plugins/firebase.js",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

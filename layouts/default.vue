@@ -18,6 +18,8 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 export default {
+  middleware: "auth",
+
   data() {
     return {
       user: "",
@@ -29,9 +31,23 @@ export default {
       if (user) {
         console.log(user);
         this.user = user;
+      } else {
+        this.$router.push({ path: "/signin" });
       }
     });
   },
+
+  //     if (this.$route.path !== "/") {
+  //       firebase.auth().onAuthStateChanged((user) => {
+  //         if (!user) {
+  //           console.log(user);
+  //           this.user = user;
+  //           this.$router.push({ path: "/signin" });
+  //         } else {
+  //         }
+  //       });
+  //     }
+  //   },
 
   methods: {
     signout() {

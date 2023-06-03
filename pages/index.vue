@@ -7,6 +7,9 @@
 <script>
 export default {
   name: "Home",
-  middleware: "auth",
+  // middleware: "auth",
+  data() {
+    return {};
+  },
 };
 </script>
