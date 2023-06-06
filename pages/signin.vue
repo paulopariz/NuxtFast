@@ -27,7 +27,7 @@
 import firebase from "~/plugins/firebase";
 
 export default {
-  layout: false,
+  layout: "authentication",
 
   data() {
     return {

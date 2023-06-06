@@ -6,7 +6,10 @@
       <nuxt-link to="/account">Accont</nuxt-link>
       <nuxt-link to="/">Home</nuxt-link>
 
-      <button v-if="user" @click="signout">Sign Out</button>
+      <button class="flex items-center gap-3" v-if="user" @click="signout">
+        <div class="py-1 px-3 bg-emerald-600 text-white">{{ firstLetter }}</div>
+        <p>{{ user.displayName }}</p>
+      </button>
     </nav>
 
     <Nuxt />
@@ -22,6 +25,21 @@ export default {
     return {
       user: "",
     };
+  },
+
+  computed: {
+    firstLetter() {
+      return this.user.displayName.charAt(0);
+    },
+  },
+
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user);
+        this.user = user;
+      }
+    });
   },
 
   methods: {

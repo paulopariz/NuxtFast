@@ -31,6 +31,7 @@ export default {
   plugins: [
     // ...outros plugins
     "~/plugins/firebase.js",
+    "~/plugins/vuelidate.js",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
