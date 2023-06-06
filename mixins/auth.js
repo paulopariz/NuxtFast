@@ -14,7 +14,7 @@ export default {
         console.log(user);
         this.user = user;
       } else {
-        this.$router.push({ path: "/signin" });
+        this.$router.push({ path: "/auth/signin" });
       }
     });
   },

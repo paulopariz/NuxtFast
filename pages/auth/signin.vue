@@ -18,6 +18,8 @@
         class="border border-gray-950 p-3"
       />
 
+      <p v-show="userInvalid">Usuario invalido</p>
+
       <button type="submit" class="px-5 py-3 bg-emerald-600 text-white">Submit</button>
     </form>
   </div>
@@ -34,6 +36,8 @@ export default {
       email: "",
       password: "",
       errors: "",
+
+      userInvalid: false,
     };
   },
 
@@ -45,6 +49,7 @@ export default {
         this.$router.push("/");
       } catch (error) {
         console.error(error);
+        this.userInvalid = true;
       }
     },
   },

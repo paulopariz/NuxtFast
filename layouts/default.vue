@@ -1,8 +1,8 @@
 <template>
   <div>
     <nav class="flex items-center gap-8 px-20 bg-gray-200 py-4">
-      <nuxt-link v-if="!user" to="/signin">Sign In</nuxt-link>
-      <nuxt-link v-if="!user" to="/signup">Sign Up</nuxt-link>
+      <nuxt-link v-if="!user" to="/auth/signin">Sign In</nuxt-link>
+      <nuxt-link v-if="!user" to="/auth/signup">Sign Up</nuxt-link>
       <nuxt-link to="/account">Accont</nuxt-link>
       <nuxt-link to="/">Home</nuxt-link>
 
@@ -50,7 +50,7 @@ export default {
         .then((result) => {
           console.log(result);
           this.user = "";
-          this.$router.push("/signin");
+          this.$router.push("/auth/signin");
         });
     },
   },
