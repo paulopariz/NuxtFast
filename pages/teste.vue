@@ -3,11 +3,10 @@
 </template>
 
 <script>
-// import auth from "~/mixins/auth";
+import auth from "~/mixins/auth";
 
 export default {
-  // middleware: "auth",
-  // mixins: [auth],
+  mixins: [auth],
 };
 </script>
 
