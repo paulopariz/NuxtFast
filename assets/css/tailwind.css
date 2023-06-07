@@ -1,3 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/* .dark *, .transition-theme {
+  transition: color 0.3s ease-in, background-color 0.3s ease-in;
+} */

@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <div class="flex h-screen w-16 flex-col justify-between border-e bg-white">
+  <aside class="transition-all">
+    <div
+      class="flex h-screen w-16 flex-col justify-between border-e bg-white transition-all"
+    >
       <div>
         <div class="inline-flex h-16 w-16 items-center justify-center" v-if="user">
           <span
             class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+            :title="user.displayName"
           >
             {{ firstLetter }}
           </span>
         </div>
 
-        <div class="border-t border-gray-100">
+        <div class="border-t border-gray-100 dark:bg-red-800">
           <nav aria-label="Main Nav" class="flex flex-col p-2">
             <ul class="space-y-3 pt-4">
               <li>
@@ -18,12 +21,12 @@
                   to="/"
                   class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
-                  <img src="@/assets/img/icons/iconStudy.svg" alt="Configurações" />
+                  <img src="@/assets/img/icons/iconHome.svg" alt="Configurações" />
 
                   <span
                     class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 whitespace-nowrap"
                   >
-                    Configurações
+                    Página inicial
                   </span>
                 </NuxtLink>
               </li>
@@ -31,6 +34,22 @@
               <li>
                 <NuxtLink
                   to="/"
+                  class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                >
+                  <img src="@/assets/img/icons/iconStudy.svg" alt="Configurações" />
+
+                  <div
+                    class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 flex flex-col gap-3"
+                  >
+                    <button @click="themeLight">Claro</button>
+                    <button @click="themeDark">Escuro</button>
+                  </div>
+                </NuxtLink>
+              </li>
+
+              <li>
+                <NuxtLink
+                  to="/teste2"
                   class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <img src="@/assets/img/icons/iconSettings.svg" alt="Configurações" />
@@ -45,7 +64,7 @@
 
               <li>
                 <NuxtLink
-                  to="/"
+                  to="/account"
                   class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <img src="@/assets/img/icons/iconUser.svg" alt="Meu perfil" />
@@ -60,7 +79,7 @@
 
               <li>
                 <NuxtLink
-                  to="/"
+                  to="/teste"
                   class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                   <img src="@/assets/img/icons/iconCredits.svg" alt="Créditos" />
@@ -104,7 +123,7 @@
             </span>
           </NuxtLink>
           <NuxtLink
-            to="/auth/signin"
+            to="/auth/signup"
             class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           >
             <img src="@/assets/img/icons/iconSignup.svg" alt="Cadastrar" />
@@ -117,20 +136,8 @@
         </div>
       </div>
     </div>
-    <nav>
-      <NuxtLink v-if="!user" to="/auth/signin">Sign In</NuxtLink>
-      <NuxtLink v-if="!user" to="/auth/signup">Sign Up</NuxtLink>
-      <NuxtLink to="/account">Accont</NuxtLink>
-      <NuxtLink to="/">Home</NuxtLink>
-
-      <button v-if="user" @click="signout">
-        <div>{{ firstLetter }}</div>
-        <p>{{ user.displayName }}</p>
-      </button>
-    </nav>
-
     <Nuxt />
-  </div>
+  </aside>
 </template>
 
 <script>
@@ -157,6 +164,8 @@ export default {
         this.user = user;
       }
     });
+
+    this.setSavedTheme();
   },
 
   methods: {
@@ -169,6 +178,23 @@ export default {
           this.user = "";
           this.$router.push("/auth/signin");
         });
+    },
+
+    setSavedTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    },
+
+    themeLight() {
+      document.documentElement.classList.remove("dark");
+    },
+
+    themeDark() {
+      document.documentElement.classList.add("dark");
     },
   },
 };
