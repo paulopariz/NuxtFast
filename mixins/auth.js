@@ -1,11 +1,16 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
       user: "",
     };
+  },
+
+  computed: {
+    ...mapState(["loading"]),
   },
 
   mounted() {
@@ -16,6 +21,7 @@ export default {
       } else {
         this.$router.push({ path: "/auth/signin" });
       }
+      this.$store.commit("SET_LOADING", false);
     });
   },
 };

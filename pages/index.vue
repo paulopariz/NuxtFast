@@ -1,16 +1,32 @@
 <template>
-  <div>
+  <Loading v-if="loading" />
+
+  <div v-else>
     <Header />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
   name: "Home",
-  // middleware: "auth",
-
   data() {
     return {};
+  },
+  computed: {
+    ...mapState(["loading"]),
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user);
+        this.user = user;
+      }
+      this.$store.commit("SET_LOADING", false);
+    });
   },
 };
 </script>
