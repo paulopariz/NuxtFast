@@ -24,6 +24,12 @@
 
       <button type="submit" class="px-5 py-3 bg-emerald-600 text-white">Submit</button>
     </form>
+
+    <div class="flex flex-col gap-7 mt-7">
+      <button @click="signInWithGoogle" class="px-5 py-3 bg-black text-white">
+        Google
+      </button>
+    </div>
   </div>
 </template>
 
@@ -50,6 +56,18 @@ export default {
         this.$router.push("/");
       } catch (error) {
         console.error(error);
+        this.userInvalid = true;
+      }
+    },
+
+    async signInWithGoogle() {
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
         this.userInvalid = true;
       }
     },

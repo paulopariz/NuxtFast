@@ -3,21 +3,21 @@
     class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-screen h-screen bg-gray-200"
   >
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      <svg viewBox="25 25 50 50">
-        <circle r="20" cy="50" cx="50"></circle>
+      <svg id="loading" viewBox="25 25 50 50">
+        <circle id="circleLoading" r="20" cy="50" cx="50"></circle>
       </svg>
     </div>
   </div>
 </template>
 
 <style>
-svg {
+#loading {
   width: 2.5em;
   transform-origin: center;
   animation: rotate4 0.6s linear infinite;
 }
 
-circle {
+#circleLoading {
   fill: none;
   stroke: green;
   stroke-width: 2;

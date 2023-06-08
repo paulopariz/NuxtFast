@@ -1,10 +1,4 @@
 <template>
-  <!-- <div
-    v-if="loading"
-    class="w-full h-screen bg-gr absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-  >
-    CARREGANDO...
-  </div> -->
   <div class="flex">
     <aside class="transition-all fixed">
       <div
@@ -12,10 +6,18 @@
       >
         <div>
           <div
-            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100"
+            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100 select-none"
             v-if="user"
           >
+            <img
+              v-if="user.photoURL"
+              :src="user.photoURL"
+              :alt="user.displayName"
+              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+            />
+
             <span
+              v-else
               class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
               :title="user.displayName"
             >
@@ -62,7 +64,7 @@
                 </li>
 
                 <li>
-                  <div
+                  <button
                     v-show="showIconThemeLight"
                     @click="themeLight"
                     class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -73,8 +75,8 @@
                     >
                       Tema
                     </span>
-                  </div>
-                  <div
+                  </button>
+                  <button
                     v-show="showIconThemeDark"
                     @click="themeDark"
                     class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -85,7 +87,7 @@
                     >
                       Tema
                     </span>
-                  </div>
+                  </button>
                 </li>
               </ul>
             </nav>
@@ -139,8 +141,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 
-// import { mapState } from "vuex";
-
 export default {
   data() {
     return {
@@ -157,20 +157,16 @@ export default {
     };
   },
   computed: {
-    // ...mapState(["loading"]),
-
     firstLetter() {
-      return this.user.displayName.charAt(0);
+      return this.user.displayName.charAt(0).toLocaleUpperCase();
     },
   },
   mounted() {
-    // this.$store.commit("SET_LOADING", true);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         console.log(user);
         this.user = user;
       }
-      // this.$store.commit("SET_LOADING", false);
     });
     this.setSavedTheme();
   },

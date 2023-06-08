@@ -32,7 +32,6 @@ export default {
     // ...outros plugins
     "~/plugins/firebase.js",
     "~/plugins/vuelidate.js",
-    { src: "~/plugins/dark-mode.js", mode: "client" },
   ],
 
   router: {

@@ -52,12 +52,17 @@
 
       <button type="submit" class="px-5 py-3 bg-emerald-600 text-white">Submit</button>
     </form>
+
+    <div class="flex flex-col gap-7 mt-7">
+      <button @click="createUserWithGoogle" class="px-5 py-3 bg-black text-white">
+        Google
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "~/plugins/firebase";
-
 import { required, email, maxLength, minLength } from "vuelidate/lib/validators";
 
 export default {
@@ -90,7 +95,9 @@ export default {
   },
 
   methods: {
+    // criar usuario com email e senha
     createUser() {
+      //validacão
       this.$v.$touch();
 
       if (this.$v.$invalid) {
@@ -117,6 +124,19 @@ export default {
         .catch((error) => {
           this.errors = error;
         });
+    },
+
+    // criar usuario com o google
+    async createUserWithGoogle() {
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+
+        this.$router.push("/account");
+      } catch (error) {
+        console.error(error);
+        this.errors = error;
+      }
     },
   },
 };
