@@ -4,11 +4,21 @@
   <div v-else class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
     <!-- <h1 class="text-emerald-600 text-7xl">BEM-VINDO</h1> -->
 
+    <h1 class="text-black text-4xl">{{ username }}</h1>
     <div class="flex-col flex gap-4">
       <div class="flex gap-4">
         <img :src="photoURL" :alt="user.displayName" class="w-36 rounded-lg" />
 
         <div class="flex flex-col items-start gap-4">
+          <input
+            type="text"
+            :value="photoGithub"
+            readonly
+            name="Foto"
+            placeholder="URL da foto"
+            class="border border-gray-950 p-2 dark:bg-zinc-900"
+          />
+
           <input
             type="text"
             v-model="newPhotoURL"
@@ -64,6 +74,7 @@ export default {
 
       photoURL: "",
       newPhotoURL: "",
+      username: "",
 
       user: "",
     };
@@ -71,6 +82,10 @@ export default {
 
   computed: {
     ...mapState(["loading"]),
+
+    photoGithub() {
+      return `https://github.com/${this.newPhotoURL}.png`;
+    },
   },
 
   mounted() {
@@ -80,8 +95,9 @@ export default {
         this.newName = userInfos.displayName;
         this.newEmail = userInfos.email;
 
-        this.newPhotoURL = this.user.photoURL || "";
-        this.photoURL = this.newPhotoURL;
+        this.getUsernameUrl(this.user.photoURL);
+
+        this.photoURL = this.photoGithub;
       } else {
         this.$router.push({ path: "/auth/signin" });
       }
@@ -117,21 +133,28 @@ export default {
         const user = firebase.auth().currentUser;
         if (user) {
           await user.updateProfile({
-            photoURL: this.newPhotoURL,
+            photoURL: this.photoGithub,
           });
 
-          this.photoURL = this.newPhotoURL;
+          this.photoURL = this.photoGithub;
         }
       } catch (error) {
         console.log("erro ao atualizar a foto");
         console.error(error);
       }
     },
+
+    getUsernameUrl(url) {
+      // remove #https://github.com" e ".png"  sobrando apenas o username
+      const username = url.replace("https://github.com/", "").replace(".png", "");
+
+      this.newPhotoURL = username;
+    },
   },
 
   beforeUpdate() {
-    if (this.newPhotoURL !== this.photoURL) {
-      this.photoURL = this.newPhotoURL;
+    if (this.photoGithub !== this.photoURL) {
+      this.photoURL = this.photoGithub;
     }
   },
 };
