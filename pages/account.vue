@@ -5,6 +5,23 @@
     <!-- <h1 class="text-emerald-600 text-7xl">BEM-VINDO</h1> -->
 
     <div class="flex-col flex gap-4">
+      <div class="flex gap-4">
+        <img :src="photoURL" :alt="user.displayName" class="w-36 rounded-lg" />
+
+        <div class="flex flex-col items-start gap-4">
+          <input
+            type="text"
+            v-model="newPhotoURL"
+            name="Foto"
+            placeholder="URL da foto"
+            class="border border-gray-950 p-2 dark:bg-zinc-900"
+          />
+          <button class="px-3 py-2 bg-emerald-600 text-white" @click="updatePhotoURL">
+            Atualizar Foto
+          </button>
+        </div>
+      </div>
+
       <input
         type="text"
         name="Nome"
@@ -45,6 +62,9 @@ export default {
       newEmail: "",
       newPassword: "",
 
+      photoURL: "",
+      newPhotoURL: "",
+
       user: "",
     };
   },
@@ -59,6 +79,9 @@ export default {
         this.user = userInfos;
         this.newName = userInfos.displayName;
         this.newEmail = userInfos.email;
+
+        this.newPhotoURL = this.user.photoURL || "";
+        this.photoURL = this.newPhotoURL;
       } else {
         this.$router.push({ path: "/auth/signin" });
       }
@@ -85,9 +108,31 @@ export default {
         }
       } catch (error) {
         console.log(error);
-        console.log("erro");
+        console.log("erro ao atualizar");
       }
     },
+
+    async updatePhotoURL() {
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          await user.updateProfile({
+            photoURL: this.newPhotoURL,
+          });
+
+          this.photoURL = this.newPhotoURL;
+        }
+      } catch (error) {
+        console.log("erro ao atualizar a foto");
+        console.error(error);
+      }
+    },
+  },
+
+  beforeUpdate() {
+    if (this.newPhotoURL !== this.photoURL) {
+      this.photoURL = this.newPhotoURL;
+    }
   },
 };
 </script>

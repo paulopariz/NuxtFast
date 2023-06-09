@@ -8,6 +8,7 @@
           <div
             class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100 select-none dark:border-zinc-900"
             v-if="user"
+            @click="consoleUser"
           >
             <img
               v-if="user.photoURL"
@@ -210,6 +211,10 @@ export default {
       document.documentElement.classList.add("dark");
       this.showIconThemeDark = false;
       this.showIconThemeLight = true;
+    },
+
+    consoleUser() {
+      console.log(firebase.auth().currentUser);
     },
   },
 };
