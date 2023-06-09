@@ -117,7 +117,7 @@ export default {
               displayName: this.name,
             })
             .then(() => {
-              this.$router.push("/account");
+              this.$router.push("/my-profile");
             })
             .catch((error) => {
               this.errors = error;
@@ -134,7 +134,7 @@ export default {
         const provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithPopup(provider);
 
-        this.$router.push("/account");
+        this.$router.push("/my-profile");
       } catch (error) {
         console.error(error);
         this.errors = error;

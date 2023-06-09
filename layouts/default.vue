@@ -10,21 +10,22 @@
             v-if="user"
             @click="consoleUser"
           >
-            <img
-              v-if="user.photoURL"
-              :src="user.photoURL"
-              :alt="user.displayName"
-              :title="user.displayName"
-              class="grid h-10 w-10 place-content-center rounded-lg"
-            />
+            <div v-if="user.photoURL && user.photoURL !== 'https://github.com/.png'">
+              <img
+                :src="user.photoURL"
+                :alt="'Imagem de perfil do usuário: ' + user.displayName"
+                :title="user.displayName"
+                class="grid h-10 w-10 place-content-center rounded-lg"
+              />
+            </div>
 
-            <span
+            <div
               v-else
-              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600 dark:bg-zinc-900 dark:text-gray-200"
+              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 t dark:bg-zinc-900"
               :title="user.displayName"
             >
-              {{ firstLetter }}
-            </span>
+              <h1 class="text-xs text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+            </div>
           </div>
           <div>
             <nav aria-label="Main Nav" class="flex flex-col p-2">
@@ -51,11 +52,11 @@
 
                 <li>
                   <ButtonsAside
-                    route="/account"
+                    route="/my-profile"
                     :icon="iconUser"
                     alt-icon="Meu perfil"
                     name="Meu perfil"
-                    :class="{ active: $route.path === '/account' }"
+                    :class="{ active: $route.path === '/my-profile' }"
                   />
                 </li>
 
