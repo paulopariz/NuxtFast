@@ -6,7 +6,7 @@
       <div class="flex flex-col gap-2">
         <input
           type="text"
-          name="Name"
+          name="Nome"
           placeholder="Name"
           v-model="$v.name.$model"
           class="border border-gray-950 p-3 dark:bg-zinc-900"
@@ -117,7 +117,6 @@ export default {
               displayName: this.name,
             })
             .then(() => {
-              console.log(user);
               this.$router.push("/account");
             })
             .catch((error) => {

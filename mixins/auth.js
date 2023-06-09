@@ -1,5 +1,4 @@
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "~/plugins/firebase";
 import { mapState } from "vuex";
 
 export default {
@@ -16,7 +15,6 @@ export default {
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         this.user = user;
       } else {
         this.$router.push({ path: "/auth/signin" });

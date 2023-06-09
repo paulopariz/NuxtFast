@@ -22,7 +22,6 @@ export default {
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         this.user = user;
       }
       this.$store.commit("SET_LOADING", false);

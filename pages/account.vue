@@ -7,6 +7,13 @@
     <div class="flex-col flex gap-4">
       <input
         type="text"
+        name="Nome"
+        placeholder="Novo nome"
+        v-model="newName"
+        class="border border-gray-950 p-3 dark:bg-zinc-900"
+      />
+      <input
+        type="text"
         name="Email"
         placeholder="Novo email"
         v-model="newEmail"
@@ -28,27 +35,49 @@
 </template>
 
 <script>
-import auth from "~/mixins/auth";
 import firebase from "~/plugins/firebase";
+import { mapState } from "vuex";
 
 export default {
-  mixins: [auth],
-
   data() {
     return {
+      newName: "",
       newEmail: "",
       newPassword: "",
+
+      user: "",
     };
+  },
+
+  computed: {
+    ...mapState(["loading"]),
+  },
+
+  mounted() {
+    firebase.auth().onAuthStateChanged((userInfos) => {
+      if (userInfos) {
+        this.user = userInfos;
+        this.newName = userInfos.displayName;
+        this.newEmail = userInfos.email;
+      } else {
+        this.$router.push({ path: "/auth/signin" });
+      }
+      this.$store.commit("SET_LOADING", false);
+    });
   },
 
   methods: {
     async updateEmailAndPassword() {
       try {
         const user = firebase.auth().currentUser;
+        console.log(user);
 
-        if (user) {
+        if (user !== null && user !== undefined) {
           await user.updateEmail(this.newEmail);
           await user.updatePassword(this.newPassword);
+          await user.updateProfile({
+            displayName: this.newName,
+          });
 
           console.log("email e senha atualizados");
         } else {
@@ -62,5 +91,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
