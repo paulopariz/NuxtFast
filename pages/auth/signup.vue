@@ -9,7 +9,7 @@
           name="Name"
           placeholder="Name"
           v-model="$v.name.$model"
-          class="border border-gray-950 p-3"
+          class="border border-gray-950 p-3 dark:bg-zinc-900"
         />
         <span v-if="!$v.name.required && $v.name.$dirty">Campo obrigatório.</span>
         <span v-if="!$v.name.maxLength && $v.name.$dirty"
@@ -26,7 +26,7 @@
           name="Email"
           placeholder="Email"
           v-model="$v.email.$model"
-          class="border border-gray-950 p-3"
+          class="border border-gray-950 p-3 dark:bg-zinc-900"
         />
         <span v-if="!$v.email.required && $v.email.$dirty">Campo Obrigatorio</span>
         <span v-if="!$v.email.email && $v.email.$dirty">E-mail inválido</span>
@@ -38,7 +38,7 @@
           name="Senha"
           placeholder="Senha"
           v-model="$v.password.$model"
-          class="border border-gray-950 p-3"
+          class="border border-gray-950 p-3 dark:bg-zinc-900"
         />
 
         <span v-if="!$v.password.required && $v.password.$dirty">Campo obrigatório.</span>
@@ -54,7 +54,10 @@
     </form>
 
     <div class="flex flex-col gap-7 mt-7">
-      <button @click="createUserWithGoogle" class="px-5 py-3 bg-black text-white">
+      <button
+        @click="createUserWithGoogle"
+        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
+      >
         Google
       </button>
     </div>

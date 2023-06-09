@@ -1,30 +1,31 @@
 <template>
-  <div class="flex">
-    <aside class="transition-all fixed">
+  <div class="flex transition-all">
+    <aside class="fixed transition-all">
       <div
-        class="flex h-screen w-16 flex-col justify-between border-e bg-white transition-all"
+        class="flex transition-al h-screen w-16 flex-col justify-between border-e bg-white dark:bg-black dark:border-zinc-900"
       >
         <div>
           <div
-            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100 select-none"
+            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100 select-none dark:border-zinc-900"
             v-if="user"
           >
             <img
               v-if="user.photoURL"
               :src="user.photoURL"
               :alt="user.displayName"
-              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+              :title="user.displayName"
+              class="grid h-10 w-10 place-content-center rounded-lg"
             />
 
             <span
               v-else
-              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
+              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600 dark:bg-zinc-900 dark:text-gray-200"
               :title="user.displayName"
             >
               {{ firstLetter }}
             </span>
           </div>
-          <div class="dark:bg-red-800">
+          <div>
             <nav aria-label="Main Nav" class="flex flex-col p-2">
               <ul class="space-y-3 pt-4 flex flex-col items-center">
                 <li>
@@ -33,6 +34,7 @@
                     :icon="iconHome"
                     alt-icon="Configurações"
                     name="Página inicial"
+                    :class="{ active: $route.path === '/' }"
                   />
                 </li>
 
@@ -42,6 +44,7 @@
                     :icon="iconStudy"
                     alt-icon="Conteúdo"
                     name="Conteúdo"
+                    :class="{ active: $route.path === '/teste2' }"
                   />
                 </li>
 
@@ -51,6 +54,7 @@
                     :icon="iconUser"
                     alt-icon="Meu perfil"
                     name="Meu perfil"
+                    :class="{ active: $route.path === '/account' }"
                   />
                 </li>
 
@@ -60,6 +64,7 @@
                     :icon="iconCredits"
                     alt-icon="Créditos"
                     name="Créditos"
+                    :class="{ active: $route.path === '/teste' }"
                   />
                 </li>
 
@@ -67,7 +72,7 @@
                   <button
                     v-show="showIconThemeLight"
                     @click="themeLight"
-                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
                   >
                     <img src="@/assets/img/icons/iconLight.svg" alt="Tema light" />
                     <span
@@ -79,7 +84,7 @@
                   <button
                     v-show="showIconThemeDark"
                     @click="themeDark"
-                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
                   >
                     <img src="@/assets/img/icons/iconDark.svg" alt="Tema dark" />
                     <span
@@ -93,11 +98,13 @@
             </nav>
           </div>
         </div>
-        <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+        <div
+          class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2 dark:bg-black dark:border-zinc-900"
+        >
           <button
             v-if="user"
             @click="signout"
-            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm select-none text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:bg-zinc-900"
           >
             <img src="@/assets/img/icons/iconSignout.svg" alt="Sair" />
             <span
@@ -209,4 +216,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.active {
+  background-color: #ededed;
+}
+.dark .active {
+  background-color: #18181b;
+}
+</style>

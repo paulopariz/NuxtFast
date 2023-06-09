@@ -4,3 +4,7 @@
 /* .dark *, .transition-theme {
   transition: color 0.3s ease-in, background-color 0.3s ease-in;
 } */
+
+.dark body{
+  background-color: #000;
+}

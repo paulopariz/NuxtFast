@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-screen h-screen bg-gray-200"
+    class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-screen h-screen bg-black"
   >
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <svg id="loading" viewBox="25 25 50 50">
@@ -20,7 +20,7 @@
 #circleLoading {
   fill: none;
   stroke: green;
-  stroke-width: 2;
+  stroke-width: 5;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   stroke-linecap: round;

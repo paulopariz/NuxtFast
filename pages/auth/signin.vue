@@ -10,14 +10,14 @@
         name="Email"
         placeholder="Email"
         v-model="email"
-        class="border border-gray-950 p-3"
+        class="border border-gray-950 p-3 dark:bg-zinc-900"
       />
       <input
         type="password"
         name="Senha"
         placeholder="Senha"
         v-model="password"
-        class="border border-gray-950 p-3"
+        class="border border-gray-950 p-3 dark:bg-zinc-900"
       />
 
       <p v-show="userInvalid">Usuario invalido</p>
@@ -26,7 +26,10 @@
     </form>
 
     <div class="flex flex-col gap-7 mt-7">
-      <button @click="signInWithGoogle" class="px-5 py-3 bg-black text-white">
+      <button
+        @click="signInWithGoogle"
+        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
+      >
         Google
       </button>
     </div>

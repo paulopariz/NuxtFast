@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="route"
-    class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+    class="group relative flex justify-center rounded px-2 py-1.5 hover:bg-gray-50 hover:text-gray-700 select-none dark:hover:bg-zinc-900"
   >
     <img :src="icon" :alt="altIcon" />
     <span
