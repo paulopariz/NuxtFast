@@ -1,6 +1,6 @@
 <template>
   <div class="flex transition-all">
-    <aside class="fixed transition-all">
+    <aside class="fixed transition-all z-20">
       <div
         class="flex transition-al h-screen w-16 flex-col justify-between border-e bg-white dark:bg-black dark:border-zinc-900"
       >
