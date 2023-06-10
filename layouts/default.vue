@@ -62,6 +62,16 @@
 
                 <li>
                   <ButtonsAside
+                    route="/my-progress"
+                    :icon="iconProgress"
+                    alt-icon="Meu progresso"
+                    name="Meu progresso"
+                    :class="{ active: $route.path === '/my-progress' }"
+                  />
+                </li>
+
+                <li>
+                  <ButtonsAside
                     route="/teste"
                     :icon="iconCredits"
                     alt-icon="Créditos"
@@ -160,6 +170,7 @@ export default {
       iconHome: require("@/assets/img/icons/iconHome.svg"),
       iconStudy: require("@/assets/img/icons/iconStudy.svg"),
       iconUser: require("@/assets/img/icons/iconUser.svg"),
+      iconProgress: require("@/assets/img/icons/iconProgress.svg"),
       iconCredits: require("@/assets/img/icons/iconCredits.svg"),
       iconSignin: require("@/assets/img/icons/iconSignin.svg"),
       iconSignup: require("@/assets/img/icons/iconSignup.svg"),

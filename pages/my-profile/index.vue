@@ -21,7 +21,6 @@
         <span class="dark:text-gray-200 text-xl"
           >Data de criação: {{ creationDate }}</span
         >
-        <span class="dark:text-gray-200 text-xl">Ultimo login: {{ lastLoginDate }}</span>
       </div>
     </section>
 
@@ -50,7 +49,6 @@ export default {
     return {
       infoUser: "",
       creationDate: "",
-      lastLoginDate: "",
     };
   },
 
@@ -68,13 +66,10 @@ export default {
         this.infoUser = user;
 
         const creationDate = user.metadata.creationTime;
-        const lastLoginDate = user.metadata.lastSignInTime;
 
         const formatDateCreation = moment(creationDate).format("DD-MM-YYYY h:mm A");
-        const formatDateLastLogin = moment(lastLoginDate).format("DD-MM-YYYY h:mm A");
 
         this.creationDate = formatDateCreation;
-        this.lastLoginDate = formatDateLastLogin;
       }
     });
   },

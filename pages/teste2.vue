@@ -11,5 +11,3 @@ export default {
   mixins: [auth],
 };
 </script>
-
-<style></style>
