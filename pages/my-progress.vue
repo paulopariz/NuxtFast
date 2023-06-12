@@ -3,7 +3,32 @@
 
   <div class="absolute left-1/2 w-full -translate-x-1/2">
     <div class="container w-full m-auto my-12">
-      <div class="mt-5 flex flex-col justify-center gap-2 items-center">
+      <section v-if="!user">
+        <h1 class="dark:text-gray-100">
+          Usuarios não autenticados tem acesso apenas as seguintes aulas:
+        </h1>
+        <ul>
+          <div v-for="accessAulas in aulasApi" :key="accessAulas.id">
+            <li v-if="accessAulas.isLogged === false" class="dark:text-gray-200">
+              {{ accessAulas.name }}
+            </li>
+          </div>
+        </ul>
+      </section>
+
+      <div>
+        <h1
+          v-for="(readAulas, index) in aulasApi"
+          :key="index"
+          class="dark:text-gray-200"
+        >
+          {{ readAulas.minutesReading }}
+        </h1>
+        <h1 class="dark:text-gray-200">Total: {{ totalMinutes }}</h1>
+      </div>
+
+      <!--BARRA DE PROGRESSO-->
+      <div v-if="user" class="mt-5 flex flex-col justify-center gap-2 items-center">
         <span class="dark:text-gray-200"
           >{{ Math.round(progressPercentage) }}% completo</span
         >
@@ -22,19 +47,11 @@
         >
           <div class="flex justify-between items-center w-full">
             <h1 class="text-3xl dark:text-gray-200 font-bold">{{ aula.id }}</h1>
-            <div v-if="user">
-              <img
-                v-if="aula.isLogged === true"
-                src="@/assets/img/icons/iconArrow.svg"
-                alt="Ícone de usuário autenticado"
-              />
-              <img
-                v-else
-                src="@/assets/img/icons/iconBlocked.svg"
-                alt="Ícone de usuário não autenticado"
-                :class="{ hidden: user }"
-              />
-            </div>
+            <img
+              v-if="user"
+              src="@/assets/img/icons/iconArrow.svg"
+              alt="Ícone de usuário autenticado"
+            />
 
             <div v-else>
               <img
@@ -85,6 +102,7 @@
 <script>
 import firebase from "~/plugins/firebase";
 import { db, aulasApi } from "~/utils/api";
+import moment from "moment";
 
 export default {
   data() {
@@ -157,6 +175,15 @@ export default {
   computed: {
     aulasApi() {
       return aulasApi;
+    },
+
+    //minutos totais das aulas
+    totalMinutes() {
+      const total = this.aulasApi.reduce(
+        (acc, readAulas) => acc + readAulas.minutesReading,
+        0
+      );
+      return moment.utc().startOf("day").add(total, "minutes").format("HH:mm");
     },
   },
 };
