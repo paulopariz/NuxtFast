@@ -34,7 +34,7 @@
                   <ButtonsAside
                     route="/"
                     :icon="iconHome"
-                    alt-icon="Configurações"
+                    alt-icon="Página inicial"
                     name="Página inicial"
                     :class="{ active: $route.path === '/' }"
                   />
@@ -42,11 +42,11 @@
 
                 <li>
                   <ButtonsAside
-                    route="/teste2"
+                    route="/content"
                     :icon="iconStudy"
                     alt-icon="Conteúdo"
                     name="Conteúdo"
-                    :class="{ active: $route.path === '/teste2' }"
+                    :class="{ active: $route.path === '/content' }"
                   />
                 </li>
 
@@ -57,16 +57,6 @@
                     alt-icon="Meu perfil"
                     name="Meu perfil"
                     :class="{ active: $route.path === '/my-profile' }"
-                  />
-                </li>
-
-                <li>
-                  <ButtonsAside
-                    route="/my-progress"
-                    :icon="iconProgress"
-                    alt-icon="Meu progresso"
-                    name="Meu progresso"
-                    :class="{ active: $route.path === '/my-progress' }"
                   />
                 </li>
 
@@ -116,7 +106,7 @@
           <button
             v-if="user"
             @click="signout"
-            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm select-none text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:bg-zinc-900"
+            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm select-none text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
           >
             <img src="@/assets/img/icons/iconSignout.svg" alt="Sair" />
             <span
@@ -130,7 +120,7 @@
             <ul class="space-y-3 flex flex-col items-center">
               <li>
                 <ButtonsAside
-                  route="/auth/signin"
+                  route="/auth/login"
                   :icon="iconSignin"
                   alt-icon="Entrar"
                   name="Entrar"
@@ -197,7 +187,7 @@ export default {
         .then((result) => {
           console.log(result);
           this.user = "";
-          this.$router.push("/auth/signin");
+          this.$router.push("/auth/login");
         });
     },
     setSavedTheme() {

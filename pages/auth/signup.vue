@@ -60,6 +60,17 @@
       >
         Google
       </button>
+      <button
+        @click="createUserWithGithub"
+        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
+      >
+        Github
+      </button>
+    </div>
+
+    <div class="flex items-center gap-3 mt-7">
+      <p>Já possui uma conta?</p>
+      <NuxtLink to="/auth/login">Conecte-se</NuxtLink>
     </div>
   </div>
 </template>
@@ -137,6 +148,20 @@ export default {
         this.$router.push("/my-profile");
       } catch (error) {
         console.error(error);
+        this.errors = error;
+      }
+    },
+
+    async createUserWithGithub() {
+      try {
+        const provider = new firebase.auth.GithubAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+
+        // Após a autenticação com sucesso, redirecione para a página desejada
+        this.$router.push("/my-profile");
+      } catch (error) {
+        console.error(error);
+        console.log("já existe conta com esse email");
         this.errors = error;
       }
     },

@@ -23,6 +23,15 @@ const aulasApi = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500",
   },
   {
+    id: 3,
+    name: "Aula-3",
+    route: "/teste",
+    isLogged: false,
+    minutesReading: 12,
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500",
+  },
+  {
     id: 4,
     name: "Aula-4",
     route: "/teste2",

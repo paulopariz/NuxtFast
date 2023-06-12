@@ -17,7 +17,7 @@ export default {
       if (user) {
         this.user = user;
       } else {
-        this.$router.push({ path: "/auth/signin" });
+        this.$router.push({ path: "/auth/login" });
       }
       this.$store.commit("SET_LOADING", false);
     });

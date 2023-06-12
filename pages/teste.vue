@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="loading" />
 
-  <h1 v-else class="text-center mr-32 text-3xl dark:text-gray-200">TESTE</h1>
+  <h1 v-else class="text-center mr-32 text-3xl">TESTE</h1>
 </template>
 
 <script>

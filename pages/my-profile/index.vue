@@ -16,11 +16,9 @@
           <h1 class="text-3xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
         </div>
 
-        <h1 class="dark:text-gray-200 text-3xl">{{ infoUser.displayName }}</h1>
-        <p class="dark:text-gray-200 text-xl">{{ infoUser.email }}</p>
-        <span class="dark:text-gray-200 text-xl"
-          >Data de criação: {{ creationDate }}</span
-        >
+        <h1 class="text-3xl">{{ infoUser.displayName }}</h1>
+        <p class="text-xl">{{ infoUser.email }}</p>
+        <span class="text-xl">Data de criação: {{ creationDate }}</span>
       </div>
     </section>
 

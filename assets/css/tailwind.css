@@ -8,3 +8,19 @@
 .dark body{
   background-color: #000;
 }
+
+h1,h2,h3,h4,h5,h6,label,button {
+  color: #000;
+}
+
+.dark h1,h2,h3,h4,h5,h6,label,button {
+  color: #fff;
+}
+
+p,span, li, a, input {
+  color: #0a0a0a;
+}
+
+.dark p,span, li, a, input {
+  color: #ebebeb;
+}

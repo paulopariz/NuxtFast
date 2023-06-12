@@ -4,12 +4,10 @@
   <div class="absolute left-1/2 w-full -translate-x-1/2">
     <div class="container w-full m-auto my-12">
       <section v-if="!user">
-        <h1 class="dark:text-gray-100">
-          Usuarios não autenticados tem acesso apenas as seguintes aulas:
-        </h1>
+        <h1>Usuarios não autenticados tem acesso apenas as seguintes aulas:</h1>
         <ul>
           <div v-for="accessAulas in aulasApi" :key="accessAulas.id">
-            <li v-if="accessAulas.isLogged === false" class="dark:text-gray-200">
+            <li v-if="accessAulas.isLogged === false" class="">
               {{ accessAulas.name }}
             </li>
           </div>
@@ -17,21 +15,19 @@
       </section>
 
       <div>
-        <h1
-          v-for="(readAulas, index) in aulasApi"
-          :key="index"
-          class="dark:text-gray-200"
-        >
-          {{ readAulas.minutesReading }}
-        </h1>
-        <h1 class="dark:text-gray-200">Total: {{ totalMinutes }}</h1>
+        <h1 class="">Tempo total de leitura: {{ totalMinutes }}</h1>
+        <h1 class="">Total de aulas: {{ aulasApi.length }}</h1>
+
+        <h1 class="">Requisitos:</h1>
+        <ul>
+          <li class="">VueJS básico</li>
+          <li class="">JavaSript básico</li>
+        </ul>
       </div>
 
       <!--BARRA DE PROGRESSO-->
       <div v-if="user" class="mt-5 flex flex-col justify-center gap-2 items-center">
-        <span class="dark:text-gray-200"
-          >{{ Math.round(progressPercentage) }}% completo</span
-        >
+        <span class="">{{ Math.round(progressPercentage) }}% completo</span>
         <div class="w-60 h-3 bg-gray-50 mt-3 dark:bg-zinc-900">
           <div
             class="progressBar h-full bg-emerald-600"
@@ -46,7 +42,7 @@
           :class="{ borderCheck: user && checkedAulas[aula.id] === true }"
         >
           <div class="flex justify-between items-center w-full">
-            <h1 class="text-3xl dark:text-gray-200 font-bold">{{ aula.id }}</h1>
+            <h1 class="text-3xl font-bold">{{ aula.id }}</h1>
             <img
               v-if="user"
               src="@/assets/img/icons/iconArrow.svg"
@@ -66,11 +62,9 @@
               />
             </div>
           </div>
-          <h2 class="dark:text-gray-200 text-2xl">{{ aula.name }}</h2>
-          <span class="dark:text-gray-200 text-xs"
-            >{{ aula.minutesReading }} min de leitura</span
-          >
-          <p class="dark:text-gray-400 text-sm">{{ aula.description }}</p>
+          <h2 class="text-2xl">{{ aula.name }}</h2>
+          <span class="text-xs">{{ aula.minutesReading }} min de leitura</span>
+          <p class="text-sm">{{ aula.description }}</p>
 
           <input
             v-if="user"
@@ -81,7 +75,7 @@
           <NuxtLink
             :to="aula.route"
             v-if="user"
-            class="dark:text-gray-200 mt-3 bg-emerald-600 px-3 py-2 text-xs"
+            class="mt-3 bg-emerald-600 px-3 py-2 text-xs"
             >Ver {{ aula.name }}
           </NuxtLink>
 
@@ -89,7 +83,7 @@
             <NuxtLink
               :to="aula.route"
               v-if="aula.isLogged === false"
-              class="dark:text-gray-200 mt-3 bg-emerald-600 px-3 py-2 text-xs"
+              class="mt-3 bg-emerald-600 px-3 py-2 text-xs"
               >Ver {{ aula.name }}
             </NuxtLink>
           </div>
@@ -183,7 +177,10 @@ export default {
         (acc, readAulas) => acc + readAulas.minutesReading,
         0
       );
-      return moment.utc().startOf("day").add(total, "minutes").format("HH:mm");
+      const duration = moment.duration(total, "minutes");
+      const hours = duration.hours();
+      const minutes = duration.minutes();
+      return `${hours}h ${minutes}min`;
     },
   },
 };

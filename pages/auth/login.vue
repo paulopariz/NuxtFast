@@ -1,8 +1,6 @@
 <template>
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <h1 class="text-black tracking-wide text-3xl font-bold mb-5 dark:text-emerald-600">
-      Entrar na conta
-    </h1>
+    <h1 class="text-black tracking-wide text-3xl font-bold mb-5">Entrar na conta</h1>
 
     <form @submit.prevent="signIn" class="flex flex-col gap-7">
       <input
@@ -32,6 +30,11 @@
       >
         Google
       </button>
+    </div>
+
+    <div class="flex items-center gap-3 mt-7">
+      <p>Não possui uma conta?</p>
+      <NuxtLink to="/auth/signup">Inscrever-se</NuxtLink>
     </div>
   </div>
 </template>
