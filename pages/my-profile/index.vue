@@ -37,6 +37,7 @@
 
 <script>
 import firebase from "~/plugins/firebase";
+import { db } from "~/utils/api";
 import moment from "moment";
 import { mapState } from "vuex";
 import auth from "~/mixins/auth";
@@ -76,19 +77,29 @@ export default {
 
   methods: {
     deleteUser() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          user
-            .delete()
-            .then(() => {
-              this.$router.push("/");
-              console.log("usuario excluido");
-            })
-            .catch((error) => {
-              console.error("erro ao exlcuir: ", error);
-            });
-        }
-      });
+      const user = firebase.auth().currentUser;
+
+      if (user) {
+        // excluir dados do firestore
+        db.collection("checkboxes")
+          .doc(user.uid)
+          .delete()
+          .then(() => {
+            // excluir usuário do firebase authentication
+            user
+              .delete()
+              .then(() => {
+                this.$router.push("/");
+                console.log("Usuário excluído");
+              })
+              .catch((error) => {
+                console.error("Erro ao excluir usuário:", error);
+              });
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir dados do usuário:", error);
+          });
+      }
     },
   },
 };
