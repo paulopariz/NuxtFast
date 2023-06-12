@@ -30,6 +30,12 @@
       >
         Google
       </button>
+      <button
+        @click="signInWithGithub"
+        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
+      >
+        Github
+      </button>
     </div>
 
     <div class="flex items-center gap-3 mt-7">
@@ -71,6 +77,18 @@ export default {
         const provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithPopup(provider);
 
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+        this.userInvalid = true;
+      }
+    },
+
+    async signInWithGithub() {
+      try {
+        const provider = new firebase.auth.GithubAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+        console.log(provider);
         this.$router.push("/");
       } catch (error) {
         console.log(error);
