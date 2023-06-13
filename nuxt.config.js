@@ -39,6 +39,8 @@ export default {
     middleware: "spinner",
   },
 
+  generate: { fallback: "404.html" },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
