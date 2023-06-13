@@ -49,53 +49,88 @@
           </div>
         </div>
       </div>
+      <!--ATUALIZAR NOME-->
+      <div>
+        <div class="flex items-center gap-1">
+          <input
+            type="text"
+            name="Nome"
+            placeholder="Novo nome"
+            v-model="$v.newName.$model"
+            class="border border-gray-950 p-3 dark:bg-zinc-900"
+          />
 
-      <input
-        type="text"
-        name="Nome"
-        placeholder="Novo nome"
-        v-model="$v.newName.$model"
-        class="border border-gray-950 p-3 dark:bg-zinc-900"
-      />
-      <span v-if="!$v.newName.required && $v.newName.$dirty">Campo obrigatório.</span>
-      <span v-if="!$v.newName.maxLength && $v.newName.$dirty"
-        >Nome deve ter no máximo 50 caracteres.</span
-      >
-      <span v-if="!$v.newName.minLength && $v.newName.$dirty"
-        >Nome deve ter pelo menos 3 caracteres.</span
-      >
+          <button @click="updateName" class="p-3 bg-emerald-600 text-xs">Salvar</button>
+          <span v-if="!$v.newName.required && $v.newName.$dirty">Campo obrigatório.</span>
+          <span v-if="!$v.newName.maxLength && $v.newName.$dirty"
+            >Nome deve ter no máximo 50 caracteres.</span
+          >
+          <span v-if="!$v.newName.minLength && $v.newName.$dirty"
+            >Nome deve ter pelo menos 3 caracteres.</span
+          >
+        </div>
+      </div>
 
-      <input
-        type="text"
-        name="Email"
-        placeholder="Novo email"
-        v-model="$v.newEmail.$model"
-        class="border border-gray-950 p-3 dark:bg-zinc-900"
-      />
-      <span v-if="!$v.newEmail.required && $v.newEmail.$dirty">Campo Obrigatorio</span>
-      <span v-if="!$v.newEmail.email && $v.newEmail.$dirty">E-mail inválido</span>
+      <div class="flex flex-col gap-4">
+        <!-- v-if="
+          user.providerData[0].providerId !== 'google.com' &&
+          user.providerData[0].providerId !== 'github.com'
+        " -->
+        <!--ATUALIZAR EMAIL-->
+        <div>
+          <div class="flex items-center gap-1">
+            <input
+              :disabled="disabledInputAndButton"
+              type="text"
+              name="Email"
+              placeholder="Novo email"
+              v-model="$v.newEmail.$model"
+              class="border border-gray-950 p-3 dark:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+            <button
+              :disabled="disabledInputAndButton"
+              @click="updateEmail"
+              class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Salvar
+            </button>
+          </div>
+          <span v-if="!$v.newEmail.required && $v.newEmail.$dirty"
+            >Campo Obrigatorio</span
+          >
+          <span v-if="!$v.newEmail.email && $v.newEmail.$dirty">E-mail inválido</span>
+        </div>
+        <!--ATUALIZAR SENHA-->
+        <div>
+          <div class="flex items-center gap-1">
+            <input
+              :disabled="disabledInputAndButton"
+              type="password"
+              name="Senha"
+              placeholder="Nova senha"
+              v-model="$v.newPassword.$model"
+              class="border border-gray-950 p-3 dark:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            />
 
-      <input
-        type="password"
-        name="Senha"
-        placeholder="Nova senha"
-        v-model="$v.newPassword.$model"
-        class="border border-gray-950 p-3 dark:bg-zinc-900"
-      />
-
-      <span v-if="!$v.newPassword.required && $v.newPassword.$dirty"
-        >Campo obrigatório.</span
-      >
-      <span v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
-        >A senha deve ter pelo menos 6 caracteres.</span
-      >
-      <span v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
-        >A senha deve ter no máximo 30 caracteres.</span
-      >
-
-      <button @click="updateEmailAndPassword" class="px-5 py-3 bg-emerald-600 text-white">
-        Atualizar
-      </button>
+            <button
+              :disabled="disabledInputAndButton"
+              @click="updatePassword"
+              class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Salvar
+            </button>
+          </div>
+          <span v-if="!$v.newPassword.required && $v.newPassword.$dirty"
+            >Campo obrigatório.</span
+          >
+          <span v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
+            >A senha deve ter pelo menos 6 caracteres.</span
+          >
+          <span v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
+            >A senha deve ter no máximo 30 caracteres.</span
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -111,6 +146,8 @@ export default {
       newName: "",
       newEmail: "",
       newPassword: "",
+
+      disabledInputAndButton: false,
 
       photoURL: "",
       newPhotoURL: "",
@@ -161,36 +198,108 @@ export default {
 
         this.photoURL = this.photoGithub;
       } else {
-        this.$router.push({ path: "/auth/signin" });
+        this.$router.push({ path: "/auth/login" });
       }
       this.$store.commit("SET_LOADING", false);
+
+      if (userInfos) {
+        const providerId = userInfos.providerData[0].providerId;
+
+        if (providerId === "github.com" || providerId === "google.com") {
+          this.disabledInputAndButton = true;
+        }
+      }
     });
   },
 
   methods: {
-    async updateEmailAndPassword() {
-      if (!this.$v.$invalid) {
+    async updateUserField(updateFn, field, value, successMessage) {
+      if (!this.$v[field].$invalid) {
+        try {
+          const user = firebase.auth().currentUser;
+          console.log(user);
+
+          if (user) {
+            await updateFn.call(user, value);
+
+            console.log(successMessage);
+          } else {
+            console.log("Usuário não autenticado.");
+          }
+        } catch (error) {
+          console.log(error);
+          console.log(`Erro ao atualizar ${field}.`);
+        }
+      } else {
+        console.log("Formulário inválido.");
+      }
+    },
+
+    async updateName() {
+      if (!this.$v.newName.$invalid) {
+        try {
+          const user = firebase.auth().currentUser;
+          console.log(user);
+
+          if (user !== null && user !== undefined) {
+            await user.updateProfile({
+              displayName: this.newName,
+            });
+
+            console.log("nome atualizado");
+          } else {
+            console.log("usuario não autenticado");
+          }
+        } catch (error) {
+          console.log(error);
+          console.log("erro ao atualizar o nome");
+        }
+      } else {
+        console.log("formulario invalido");
+      }
+    },
+
+    async updatePassword() {
+      if (!this.$v.newPassword.$invalid) {
+        try {
+          const user = firebase.auth().currentUser;
+          console.log(user);
+
+          if (user !== null && user !== undefined) {
+            await user.updatePassword(this.newPassword);
+
+            console.log("senha atualizada");
+          } else {
+            console.log("usuario não autenticado");
+          }
+        } catch (error) {
+          console.log(error);
+          console.log("erro ao atualizar a senha");
+        }
+      } else {
+        console.log("formulario invalido");
+      }
+    },
+
+    async updateEmail() {
+      if (!this.$v.newEmail.$invalid) {
         try {
           const user = firebase.auth().currentUser;
           console.log(user);
 
           if (user !== null && user !== undefined) {
             await user.updateEmail(this.newEmail);
-            await user.updatePassword(this.newPassword);
-            await user.updateProfile({
-              displayName: this.newName,
-            });
 
-            console.log("email e senha atualizados");
+            console.log("email atualizado");
           } else {
             console.log("usuario não autenticado");
           }
         } catch (error) {
           console.log(error);
-          console.log("erro ao atualizar");
+          console.log("erro ao atualizar o email");
         }
       } else {
-        console.log("scsdc");
+        console.log("formulario invalido");
       }
     },
 
