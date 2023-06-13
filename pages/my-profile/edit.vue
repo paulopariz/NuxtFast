@@ -60,7 +60,7 @@
             />
             <button
               :disabled="disabledInputAndButton"
-              @click="updateEmail"
+              @click="updateEmail()"
               class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Salvar
@@ -85,7 +85,7 @@
 
             <button
               :disabled="disabledInputAndButton"
-              @click="updatePassword"
+              @click="updatePassword()"
               class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Salvar
@@ -123,6 +123,10 @@ export default {
       username: "",
 
       user: "",
+
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
+      iconCheckAlert: require("~/assets/img/icons/iconCheck.svg"),
+      iconAttentionAlert: require("~/assets/img/icons/iconAttention.svg"),
     };
   },
 
@@ -175,78 +179,93 @@ export default {
 
   methods: {
     async updateName() {
-      if (!this.$v.newName.$invalid) {
-        try {
-          const user = firebase.auth().currentUser;
-          console.log(user);
+      this.$v.newName.$touch();
 
-          if (user !== null && user !== undefined) {
+      if (this.$v.newName.$invalid) {
+        return;
+      }
+      try {
+        const user = firebase.auth().currentUser;
+
+        if (user !== null && user !== undefined) {
+          if (user.displayName !== this.newName) {
             await user.updateProfile({
               displayName: this.newName,
             });
 
-            console.log("nome atualizado");
+            this.$alert("Nome atualizado com sucesso!", this.iconCheckAlert);
           } else {
-            console.log("não foi possivel atualizar");
+            this.$alert(
+              "Por favor, utilize um nome diferente do atual.",
+              this.iconAttentionAlert
+            );
           }
-        } catch (error) {
-          console.log(error);
-          console.log("erro ao atualizar o nome");
+        } else {
+          this.$alert("Não foi possível atualizar o nome!", this.iconErrorAlert);
         }
-      } else {
-        console.log("formulario invalido");
-      }
-    },
-
-    async updatePassword() {
-      if (!this.$v.newPassword.$invalid) {
-        try {
-          const user = firebase.auth().currentUser;
-          console.log(user);
-
-          if (
-            user &&
-            user.providerData[0].providerId !== "google.com" &&
-            user.providerData[0].providerId !== "github.com"
-          ) {
-            await user.updatePassword(this.newPassword);
-
-            console.log("senha atualizada");
-          } else {
-            console.log("não foi possivel atualizar");
-          }
-        } catch (error) {
-          console.log(error);
-          console.log("erro ao atualizar a senha");
-        }
-      } else {
-        console.log("formulario invalido");
+      } catch (error) {
+        this.$alert("Não foi possível atualizar o nome!", this.iconErrorAlert);
       }
     },
 
     async updateEmail() {
-      if (!this.$v.newEmail.$invalid) {
-        try {
-          const user = firebase.auth().currentUser;
-          console.log(user);
+      this.$v.newEmail.$touch();
 
-          if (
-            user &&
-            user.providerData[0].providerId !== "google.com" &&
-            user.providerData[0].providerId !== "github.com"
-          ) {
+      if (this.$v.newEmail.$invalid) {
+        return;
+      }
+      try {
+        const user = firebase.auth().currentUser;
+
+        if (
+          user &&
+          user.providerData[0].providerId !== "google.com" &&
+          user.providerData[0].providerId !== "github.com"
+        ) {
+          if (this.newEmail !== user.email) {
             await user.updateEmail(this.newEmail);
-
-            console.log("email atualizado");
+            this.$alert("E-mail atualizado com sucesso!", this.iconCheckAlert);
           } else {
-            console.log("não foi possivel atualizar");
+            this.$alert(
+              "Por favor, utilize um e-mail diferente do atual.",
+              this.iconAttentionAlert
+            );
           }
-        } catch (error) {
-          console.log(error);
-          console.log("erro ao atualizar o email");
+        } else {
+          this.$alert("Não foi possível atualizar o e-mail!", this.iconErrorAlert);
         }
-      } else {
-        console.log("formulario invalido");
+      } catch (error) {
+        this.$alert(
+          "Algo deu errado. Tente outro e-mail ou volte mais tarde.",
+          this.iconErrorAlert
+        );
+      }
+    },
+
+    async updatePassword() {
+      this.$v.newPassword.$touch();
+
+      if (this.$v.newPassword.$invalid) {
+        return;
+      }
+      try {
+        const user = firebase.auth().currentUser;
+
+        if (
+          user &&
+          user.providerData[0].providerId !== "google.com" &&
+          user.providerData[0].providerId !== "github.com"
+        ) {
+          await user.updatePassword(this.newPassword);
+          this.$alert("Senha atualizada com sucesso!", this.iconCheckAlert);
+          setTimeout(() => {
+            this.$router.go();
+          }, 2100);
+        } else {
+          this.$alert("Não foi possível atualizar a senha!", this.iconErrorAlert);
+        }
+      } catch (error) {
+        this.$alert("Não foi possível atualizar a senha!", this.iconErrorAlert);
       }
     },
   },
