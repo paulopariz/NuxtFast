@@ -147,8 +147,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "~/plugins/firebase";
 
 export default {
   data() {
@@ -181,14 +180,15 @@ export default {
   },
   methods: {
     signout() {
-      firebase
-        .auth()
-        .signOut()
-        .then((result) => {
-          console.log(result);
-          this.user = "";
-          this.$router.push("/auth/login");
-        });
+      setTimeout(() => {
+        firebase
+          .auth()
+          .signOut()
+          .then((result) => {
+            this.user = "";
+            this.$router.push("/auth/login");
+          });
+      }, 1200);
     },
     setSavedTheme() {
       const savedTheme = localStorage.getItem("theme");

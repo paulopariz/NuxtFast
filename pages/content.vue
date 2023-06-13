@@ -104,6 +104,8 @@ export default {
       checkedAulas: {},
       progressPercentage: 0,
       user: null,
+
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
     };
   },
 
@@ -137,6 +139,10 @@ export default {
         }
       } catch (error) {
         console.error("Erro ao carregar os dados", error);
+        this.$alert(
+          "Dados não carregados. Verifique se você está autenticado!",
+          this.iconErrorAlert
+        );
       }
     },
 

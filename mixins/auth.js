@@ -5,6 +5,8 @@ export default {
   data() {
     return {
       user: "",
+
+      iconAttentionAlert: require("~/assets/img/icons/iconAttention.svg"),
     };
   },
 
@@ -18,6 +20,10 @@ export default {
         this.user = user;
       } else {
         this.$router.push({ path: "/auth/login" });
+        this.$alert(
+          "Apenas para usuários autenticados!",
+          this.iconAttentionAlert
+        );
       }
       this.$store.commit("SET_LOADING", false);
     });

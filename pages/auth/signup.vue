@@ -88,6 +88,8 @@ export default {
       email: "",
       password: "",
       errors: "",
+
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
     };
   },
 
@@ -132,10 +134,12 @@ export default {
             })
             .catch((error) => {
               this.errors = error;
+              this.$alert("Algo deu errado. Tente novamente.", this.iconErrorAlert);
             });
         })
         .catch((error) => {
           this.errors = error;
+          this.$alert("Algo deu errado. Tente novamente.", this.iconErrorAlert);
         });
     },
 
@@ -147,8 +151,8 @@ export default {
 
         this.$router.push("/my-profile");
       } catch (error) {
-        console.error(error);
         this.errors = error;
+        this.$alert("Algo deu errado. Tente novamente.", this.iconErrorAlert);
       }
     },
 
@@ -161,7 +165,8 @@ export default {
         this.$router.push("/my-profile");
       } catch (error) {
         console.error(error);
-        console.log("já existe conta com esse email");
+        this.$alert("Algo deu errado. Tente novamente.", this.iconErrorAlert);
+
         this.errors = error;
       }
     },

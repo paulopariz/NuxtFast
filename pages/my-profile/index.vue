@@ -48,6 +48,9 @@ export default {
     return {
       infoUser: "",
       creationDate: "",
+
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
+      iconCheckAlert: require("~/assets/img/icons/iconCheck.svg"),
     };
   },
 
@@ -88,14 +91,17 @@ export default {
               .delete()
               .then(() => {
                 this.$router.push("/");
-                console.log("Usuário excluído");
+                this.$alert("Usuário excluído com sucesso!", this.iconCheckAlert);
+                setTimeout(() => {
+                  this.$router.go();
+                }, 2100);
               })
               .catch((error) => {
-                console.error("Erro ao excluir usuário:", error);
+                this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
               });
           })
           .catch((error) => {
-            console.error("Erro ao excluir dados do usuário:", error);
+            this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
           });
       }
     },

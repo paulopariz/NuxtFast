@@ -18,8 +18,6 @@
         class="border border-gray-950 p-3 dark:bg-zinc-900"
       />
 
-      <p v-show="userInvalid">Usuario invalido</p>
-
       <button type="submit" class="px-5 py-3 bg-emerald-600 text-white">Submit</button>
     </form>
 
@@ -56,7 +54,7 @@ export default {
       email: "",
       password: "",
 
-      userInvalid: false,
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
     };
   },
 
@@ -67,8 +65,7 @@ export default {
 
         this.$router.push("/");
       } catch (error) {
-        console.error(error);
-        this.userInvalid = true;
+        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
       }
     },
 
@@ -79,8 +76,7 @@ export default {
 
         this.$router.push("/");
       } catch (error) {
-        console.log(error);
-        this.userInvalid = true;
+        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
       }
     },
 
@@ -91,8 +87,7 @@ export default {
         console.log(provider);
         this.$router.push("/");
       } catch (error) {
-        console.log(error);
-        this.userInvalid = true;
+        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
       }
     },
   },
