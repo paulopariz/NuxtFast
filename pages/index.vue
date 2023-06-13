@@ -3,6 +3,8 @@
 
   <div v-else>
     <Header />
+
+    <button @click="showAlert">Mostrar Alerta</button>
   </div>
 </template>
 
@@ -26,6 +28,13 @@ export default {
       }
       this.$store.commit("SET_LOADING", false);
     });
+  },
+
+  methods: {
+    showAlert() {
+      const icon = require("~/assets/img/icons/iconError.svg");
+      this.$alert("Hello Word!!", icon);
+    },
   },
 };
 </script>

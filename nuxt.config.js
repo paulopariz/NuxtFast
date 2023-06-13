@@ -32,6 +32,7 @@ export default {
     // ...outros plugins
     "~/plugins/firebase.js",
     "~/plugins/vuelidate.js",
+    { src: "~/plugins/alert.js", mode: "client" },
   ],
 
   router: {

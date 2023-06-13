@@ -5,22 +5,46 @@
   transition: color 0.3s ease-in, background-color 0.3s ease-in;
 } */
 
-.dark body{
+.dark body {
   background-color: #000;
 }
 
-h1,h2,h3,h4,h5,h6,label,button {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+button,
+img {
   color: #000;
 }
 
-.dark h1,h2,h3,h4,h5,h6,label,button {
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6,
+.dark label,
+.dark button,
+.dark img {
   color: #fff;
 }
 
-p,span, li, a, input {
+p,
+span,
+li,
+a,
+input {
   color: #0a0a0a;
 }
 
-.dark p,span, li, a, input {
+.dark p,
+.dark span,
+.dark li,
+.dark a,
+.dark input {
   color: #ebebeb;
 }
