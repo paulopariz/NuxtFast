@@ -15,7 +15,7 @@ const alert = {
 
         const messageELement = document.createElement("span");
         messageELement.textContent = message;
-        messageELement.className = "tracking-wide";
+        messageELement.className = "tracking-wide text-N-light";
         elementAlert.appendChild(messageELement);
 
         document.body.appendChild(elementAlert);

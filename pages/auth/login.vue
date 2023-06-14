@@ -1,44 +1,97 @@
 <template>
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <h1 class="text-black tracking-wide text-3xl font-bold mb-5">Entrar na conta</h1>
-
-    <form @submit.prevent="signIn" class="flex flex-col gap-7">
-      <input
-        type="text"
-        name="Email"
-        placeholder="Email"
-        v-model="email"
-        class="border border-gray-950 p-3 dark:bg-zinc-900"
-      />
-      <input
-        type="password"
-        name="Senha"
-        placeholder="Senha"
-        v-model="password"
-        class="border border-gray-950 p-3 dark:bg-zinc-900"
-      />
-
-      <button type="submit" class="px-5 py-3 bg-emerald-600 text-white">Submit</button>
-    </form>
-
-    <div class="flex flex-col gap-7 mt-7">
-      <button
-        @click="signInWithGoogle"
-        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
-      >
-        Google
-      </button>
-      <button
-        @click="signInWithGithub"
-        class="px-5 py-3 bg-black text-white dark:bg-zinc-900"
-      >
-        Github
-      </button>
+    <div class="mb-8 flex justify-center flex-col items-center gap-3">
+      <h1 class="tracking-wide text-3xl font-bold">Bem-vindo(a)</h1>
+      <p class="text-sm text-center tracking-wide">
+        Faça o seu login e aproveite todo o conteúdo disponível. Se você ainda não possui
+        uma conta, clique no botão "Inscrever-se" abaixo.
+      </p>
     </div>
 
-    <div class="flex items-center gap-3 mt-7">
-      <p>Não possui uma conta?</p>
-      <NuxtLink to="/auth/signup">Inscrever-se</NuxtLink>
+    <form @submit.prevent="signIn" class="flex flex-col gap-5">
+      <label
+        for="Email"
+        class="relative block border rounded-sm border-gray-200 bg-transparent py-2.5 transition-all focus-within:border-N-green"
+      >
+        <input
+          type="email"
+          name="Email"
+          placeholder="Email"
+          v-model="email"
+          class="peer h-8 w-full border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+        />
+
+        <span
+          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5"
+        >
+          Email
+        </span>
+      </label>
+
+      <label
+        for="Password"
+        class="relative block border rounded-sm border-gray-200 bg-transparent py-2.5 transition-all focus-within:border-N-green"
+      >
+        <input
+          type="password"
+          name="Senha"
+          placeholder="Senha"
+          v-model="password"
+          class="peer h-8 w-full border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+        />
+
+        <span
+          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5"
+        >
+          Senha
+        </span>
+      </label>
+
+      <button
+        type="submit"
+        class="px-5 py-3 bg-N-green text-N-light font-semibold rounded-sm transition-all hover:bg-N-green/90"
+      >
+        Entrar
+      </button>
+    </form>
+
+    <div class="flex items-center gap-1 mt-7 justify-center">
+      <p class="text-sm">Não possui uma conta?</p>
+      <NuxtLink to="/auth/signup" class="text-sm text-N-green underline decoration-1"
+        >Inscrever-se</NuxtLink
+      >
+    </div>
+
+    <div class="mt-7 flex justify-center items-center gap-4">
+      <div class="h-[1px] w-full bg-gray-300" />
+      <span class="text-xs">OU</span>
+      <div class="h-[1px] w-full bg-gray-300" />
+    </div>
+
+    <div class="flex flex-col gap-2 mt-7">
+      <button
+        @click="signInWithGoogle"
+        class="px-5 py-3 bg-N-dark transition-all rounded-sm flex justify-center gap-3 items-center dark:bg-zinc-900 hover:bg-N-dark/95"
+      >
+        <img
+          src="@/assets/img/icons/iconGoogle.svg"
+          alt="Entrar com o Google"
+          class="w-8"
+        />
+        <span class="text-N-light font-semibold tracking-wide">Entrar com o Google</span>
+      </button>
+
+      <button
+        @click="signInWithGithub"
+        class="px-5 py-3 bg-N-dark transition-all rounded-sm flex justify-center gap-3 items-center dark:bg-zinc-900 hover:bg-N-dark/95"
+      >
+        <img
+          src="@/assets/img/icons/iconGithub.svg"
+          alt="Entrar com o Github"
+          class="w-8"
+        />
+        <span class="text-N-light font-semibold tracking-wide">Entrar com o Github</span>
+      </button>
     </div>
   </div>
 </template>

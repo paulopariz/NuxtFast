@@ -8,6 +8,12 @@ module.exports = {
         center: true,
         padding: "85px",
       },
+
+      colors: {
+        "N-green": "#00DC82",
+        "N-light": "#fff",
+        "N-dark": "#0B0B0C",
+      },
     },
   },
   plugins: [],

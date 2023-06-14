@@ -5,8 +5,12 @@
   transition: color 0.3s ease-in, background-color 0.3s ease-in;
 } */
 
+body {
+  background-color: #fff;
+  font-family: 'Nunito', sans-serif;
+}
 .dark body {
-  background-color: #000;
+  background-color: #0B0B0C;
 }
 
 h1,
@@ -18,7 +22,7 @@ h6,
 label,
 button,
 img {
-  color: #000;
+  color: #0B0B0C;
 }
 
 .dark h1,
@@ -38,7 +42,7 @@ span,
 li,
 a,
 input {
-  color: #0a0a0a;
+  color: #0B0B0C;
 }
 
 .dark p,
@@ -46,5 +50,5 @@ input {
 .dark li,
 .dark a,
 .dark input {
-  color: #ebebeb;
+  color: #fff;
 }
