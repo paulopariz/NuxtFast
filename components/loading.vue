@@ -19,7 +19,7 @@
 
 #circleLoading {
   fill: none;
-  stroke: green;
+  stroke: #00dc82;
   stroke-width: 5;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;

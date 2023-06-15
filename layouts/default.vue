@@ -2,11 +2,11 @@
   <div class="flex transition-all">
     <aside class="fixed transition-all z-20">
       <div
-        class="flex transition-al h-screen w-16 flex-col justify-between border-e bg-white dark:bg-black dark:border-zinc-900"
+        class="flex transition-al h-screen w-16 flex-col justify-between border-e border-gray-200 bg-N-light dark:bg-N-dark dark:border-zinc-900"
       >
         <div>
           <div
-            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-100 select-none dark:border-zinc-900"
+            class="inline-flex h-16 w-16 items-center justify-center border-b border-gray-200 select-none dark:border-zinc-900"
             v-if="user"
             @click="consoleUser"
           >
@@ -21,15 +21,15 @@
 
             <div
               v-else
-              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 t dark:bg-zinc-900"
+              class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
               :title="user.displayName"
             >
               <h1 class="text-xs text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
             </div>
           </div>
           <div>
-            <nav aria-label="Main Nav" class="flex flex-col p-2">
-              <ul class="space-y-3 pt-4 flex flex-col items-center">
+            <nav aria-label="Main Nav" class="flex flex-col">
+              <ul class="space-y-3 py-4 flex flex-col">
                 <li>
                   <ButtonsAside
                     route="/"
@@ -70,15 +70,15 @@
                   />
                 </li>
 
-                <li>
+                <li class="m-auto">
                   <button
                     v-show="showIconThemeLight"
                     @click="themeLight"
-                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
+                    class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none"
                   >
                     <img src="@/assets/img/icons/iconLight.svg" alt="Tema light" />
                     <span
-                      class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 whitespace-nowrap"
+                      class="absolute transition-all start-full top-1/2 ms-2 text-N-light border border-transparent dark:border-zinc-900 -translate-y-1/2 rounded-sm bg-N-dark px-2 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 whitespace-nowrap"
                     >
                       Tema
                     </span>
@@ -86,11 +86,11 @@
                   <button
                     v-show="showIconThemeDark"
                     @click="themeDark"
-                    class="group relative cursor-pointer flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
+                    class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none"
                   >
                     <img src="@/assets/img/icons/iconDark.svg" alt="Tema dark" />
                     <span
-                      class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 whitespace-nowrap"
+                      class="absolute transition-all start-full top-1/2 ms-2 text-N-light border border-transparent dark:border-zinc-900 -translate-y-1/2 rounded-sm bg-N-dark px-2 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 whitespace-nowrap"
                     >
                       Tema
                     </span>
@@ -101,41 +101,43 @@
           </div>
         </div>
         <div
-          class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2 dark:bg-black dark:border-zinc-900"
+          class="sticky inset-x-0 py-4 bottom-0 border-t border-gray-200 bg-N-light dark:bg-N-dark dark:border-zinc-900"
         >
           <button
             v-if="user"
             @click="signout"
-            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm select-none text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:hover:bg-zinc-900"
+            class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent select-none m-auto"
           >
             <img src="@/assets/img/icons/iconSignout.svg" alt="Sair" />
             <span
-              class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 whitespace-nowrap"
+              class="absolute transition-all start-full top-1/2 ms-1.5 text-N-light border border-transparent dark:border-zinc-900 -translate-y-1/2 rounded-sm bg-N-dark px-2 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 whitespace-nowrap"
             >
               Sair
             </span>
           </button>
 
-          <nav v-else>
-            <ul class="space-y-3 flex flex-col items-center">
-              <li>
-                <ButtonsAside
-                  route="/auth/login"
-                  :icon="iconSignin"
-                  alt-icon="Entrar"
-                  name="Entrar"
-                />
-              </li>
-              <li>
-                <ButtonsAside
-                  route="/auth/signup"
-                  :icon="iconSignup"
-                  alt-icon="Cadastrar"
-                  name="Cadastrar"
-                />
-              </li>
-            </ul>
-          </nav>
+          <div v-else>
+            <nav class="flex flex-col">
+              <ul class="space-y-3 flex flex-col">
+                <li>
+                  <ButtonsAside
+                    route="/auth/login"
+                    :icon="iconSignin"
+                    alt-icon="Entrar"
+                    name="Entrar"
+                  />
+                </li>
+                <li>
+                  <ButtonsAside
+                    route="/auth/signup"
+                    :icon="iconSignup"
+                    alt-icon="Cadastrar"
+                    name="Cadastrar"
+                  />
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </aside>
@@ -223,10 +225,14 @@ export default {
 </script>
 
 <style scoped>
-.active {
-  background-color: #ededed;
-}
-.dark .active {
-  background-color: #18181b;
+.active::before {
+  position: absolute;
+  content: "";
+  width: 4.5px;
+  height: 15px;
+  border-radius: 2px;
+  left: 0;
+  background-color: #00dc82;
+  box-shadow: 0px 0px 18px 1px #00dc82;
 }
 </style>
