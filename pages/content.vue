@@ -38,11 +38,21 @@
 
       <div v-for="aula in aulasApi" :key="aula.id">
         <section
-          class="mt-7 p-4 border-2 border-zinc-900 flex flex-col items-start gap-2"
+          class="mt-14 pt-4 pb-7 border border-zinc-900 flex flex-col items-start gap-4 rounded-md transition-all hover:bg-zinc-900/20"
           :class="{ borderCheck: user && checkedAulas[aula.id] === true }"
         >
-          <div class="flex justify-between items-center w-full">
-            <h1 class="text-3xl font-bold">{{ aula.id }}</h1>
+          <NuxtLink
+            :to="aula.route"
+            class="absolute transition-all bg-zinc-900/20 -mt-7 -ml-3 flex items-center justify-center gap-3 px-5 py-2 rounded-full border border-gray-200 dark:border-zinc-900 backdrop-blur-md dark:hover:bg-zinc-900/40"
+          >
+            <span v-if="user" class="text-N-light font-bold tracking-wide"
+              >Acessar {{ aula.name }}</span
+            >
+
+            <div v-else>
+              <span v-if="aula.isLogged === true">Apenas usuários autenticados</span>
+              <span v-else>{{ aula.name }}</span>
+            </div>
             <img
               v-if="user"
               src="@/assets/img/icons/iconArrow.svg"
@@ -61,32 +71,50 @@
                 alt="Ícone de usuário não autenticado"
               />
             </div>
-          </div>
-          <h2 class="text-2xl">{{ aula.name }}</h2>
-          <span class="text-xs">{{ aula.minutesReading }} min de leitura</span>
-          <p class="text-sm">{{ aula.description }}</p>
+          </NuxtLink>
 
-          <input
+          <div class="mt-7 px-5 flex flex-col gap-8 w-full">
+            <div class="flex items-center justify-between">
+              <h1 class="text-3xl font-bold">{{ aula.id }}</h1>
+              <span class="text-xs tracking-wide font-bold"
+                >{{ aula.minutesReading }} min de leitura</span
+              >
+            </div>
+            <p class="text-base tracking-wide w-4/6 leading-6 font-light">
+              {{ aula.description }}
+            </p>
+
+            <div class="flex flex-col">
+              <div class="flex flex-row items-center">
+                <input
+                  v-if="user"
+                  type="checkbox"
+                  v-model="checkedAulas[aula.id]"
+                  @change="updateProgress"
+                  class="appearance-none cursor-pointer h-5 w-5 bg-gray-200 dark:bg-zinc-900 rounded-full checked:bg-N-green dark:checked:bg-N-green checked:scale-75 transition-all duration-200 peer"
+                />
+                <div
+                  class="h-5 w-5 scale-125 cursor-pointer absolute border-zinc-800 border-2 rounded-full pointer-events-none peer-checked:border-N-green peer-checked:border-2"
+                ></div>
+
+                <label
+                  class="flex flex-col justify-center px-2 peer-checked:text-N-green select-none"
+                >
+                  <span v-if="checkedAulas[aula.id] === false" class="font-semibold ml-2"
+                    >Concluir</span
+                  >
+                  <span v-else class="font-semibold ml-2">Concluído</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- <input
             v-if="user"
             type="checkbox"
             v-model="checkedAulas[aula.id]"
             @change="updateProgress"
-          />
-          <NuxtLink
-            :to="aula.route"
-            v-if="user"
-            class="mt-3 bg-emerald-600 px-3 py-2 text-xs"
-            >Ver {{ aula.name }}
-          </NuxtLink>
-
-          <div v-else>
-            <NuxtLink
-              :to="aula.route"
-              v-if="aula.isLogged === false"
-              class="mt-3 bg-emerald-600 px-3 py-2 text-xs"
-              >Ver {{ aula.name }}
-            </NuxtLink>
-          </div>
+          /> -->
         </section>
       </div>
     </div>
@@ -197,6 +225,6 @@ export default {
   transition: width 0.5s ease;
 }
 .borderCheck {
-  border-color: rgb(22, 210, 81);
+  border-color: #00dc82;
 }
 </style>
