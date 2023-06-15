@@ -10,38 +10,38 @@
 
     <form @submit.prevent="signIn" class="flex flex-col gap-5">
       <label
-        for="Email"
-        class="relative block border rounded-sm border-gray-200 bg-transparent py-2.5 transition-all focus-within:border-N-green"
+        for="E-mail"
+        class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green"
       >
         <input
-          type="email"
-          name="Email"
-          placeholder="Email"
+          type="text"
+          name="E-mail"
+          placeholder="E-mail"
           v-model="email"
-          class="peer h-8 w-full border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+          class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
         />
 
         <span
-          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5"
+          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
         >
-          Email
+          E-mail
         </span>
       </label>
 
       <label
         for="Password"
-        class="relative block border rounded-sm border-gray-200 bg-transparent py-2.5 transition-all focus-within:border-N-green"
+        class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green"
       >
         <input
           type="password"
           name="Senha"
           placeholder="Senha"
           v-model="password"
-          class="peer h-8 w-full border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+          class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
         />
 
         <span
-          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5"
+          class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
         >
           Senha
         </span>
@@ -49,7 +49,7 @@
 
       <button
         type="submit"
-        class="px-5 py-3 bg-N-green text-N-light font-semibold rounded-sm transition-all hover:bg-N-green/90"
+        class="px-5 h-14 bg-N-green text-N-light font-semibold tracking-wide rounded-sm transition-all hover:bg-N-green/90"
       >
         Entrar
       </button>
@@ -57,41 +57,33 @@
 
     <div class="flex items-center gap-1 mt-7 justify-center">
       <p class="text-sm">Não possui uma conta?</p>
-      <NuxtLink to="/auth/signup" class="text-sm text-N-green underline decoration-1"
+      <NuxtLink
+        to="/auth/signup"
+        class="text-sm text-N-green dark:text-N-green underline decoration-1"
         >Inscrever-se</NuxtLink
       >
     </div>
 
     <div class="mt-7 flex justify-center items-center gap-4">
-      <div class="h-[1px] w-full bg-gray-300" />
+      <div class="h-[1px] w-full bg-gray-300 dark:bg-zinc-900" />
       <span class="text-xs">OU</span>
-      <div class="h-[1px] w-full bg-gray-300" />
+      <div class="h-[1px] w-full bg-gray-300 dark:bg-zinc-900" />
     </div>
 
     <div class="flex flex-col gap-2 mt-7">
-      <button
-        @click="signInWithGoogle"
-        class="px-5 py-3 bg-N-dark transition-all rounded-sm flex justify-center gap-3 items-center dark:bg-zinc-900 hover:bg-N-dark/95"
-      >
-        <img
-          src="@/assets/img/icons/iconGoogle.svg"
-          alt="Entrar com o Google"
-          class="w-8"
-        />
-        <span class="text-N-light font-semibold tracking-wide">Entrar com o Google</span>
-      </button>
+      <ButtonsAuth
+        :btnAuth="signInWithGoogle"
+        :icon="iconGoogle"
+        alt="Entrar com o Google"
+        text="Entrar com o Google"
+      />
 
-      <button
-        @click="signInWithGithub"
-        class="px-5 py-3 bg-N-dark transition-all rounded-sm flex justify-center gap-3 items-center dark:bg-zinc-900 hover:bg-N-dark/95"
-      >
-        <img
-          src="@/assets/img/icons/iconGithub.svg"
-          alt="Entrar com o Github"
-          class="w-8"
-        />
-        <span class="text-N-light font-semibold tracking-wide">Entrar com o Github</span>
-      </button>
+      <ButtonsAuth
+        :btnAuth="signInWithGithub"
+        :icon="iconGithub"
+        alt="Entrar com o Github"
+        text="Entrar com o Github"
+      />
     </div>
   </div>
 </template>
@@ -108,6 +100,9 @@ export default {
       password: "",
 
       iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
+
+      iconGoogle: require("@/assets/img/icons/iconGoogle.svg"),
+      iconGithub: require("@/assets/img/icons/iconGithub.svg"),
     };
   },
 

@@ -8,47 +8,9 @@
 body {
   background-color: #fff;
   font-family: 'Nunito', sans-serif;
+  color: #0B0B0C;
 }
 .dark body {
   background-color: #0B0B0C;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-label,
-button,
-img {
-  color: #0B0B0C;
-}
-
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6,
-.dark label,
-.dark button,
-.dark img {
-  color: #fff;
-}
-
-p,
-span,
-li,
-a,
-input {
-  color: #0B0B0C;
-}
-
-.dark p,
-.dark span,
-.dark li,
-.dark a,
-.dark input {
   color: #fff;
 }
