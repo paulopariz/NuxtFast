@@ -2,31 +2,94 @@
   <Loading v-if="loading" />
 
   <div v-else>
-    <section class="absolute left-1/2 -translate-x-1/2 w-full h-full">
-      <div class="mt-12 flex flex-col items-center justify-center container m-auto">
-        <div v-if="infoUser.photoURL && user.photoURL !== 'https://github.com/.png'">
-          <img :src="infoUser.photoURL" :alt="infoUser.displayName" class="w-36 h-36" />
-        </div>
+    <section class="container w-full m-auto">
+      <header
+        class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
+      >
+        <h1 class="text-xl font-semibold">Meu perfil</h1>
+        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/4">
+          Esta é a seção do seu perfil, onde você pode visualizar seus dados. Além disso,
+          você tem a opção de atualizar seu perfil clicando no botão "Editar perfil"
+          abaixo. Caso seja um usuário autenticado vinculado ao GitHub e ao Google, você
+          só poderá atualizar seu nome. Abaixo, há também um botão para excluir seu
+          perfil, porém, tome cuidado para não clicar acidentalmente e deletar sua conta.
+        </p>
+      </header>
 
+      <div class="mt-10 flex justify-between items-start">
         <div
-          v-else
-          class="grid h-36 w-36 place-content-center rounded-lg bg-gray-100 t dark:bg-zinc-900"
-          :title="user.displayName"
+          class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
-          <h1 class="text-3xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Nome</h1>
+            <p class="ml-2 font-semibold">{{ infoUser.displayName }}</p>
+          </div>
+
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Email</h1>
+            <p
+              v-if="infoUser.providerData[0].providerId !== 'password'"
+              class="text-zinc-900 dark:text-gray-200 text-sm"
+            >
+              Esse email é referente a sua conta
+              <span
+                class="text-N-green"
+                v-if="infoUser.providerData[0].providerId === 'google.com'"
+                >Google</span
+              >
+              <span
+                class="text-N-green"
+                v-if="infoUser.providerData[0].providerId === 'github.com'"
+                >Github</span
+              >
+              !
+            </p>
+            <p class="ml-2 font-semibold">{{ infoUser.email }}</p>
+          </div>
+
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Perfil criado em</h1>
+            <p class="ml-2 font-semibold">{{ creationDate }}</p>
+          </div>
         </div>
 
-        <h1 class="text-3xl">{{ infoUser.displayName }}</h1>
-        <p class="text-xl">{{ infoUser.email }}</p>
-        <span class="text-xl">Data de criação: {{ creationDate }}</span>
+        <div>
+          <div v-if="infoUser.photoURL">
+            <img
+              :src="infoUser.photoURL"
+              :alt="infoUser.displayName"
+              :title="infoUser.displayName"
+              class="w-36 h-36 rounded-lg"
+            />
+          </div>
+          <div
+            v-else
+            class="grid h-36 w-36 place-content-center rounded-lg bg-gray-100 t dark:bg-zinc-900"
+            :title="user.displayName"
+          >
+            <h1 class="text-3xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="fixed bottom-12 right-12 flex items-center gap-3">
-      <NuxtLink to="/my-profile/edit" class="bg-emerald-600 px-3 py-2 text-white"
+    <div class="fixed bottom-12 right-12 flex items-center gap-6">
+      <NuxtLink
+        to="/my-profile/edit"
+        class="font-semibold tracking-wide decoration-1 hover:underline"
         >Editar perfil</NuxtLink
       >
-      <button @click="deleteUser" class="bg-red-600 px-3 py-2 text-white">
+      <div class="h-7 w-0.5 bg-gray-200 dark:bg-zinc-900" />
+      <button
+        @click="deleteUser"
+        class="font-semibold tracking-wide text-red-600 underline decoration-1"
+      >
         Deletar meu perfil
       </button>
     </div>

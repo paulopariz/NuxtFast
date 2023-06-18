@@ -56,7 +56,11 @@
                     :icon="iconUser"
                     alt-icon="Meu perfil"
                     name="Meu perfil"
-                    :class="{ active: $route.path === '/my-profile' }"
+                    :class="{
+                      active:
+                        $route.path === '/my-profile' ||
+                        $route.path === '/my-profile/edit',
+                    }"
                   />
                 </li>
 
@@ -143,7 +147,7 @@
     </aside>
 
     <div>
-      <Nuxt class="px-44" />
+      <Nuxt class="px-64 py-12" />
     </div>
   </div>
 </template>

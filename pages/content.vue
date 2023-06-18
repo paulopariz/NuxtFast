@@ -2,7 +2,7 @@
   <Loading v-if="loading" />
 
   <div v-else class="absolute left-1/2 w-full -translate-x-1/2">
-    <div class="container w-full m-auto my-12">
+    <div class="container w-full m-auto">
       <header
         class="flex items-start justify-between border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
       >
