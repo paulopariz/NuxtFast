@@ -24,7 +24,9 @@ export default {
       if (user) {
         this.user = user;
       }
-      this.$store.commit("SET_LOADING", false);
+      setTimeout(() => {
+        this.$store.commit("SET_LOADING", false);
+      }, 500);
     });
   },
 };

@@ -1,36 +1,56 @@
 <template>
-  <!-- <Loading v-if="loading" /> -->
+  <Loading v-if="loading" />
 
-  <div class="absolute left-1/2 w-full -translate-x-1/2">
+  <div v-else class="absolute left-1/2 w-full -translate-x-1/2">
     <div class="container w-full m-auto my-12">
-      <section v-if="!user">
-        <h1>Usuarios não autenticados tem acesso apenas as seguintes aulas:</h1>
-        <ul>
-          <div v-for="accessAulas in aulasApi" :key="accessAulas.id">
-            <li v-if="accessAulas.isLogged === false" class="">
-              {{ accessAulas.name }}
-            </li>
-          </div>
-        </ul>
-      </section>
-
       <header
-        class="flex items-center justify-between border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
+        class="flex items-start justify-between border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
       >
-        <div class="flex flex-col gap-6">
-          <div class="flex items-center gap-4">
-            <img src="../assets/img/icons/iconTimer.svg" alt="" />
-            <h1 class="font-semibold tracking-wide">
+        <div class="flex flex-col gap-6 w-1/2">
+          <div class="flex flex-col">
+            <h1 class="text-xl font-semibold">O que você irá aprender:</h1>
+            <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam
+              est quasi quam, nam beatae officiis neque officia, fugiat maxime,
+              perspiciatis accusantium sapiente delectus earum explicabo? Minima inventore
+              commodi dolores.
+            </p>
+          </div>
+
+          <div v-if="!user" class="flex flex-col">
+            <h1 class="text-xl font-semibold">Acesso</h1>
+            <p>
+              Você não está autenticado! Usuários não autenticados têm acesso a apenas
+              {{ aulasApi.filter((item) => item.isLogged === false).length }} dos
+              {{ aulasApi.length }} conteúdos.
+              <NuxtLink to="/auth/login" class="text-N-green underline decoration-1"
+                >Conecte-se</NuxtLink
+              >
+              à sua conta para ter acesso completo ou
+              <NuxtLink to="/auth/signup" class="text-N-green underline decoration-1"
+                >inscreva-se</NuxtLink
+              >
+              se ainda não tem uma conta.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <img src="../assets/img/icons/iconTimer.svg" class="w-6" alt="Icon Timer" />
+            <h1 class="text-zinc-900 dark:text-gray-200 text-sm tracking-wide">
               Tempo de leitura {{ totalMinutes }}
             </h1>
           </div>
           <div class="flex items-center gap-4">
-            <img src="../assets/img/icons/iconReq.svg" alt="" />
-            <h1 class="font-semibold tracking-wide">JavaSript, VueJS básicos</h1>
+            <img src="../assets/img/icons/iconReq.svg" class="w-6" alt="Icon Req" />
+            <h1 class="text-zinc-900 dark:text-gray-200 text-sm tracking-wide">
+              JavaSript, VueJS básicos
+            </h1>
           </div>
           <div class="flex items-center gap-4">
-            <img src="../assets/img/icons/iconRocket.svg" alt="" />
-            <h1 class="font-semibold tracking-wide">{{ aulasApi.length }} Tópicos</h1>
+            <img src="../assets/img/icons/iconRocket.svg" class="w-6" alt="Icon Rocket" />
+            <h1 class="text-zinc-900 dark:text-gray-200 text-sm tracking-wide">
+              {{ aulasApi.length }} Conteúdos
+            </h1>
           </div>
         </div>
 
@@ -39,27 +59,38 @@
         </div>
       </header>
 
-      <!--BARRA DE PROGRESSO-->
-      <div v-if="user" class="mt-16 flex flex-col justify-start gap-2">
-        <span class="">{{ Math.round(progressPercentage) }}% completo</span>
-        <div
-          class="w-60 h-4 bg-gray-50 mt-3 dark:bg-zinc-900 flex items-center px-1 rounded-full"
-        >
+      <section class="mt-16 flex justify-start flex-col w-3/4">
+        <h1 class="text-xl font-semibold">Conteúdo</h1>
+        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200">
+          Aqui está todo o conteúdo. Ao concluir a leitura de cada parte, clique no
+          círculo correspondente para marcá-la como completa. Dessa forma, a barra de
+          progresso irá avançar.
+        </p>
+
+        <!--BARRA DE PROGRESSO-->
+        <div v-if="user" class="mt-8 flex flex-col gap-2">
+          <span class="font-semibold"
+            >{{ Math.round(progressPercentage) }}% completo</span
+          >
           <div
-            class="progressBar h-2.5 bg-N-green rounded-full"
-            :style="{ width: progressPercentage + '%' }"
-          ></div>
+            class="w-60 h-4 bg-gray-100 mt-3 dark:bg-zinc-900 flex items-center px-1 rounded-full"
+          >
+            <div
+              class="progressBar h-2.5 bg-N-green rounded-full"
+              :style="{ width: progressPercentage + '%' }"
+            ></div>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div v-for="aula in aulasApi" :key="aula.id">
         <section
-          class="mt-14 pt-4 pb-7 border border-gray-200 dark:border-zinc-900 flex flex-col items-start gap-4 rounded-md transition-all hover:bg-gray-200/20 dark:hover:bg-zinc-900/20"
+          class="mt-14 pt-4 pb-7 border-2 border-gray-200 dark:border-zinc-900 flex flex-col items-start gap-4 rounded-md transition-all hover:bg-gray-200/20 dark:hover:bg-zinc-900/20"
           :class="{ borderCheck: user && checkedAulas[aula.id] === true }"
         >
           <NuxtLink
             :to="aula.route"
-            class="absolute transition-all bg-gray-200/20 dark:bg-zinc-900/20 -mt-7 -ml-3 flex items-center justify-center gap-3 px-5 py-2 rounded-full border border-gray-200 dark:border-zinc-900 backdrop-blur-md hover:bg-gray-200/40 dark:hover:bg-zinc-900/40"
+            class="absolute transition-all bg-gray-200/20 dark:bg-zinc-900/20 -mt-7 -ml-3 flex items-center justify-center gap-3 px-5 py-2 rounded-full border-2 border-gray-200 dark:border-zinc-900 backdrop-blur-md hover:bg-gray-200/40 dark:hover:bg-zinc-900/40"
           >
             <span v-if="user" class="font-bold tracking-wide"
               >Acessar {{ aula.name }}</span
@@ -96,7 +127,7 @@
                 >{{ aula.minutesReading }} min de leitura</span
               >
             </div>
-            <p class="text-base tracking-wide w-4/6 leading-6 font-light">
+            <p class="text-base tracking-wide w-4/6 leading-6 font-normal">
               {{ aula.description }}
             </p>
 
@@ -106,7 +137,7 @@
                   type="checkbox"
                   v-model="checkedAulas[aula.id]"
                   @change="updateProgress"
-                  class="appearance-none cursor-pointer h-5 w-5 bg-gray-100 dark:bg-zinc-900 rounded-full checked:bg-N-green dark:checked:bg-N-green checked:scale-75 transition-all duration-200 peer"
+                  class="appearance-none cursor-pointer h-5 w-5 bg-gray-100 dark:bg-zinc-900 rounded-full transition-all duration-200 peer checked:bg-[url('~/assets/img/icons/iconCheck.svg')] bg-center bg-cover hover:bg-[url('~/assets/img/icons/iconCheck.svg')]"
                 />
                 <div
                   class="h-5 w-5 scale-125 cursor-pointer absolute border-gray-200 dark:border-zinc-800 border-2 rounded-full pointer-events-none peer-checked:border-N-green peer-checked:border-2"
@@ -133,6 +164,7 @@
 import firebase from "~/plugins/firebase";
 import { db, aulasApi } from "~/utils/api";
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -155,6 +187,10 @@ export default {
         this.checkedAulas = {};
         this.progressPercentage = 0;
       }
+
+      setTimeout(() => {
+        this.$store.commit("SET_LOADING", false);
+      }, 500);
     });
   },
 
@@ -209,6 +245,8 @@ export default {
   },
 
   computed: {
+    ...mapState(["loading"]),
+
     aulasApi() {
       return aulasApi;
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="flex transition-all">
-    <aside class="fixed transition-all z-20">
+    <aside class="fixed transition-all z-20 -left-20" id="aside">
       <div
         class="flex transition-al h-screen w-16 flex-col justify-between border-e border-gray-200 bg-N-light dark:bg-N-dark dark:border-zinc-900"
       >
@@ -178,6 +178,7 @@ export default {
         this.user = user;
       }
     });
+    this.viewAside();
     this.setSavedTheme();
   },
   methods: {
@@ -219,6 +220,13 @@ export default {
 
     consoleUser() {
       console.log(firebase.auth().currentUser);
+    },
+
+    viewAside() {
+      const aside = document.getElementById("aside");
+      setTimeout(() => {
+        aside.style.left = "0px";
+      }, 800);
     },
   },
 };

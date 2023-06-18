@@ -25,7 +25,9 @@ export default {
           this.iconAttentionAlert
         );
       }
-      this.$store.commit("SET_LOADING", false);
+      setTimeout(() => {
+        this.$store.commit("SET_LOADING", false);
+      }, 500);
     });
   },
 };

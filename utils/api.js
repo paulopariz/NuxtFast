@@ -53,7 +53,7 @@ const aulasApi = [
     id: 6,
     name: "Aula-6",
     route: "/my-profile/edit",
-    isLogged: false,
+    isLogged: true,
     minutesReading: 6,
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500",
