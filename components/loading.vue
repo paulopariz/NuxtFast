@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-screen h-screen bg-black z-50"
+    class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-screen h-screen bg-N-dark z-50"
   >
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <svg id="loading" viewBox="25 25 50 50">

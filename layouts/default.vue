@@ -142,8 +142,8 @@
       </div>
     </aside>
 
-    <div class="px-32">
-      <Nuxt />
+    <div>
+      <Nuxt class="px-44" />
     </div>
   </div>
 </template>

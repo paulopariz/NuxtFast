@@ -1,5 +1,5 @@
 {
-  "name": "Overview-Nuxt.js",
+  "name": "NuxtFast",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "core-js": "^3.25.3",
     "firebase": "^8.10.1",
     "moment": "^2.29.4",

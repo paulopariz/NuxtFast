@@ -14,23 +14,39 @@
         </ul>
       </section>
 
-      <div>
-        <h1 class="">Tempo total de leitura: {{ totalMinutes }}</h1>
-        <h1 class="">Total de aulas: {{ aulasApi.length }}</h1>
+      <header
+        class="flex items-center justify-between border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
+      >
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center gap-4">
+            <img src="../assets/img/icons/iconTimer.svg" alt="" />
+            <h1 class="font-semibold tracking-wide">
+              Tempo de leitura {{ totalMinutes }}
+            </h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <img src="../assets/img/icons/iconReq.svg" alt="" />
+            <h1 class="font-semibold tracking-wide">JavaSript, VueJS básicos</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <img src="../assets/img/icons/iconRocket.svg" alt="" />
+            <h1 class="font-semibold tracking-wide">{{ aulasApi.length }} Tópicos</h1>
+          </div>
+        </div>
 
-        <h1 class="">Requisitos:</h1>
-        <ul>
-          <li class="">VueJS básico</li>
-          <li class="">JavaSript básico</li>
-        </ul>
-      </div>
+        <div>
+          <img src="../assets/img/NuxtGreen.svg" alt="Logo NuxtJS" class="w-64" />
+        </div>
+      </header>
 
       <!--BARRA DE PROGRESSO-->
-      <div v-if="user" class="mt-5 flex flex-col justify-center gap-2 items-center">
+      <div v-if="user" class="mt-16 flex flex-col justify-start gap-2">
         <span class="">{{ Math.round(progressPercentage) }}% completo</span>
-        <div class="w-60 h-3 bg-gray-50 mt-3 dark:bg-zinc-900">
+        <div
+          class="w-60 h-4 bg-gray-50 mt-3 dark:bg-zinc-900 flex items-center px-1 rounded-full"
+        >
           <div
-            class="progressBar h-full bg-emerald-600"
+            class="progressBar h-2.5 bg-N-green rounded-full"
             :style="{ width: progressPercentage + '%' }"
           ></div>
         </div>
@@ -38,14 +54,14 @@
 
       <div v-for="aula in aulasApi" :key="aula.id">
         <section
-          class="mt-14 pt-4 pb-7 border border-zinc-900 flex flex-col items-start gap-4 rounded-md transition-all hover:bg-zinc-900/20"
+          class="mt-14 pt-4 pb-7 border border-gray-200 dark:border-zinc-900 flex flex-col items-start gap-4 rounded-md transition-all hover:bg-gray-200/20 dark:hover:bg-zinc-900/20"
           :class="{ borderCheck: user && checkedAulas[aula.id] === true }"
         >
           <NuxtLink
             :to="aula.route"
-            class="absolute transition-all bg-zinc-900/20 -mt-7 -ml-3 flex items-center justify-center gap-3 px-5 py-2 rounded-full border border-gray-200 dark:border-zinc-900 backdrop-blur-md dark:hover:bg-zinc-900/40"
+            class="absolute transition-all bg-gray-200/20 dark:bg-zinc-900/20 -mt-7 -ml-3 flex items-center justify-center gap-3 px-5 py-2 rounded-full border border-gray-200 dark:border-zinc-900 backdrop-blur-md hover:bg-gray-200/40 dark:hover:bg-zinc-900/40"
           >
-            <span v-if="user" class="text-N-light font-bold tracking-wide"
+            <span v-if="user" class="font-bold tracking-wide"
               >Acessar {{ aula.name }}</span
             >
 
@@ -75,8 +91,8 @@
 
           <div class="mt-7 px-5 flex flex-col gap-8 w-full">
             <div class="flex items-center justify-between">
-              <h1 class="text-3xl font-bold">{{ aula.id }}</h1>
-              <span class="text-xs tracking-wide font-bold"
+              <h1 class="text-3xl font-bold text-N-green">{{ aula.id }}</h1>
+              <span class="text-sm tracking-wide font-bold"
                 >{{ aula.minutesReading }} min de leitura</span
               >
             </div>
@@ -84,37 +100,29 @@
               {{ aula.description }}
             </p>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col" v-if="user">
               <div class="flex flex-row items-center">
                 <input
-                  v-if="user"
                   type="checkbox"
                   v-model="checkedAulas[aula.id]"
                   @change="updateProgress"
-                  class="appearance-none cursor-pointer h-5 w-5 bg-gray-200 dark:bg-zinc-900 rounded-full checked:bg-N-green dark:checked:bg-N-green checked:scale-75 transition-all duration-200 peer"
+                  class="appearance-none cursor-pointer h-5 w-5 bg-gray-100 dark:bg-zinc-900 rounded-full checked:bg-N-green dark:checked:bg-N-green checked:scale-75 transition-all duration-200 peer"
                 />
                 <div
-                  class="h-5 w-5 scale-125 cursor-pointer absolute border-zinc-800 border-2 rounded-full pointer-events-none peer-checked:border-N-green peer-checked:border-2"
+                  class="h-5 w-5 scale-125 cursor-pointer absolute border-gray-200 dark:border-zinc-800 border-2 rounded-full pointer-events-none peer-checked:border-N-green peer-checked:border-2"
                 ></div>
 
                 <label
                   class="flex flex-col justify-center px-2 peer-checked:text-N-green select-none"
                 >
-                  <span v-if="checkedAulas[aula.id] === false" class="font-semibold ml-2"
-                    >Concluir</span
+                  <span v-if="checkedAulas[aula.id] === true" class="font-semibold ml-2"
+                    >Concluído</span
                   >
-                  <span v-else class="font-semibold ml-2">Concluído</span>
+                  <span v-else class="font-semibold ml-2">Concluir</span>
                 </label>
               </div>
             </div>
           </div>
-
-          <!-- <input
-            v-if="user"
-            type="checkbox"
-            v-model="checkedAulas[aula.id]"
-            @change="updateProgress"
-          /> -->
         </section>
       </div>
     </div>
@@ -220,11 +228,30 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .progressBar {
   transition: width 0.5s ease;
+  box-shadow: 0px 0px 18px 1px #00dc80c5;
 }
 .borderCheck {
+  /* background: radial-gradient(
+        circle at 100% 100%,
+        #0b0b0c 0,
+        #0b0b0c 5px,
+        transparent 5px
+      )
+      0% 0%/6px 6px no-repeat,
+    radial-gradient(circle at 0 100%, #0b0b0c 0, #0b0b0c 5px, transparent 5px) 100% 0%/6px
+      6px no-repeat,
+    radial-gradient(circle at 100% 0, #0b0b0c 0, #0b0b0c 5px, transparent 5px) 0% 100%/6px
+      6px no-repeat,
+    radial-gradient(circle at 0 0, #0b0b0c 0, #0b0b0c 5px, transparent 5px) 100% 100%/6px
+      6px no-repeat,
+    linear-gradient(#0b0b0c, #0b0b0c) 50% 50% / calc(100% - 2px) calc(100% - 12px)
+      no-repeat,
+    linear-gradient(#0b0b0c, #0b0b0c) 50% 50% / calc(100% - 12px) calc(100% - 2px)
+      no-repeat,
+    linear-gradient(159deg, transparent 8%, #00dc82 74%); */
   border-color: #00dc82;
 }
 </style>
