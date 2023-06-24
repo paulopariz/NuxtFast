@@ -105,18 +105,16 @@
                   <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
                 </button>
               </div>
-              <div>
-                <span
-                  class="text-xs tracking-wide text-red-600"
-                  v-if="!$v.newEmail.required && $v.newEmail.$dirty"
-                  >Campo Obrigatorio</span
-                >
-                <span
-                  class="text-xs tracking-wide text-red-600"
-                  v-if="!$v.newEmail.email && $v.newEmail.$dirty"
-                  >E-mail inválido</span
-                >
-              </div>
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newEmail.required && $v.newEmail.$dirty"
+                >Campo Obrigatorio</span
+              >
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newEmail.email && $v.newEmail.$dirty"
+                >E-mail inválido</span
+              >
             </div>
           </div>
 

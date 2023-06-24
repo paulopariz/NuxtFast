@@ -6,7 +6,7 @@ const alert = {
       if (process.client) {
         const elementAlert = document.createElement("div");
         elementAlert.className =
-          "px-8 py-2.5 flex gap-6 items-center justify-center rounded-md bg-zinc-900 border border-zinc-800 shadow-xl fixed top-5 right-5";
+          "px-8 py-2.5 flex gap-6 items-center justify-center rounded-md bg-zinc-900 border border-zinc-800 shadow-xl fixed top-5 right-5 z-50";
 
         const elementIcon = document.createElement("img");
         elementIcon.src = icon;

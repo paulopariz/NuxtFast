@@ -76,6 +76,16 @@
       </div>
     </section>
 
+    <div v-show="viewModal">
+      <Modal
+        titleModal="Desativar conta"
+        :descModal="descModal"
+        textConfirmModal="Desativar"
+        :clickConfirmModal="deactivateAccount"
+        :clickCancelModal="cancel"
+      />
+    </div>
+
     <div class="fixed bottom-12 right-12 flex items-center gap-6">
       <NuxtLink
         to="/my-profile/edit"
@@ -84,10 +94,10 @@
       >
       <div class="h-7 w-0.5 bg-gray-200 dark:bg-zinc-900" />
       <button
-        @click="deleteUser"
+        @click="deactivateOpenModal"
         class="font-semibold tracking-wide text-red-600 underline decoration-1"
       >
-        Deletar meu perfil
+        Desativar conta
       </button>
     </div>
   </div>
@@ -111,6 +121,11 @@ export default {
 
       iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
       iconCheckAlert: require("~/assets/img/icons/iconCheck.svg"),
+
+      descModal:
+        "Tem certeza de que deseja desativar sua conta? Todos os seus dados serão removidos permanentemente. Essa ação não pode ser desfeita.",
+
+      viewModal: false,
     };
   },
 
@@ -123,21 +138,26 @@ export default {
   },
 
   mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.infoUser = user;
+    const user = firebase.auth().currentUser;
+    if (user) {
+      this.infoUser = user;
 
-        const creationDate = user.metadata.creationTime;
+      const creationDate = user.metadata.creationTime;
 
-        const formatDateCreation = moment(creationDate).format("DD-MM-YYYY h:mm A");
+      const formatDateCreation = moment(creationDate).format("DD-MM-YYYY h:mm A");
 
-        this.creationDate = formatDateCreation;
-      }
-    });
+      this.creationDate = formatDateCreation;
+    }
   },
 
   methods: {
-    deleteUser() {
+    deactivateOpenModal() {
+      setTimeout(() => {
+        this.viewModal = true;
+      }, 200);
+    },
+
+    deactivateAccount() {
       const user = firebase.auth().currentUser;
 
       if (user) {
@@ -164,6 +184,9 @@ export default {
             this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
           });
       }
+    },
+    cancel() {
+      this.viewModal = false;
     },
   },
 };
