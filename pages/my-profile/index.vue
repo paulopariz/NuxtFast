@@ -1,18 +1,15 @@
 <template>
   <Loading v-if="loading" />
 
-  <div v-else>
+  <div v-else class="w-screen">
     <section class="container w-full m-auto">
       <header
         class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
       >
         <h1 class="text-xl font-semibold">Meu perfil</h1>
-        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/4">
-          Esta é a seção do seu perfil, onde você pode visualizar seus dados. Além disso,
-          você tem a opção de atualizar seu perfil clicando no botão "Editar perfil"
-          abaixo. Caso seja um usuário autenticado vinculado ao GitHub e ao Google, você
-          só poderá atualizar seu nome. Abaixo, há também um botão para excluir seu
-          perfil, porém, tome cuidado para não clicar acidentalmente e deletar sua conta.
+        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/5">
+          Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
+          perfil clicando em "Editar perfil" abaixo e deletar sua conta.
         </p>
       </header>
 
@@ -63,7 +60,7 @@
           <div v-if="infoUser.photoURL">
             <img
               :src="infoUser.photoURL"
-              :alt="infoUser.displayName"
+              :alt="'Imagem de perfil do usuário: ' + infoUser.displayName"
               :title="infoUser.displayName"
               class="w-36 h-36 rounded-lg"
             />

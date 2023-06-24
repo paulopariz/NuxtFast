@@ -1,108 +1,198 @@
 <template>
   <Loading v-if="loading" />
 
-  <div v-else class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <h1 class="text-black text-4xl">{{ username }}</h1>
-    <div class="flex-col flex gap-4">
-      <div class="flex gap-4">
-        <img
-          v-if="user.photoURL"
-          :src="user.photoURL"
-          :alt="'Imagem de perfil do usuário: ' + user.displayName"
-          class="w-36 rounded-lg"
-        />
+  <div v-else class="w-screen">
+    <section class="container w-full m-auto">
+      <header
+        class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
+      >
+        <h1 class="text-xl font-semibold">Editar perfil</h1>
+        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/5">
+          Edite os dados do seu perfil abaixo. Se você estiver conectado ao GitHub e ao
+          Google, só poderá alterar seu nome.
+        </p>
+      </header>
 
+      <div class="mt-10 flex justify-between items-start">
         <div
-          v-else
-          class="grid w-36 h-36 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
-          :title="user.displayName"
+          class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
-          <h1 class="text-4xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+          <!--ATUALIZAR NOME-->
+
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Nome</h1>
+            <div class="flex flex-col gap-3 ml-2">
+              <div class="flex items-center mt-4">
+                <label
+                  for="Novo nome"
+                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
+                >
+                  <input
+                    type="text"
+                    name="Nome"
+                    placeholder="Novo nome"
+                    v-model="$v.newName.$model"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none"
+                  />
+                  <span
+                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
+                  >
+                    Novo nome
+                  </span>
+                </label>
+                <button
+                  @click="updateName"
+                  class="bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
+                >
+                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
+                </button>
+              </div>
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newName.required && $v.newName.$dirty"
+                >Campo obrigatório.</span
+              >
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newName.maxLength && $v.newName.$dirty"
+                >Nome deve ter no máximo 50 caracteres.</span
+              >
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newName.minLength && $v.newName.$dirty"
+                >Nome deve ter pelo menos 3 caracteres.</span
+              >
+            </div>
+          </div>
+
+          <!--ATUALIZAR EMAIL-->
+
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+            :class="{ 'opacity-50': disabledInputAndButton == true }"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Email</h1>
+
+            <div class="flex flex-col gap-3 ml-2">
+              <div class="flex items-center mt-4">
+                <label
+                  for="Novo email"
+                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
+                  :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
+                >
+                  <input
+                    :disabled="disabledInputAndButton"
+                    type="text"
+                    name="Email"
+                    placeholder="Novo email"
+                    v-model="$v.newEmail.$model"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed"
+                  />
+                  <span
+                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
+                  >
+                    Novo email
+                  </span>
+                </label>
+
+                <button
+                  :disabled="disabledInputAndButton"
+                  @click="updateEmail()"
+                  class="disabled:cursor-not-allowed bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
+                >
+                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
+                </button>
+              </div>
+              <div>
+                <span
+                  class="text-xs tracking-wide text-red-600"
+                  v-if="!$v.newEmail.required && $v.newEmail.$dirty"
+                  >Campo Obrigatorio</span
+                >
+                <span
+                  class="text-xs tracking-wide text-red-600"
+                  v-if="!$v.newEmail.email && $v.newEmail.$dirty"
+                  >E-mail inválido</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!--ATUALIZAR SENHA-->
+
+          <div
+            class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
+            :class="{ 'opacity-50': disabledInputAndButton == true }"
+          >
+            <h1 class="text-xl text-N-green font-semibold">Senha</h1>
+
+            <div class="flex flex-col gap-3 ml-2">
+              <div class="flex items-center mt-4">
+                <label
+                  for="Nova senha"
+                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
+                  :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
+                >
+                  <input
+                    :disabled="disabledInputAndButton"
+                    type="password"
+                    name="Senha"
+                    placeholder="Nova senha"
+                    v-model="$v.newPassword.$model"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed"
+                  />
+                  <span
+                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
+                  >
+                    Nova senha
+                  </span>
+                </label>
+                <button
+                  :disabled="disabledInputAndButton"
+                  @click="updatePassword()"
+                  class="disabled:cursor-not-allowed bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
+                >
+                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
+                </button>
+              </div>
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newPassword.required && $v.newPassword.$dirty"
+                >Campo obrigatório.</span
+              >
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
+                >A senha deve ter pelo menos 6 caracteres.</span
+              >
+              <span
+                class="text-xs tracking-wide text-red-600"
+                v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
+                >A senha deve ter no máximo 30 caracteres.</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-      <!--ATUALIZAR NOME-->
-      <div>
-        <div class="flex items-center gap-1">
-          <input
-            type="text"
-            name="Nome"
-            placeholder="Novo nome"
-            v-model="$v.newName.$model"
-            class="border border-gray-950 p-3 dark:bg-zinc-900"
+        <div>
+          <img
+            v-if="user.photoURL"
+            :src="user.photoURL"
+            :alt="'Imagem de perfil do usuário: ' + user.displayName"
+            :title="user.displayName"
+            class="w-36 h-36 rounded-lg"
           />
-
-          <button @click="updateName" class="p-3 bg-emerald-600 text-xs">Salvar</button>
-          <span v-if="!$v.newName.required && $v.newName.$dirty">Campo obrigatório.</span>
-          <span v-if="!$v.newName.maxLength && $v.newName.$dirty"
-            >Nome deve ter no máximo 50 caracteres.</span
+          <div
+            v-else
+            class="grid w-36 h-36 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
+            :title="user.displayName"
           >
-          <span v-if="!$v.newName.minLength && $v.newName.$dirty"
-            >Nome deve ter pelo menos 3 caracteres.</span
-          >
+            <h1 class="text-4xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+          </div>
         </div>
       </div>
-
-      <div class="flex flex-col gap-4">
-        <!-- v-if="
-          user.providerData[0].providerId !== 'google.com' &&
-          user.providerData[0].providerId !== 'github.com'
-        " -->
-        <!--ATUALIZAR EMAIL-->
-        <div>
-          <div class="flex items-center gap-1">
-            <input
-              :disabled="disabledInputAndButton"
-              type="text"
-              name="Email"
-              placeholder="Novo email"
-              v-model="$v.newEmail.$model"
-              class="border border-gray-950 p-3 dark:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-            <button
-              :disabled="disabledInputAndButton"
-              @click="updateEmail()"
-              class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Salvar
-            </button>
-          </div>
-          <span v-if="!$v.newEmail.required && $v.newEmail.$dirty"
-            >Campo Obrigatorio</span
-          >
-          <span v-if="!$v.newEmail.email && $v.newEmail.$dirty">E-mail inválido</span>
-        </div>
-        <!--ATUALIZAR SENHA-->
-        <div>
-          <div class="flex items-center gap-1">
-            <input
-              :disabled="disabledInputAndButton"
-              type="password"
-              name="Senha"
-              placeholder="Nova senha"
-              v-model="$v.newPassword.$model"
-              class="border border-gray-950 p-3 dark:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-
-            <button
-              :disabled="disabledInputAndButton"
-              @click="updatePassword()"
-              class="p-3 bg-emerald-600 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Salvar
-            </button>
-          </div>
-          <span v-if="!$v.newPassword.required && $v.newPassword.$dirty"
-            >Campo obrigatório.</span
-          >
-          <span v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
-            >A senha deve ter pelo menos 6 caracteres.</span
-          >
-          <span v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
-            >A senha deve ter no máximo 30 caracteres.</span
-          >
-        </div>
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 
