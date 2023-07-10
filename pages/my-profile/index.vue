@@ -6,7 +6,7 @@
       <header
         class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
       >
-        <h1 class="text-xl font-semibold">Meu perfil</h1>
+        <Title title="Meu perfil" />
         <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/5">
           Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
           perfil clicando em "Editar perfil" abaixo e deletar sua conta.

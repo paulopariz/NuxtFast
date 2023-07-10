@@ -8,7 +8,7 @@
       >
         <div class="flex flex-col gap-6 w-1/2">
           <div class="flex flex-col">
-            <h1 class="text-xl font-semibold">O que você irá aprender:</h1>
+            <Title title="O que você irá aprender:" />
             <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam
               est quasi quam, nam beatae officiis neque officia, fugiat maxime,

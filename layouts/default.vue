@@ -66,11 +66,11 @@
 
                 <li>
                   <ButtonsAside
-                    route="/teste"
+                    route="/credits"
                     :icon="iconCredits"
                     alt-icon="Créditos"
                     name="Créditos"
-                    :class="{ active: $route.path === '/teste' }"
+                    :class="{ active: $route.path === '/credits' }"
                   />
                 </li>
 

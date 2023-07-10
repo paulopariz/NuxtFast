@@ -6,7 +6,7 @@
       <header
         class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
       >
-        <h1 class="text-xl font-semibold">Editar perfil</h1>
+        <Title title="Editar perfil" />
         <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/5">
           Edite os dados do seu perfil abaixo. Se você estiver conectado ao GitHub e ao
           Google, só poderá alterar seu nome.
