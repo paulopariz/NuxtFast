@@ -1,15 +1,109 @@
 <template>
-  <div>
-    <h1>{{ user.login }}</h1>
+  <Loading v-if="loading" />
+
+  <div v-else class="w-screen">
+    <section class="container w-full m-auto">
+      <BaseHeader
+        title="Crétidos"
+        desc="O conteúdo do NuxtFast foi criado com base na documentação fornecida pelo Nuxt.js, feito por Paulo Pariz."
+      />
+
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-6">
+          <a
+            :href="user.html_url"
+            target="_blank"
+            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between w-44 py-2 px-4 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+          >
+            <h1 class="font-semibold text-sm dark:text-gray-200 tracking-wide">
+              {{ user.name }}
+            </h1>
+            <img
+              :src="user.avatar_url"
+              :alt="user.login"
+              :title="user.login"
+              class="w-9 h-9 rounded-full dark:bg-zinc-900 p-0.5"
+            />
+          </a>
+
+          <ul class="flex flex-col gap-6 ml-2">
+            <li class="flex items-end gap-3">
+              <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
+                {{ user.following }}
+              </h2>
+              <p class="text-gray-300">Seguindo</p>
+            </li>
+
+            <li class="flex items-end gap-3">
+              <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
+                {{ user.followers }}
+              </h2>
+              <p class="text-gray-300">Seguidores</p>
+            </li>
+
+            <li class="flex items-end gap-3">
+              <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
+                {{ user.public_repos }}
+              </h2>
+              <p class="text-gray-300">Repositórios</p>
+            </li>
+          </ul>
+        </div>
+        <div class="flex flex-col gap-6">
+          <a
+            href="https://www.instagram.com/parizpaulo_/"
+            target="_blank"
+            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+          >
+            <img src="@/assets/img/icons/iconInstagram.svg" alt="Icon Instagram" />
+            <h1 class="text-gray-300">@parizpaulo_</h1>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/paulopariz/"
+            target="_blank"
+            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+          >
+            <img src="@/assets/img/icons/iconLinkedin.svg" alt="Icon Linkedin" />
+            <h1 class="text-gray-300">in/paulopariz</h1>
+          </a>
+
+          <a
+            href="https://paulopariz.vercel.app/"
+            target="_blank"
+            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+          >
+            <img src="@/assets/img/icons/iconPortfolio.svg" alt="Icon Dev" />
+            <h1 class="text-gray-300">paulopariz.app</h1>
+          </a>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
+
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Credits",
   data() {
     return {
       user: [],
     };
+  },
+
+  computed: {
+    ...mapState(["loading"]),
+  },
+
+  mounted() {
+    setTimeout(
+      () => {
+        this.$store.commit("SET_LOADING", false);
+      },
+
+      500
+    );
   },
 
   async fetch() {

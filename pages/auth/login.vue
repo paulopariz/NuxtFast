@@ -3,8 +3,8 @@
     <div class="mb-8 flex justify-center flex-col items-center gap-3">
       <h1 class="tracking-wide text-3xl font-bold">Bem-vindo(a)</h1>
       <p class="text-sm text-center tracking-wide">
-        Faça o seu login e aproveite todo o conteúdo disponível. Se você ainda não possui
-        uma conta, clique no botão "Inscrever-se" abaixo.
+        Faça o seu login e aproveite todo o conteúdo disponível. Se você ainda
+        não possui uma conta, clique no botão "Inscrever-se" abaixo.
       </p>
     </div>
 
@@ -109,11 +109,16 @@ export default {
   methods: {
     async signIn() {
       try {
-        await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+        await firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password);
 
         this.$router.push("/");
       } catch (error) {
-        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
+        this.$alert(
+          "Usuário não encontrado. Tente novamente.",
+          this.iconErrorAlert
+        );
       }
     },
 
@@ -124,7 +129,10 @@ export default {
 
         this.$router.push("/");
       } catch (error) {
-        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
+        this.$alert(
+          "Usuário não encontrado. Tente novamente.",
+          this.iconErrorAlert
+        );
       }
     },
 
@@ -135,7 +143,10 @@ export default {
         console.log(provider);
         this.$router.push("/");
       } catch (error) {
-        this.$alert("Usuário não encontrado. Tente novamente.", this.iconErrorAlert);
+        this.$alert(
+          "Usuário não encontrado. Tente novamente.",
+          this.iconErrorAlert
+        );
       }
     },
   },

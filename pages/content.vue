@@ -8,8 +8,12 @@
       >
         <div class="flex flex-col gap-6 w-1/2">
           <div class="flex flex-col">
-            <Title title="O que você irá aprender:" />
-            <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200">
+            <h1
+              class="text-2xl text-white font-bold tracking-wide before:w-3 before:h-3 before:rounded-sm before:-ml-1 before:-z-10 before:bg-N-green/70 before:border before:border-N-green before:absolute before:mt-3.5 before:shadow-md before:shadow-N-green/30"
+            >
+              O que você irá aprender:
+            </h1>
+            <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 mt-3">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam
               est quasi quam, nam beatae officiis neque officia, fugiat maxime,
               perspiciatis accusantium sapiente delectus earum explicabo? Minima inventore

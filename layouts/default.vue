@@ -29,7 +29,7 @@
           </div>
           <div>
             <nav aria-label="Main Nav" class="flex flex-col">
-              <ul class="space-y-3 py-4 flex flex-col">
+              <ul class="space-y-8 py-4 flex flex-col">
                 <li>
                   <ButtonsAside
                     route="/"

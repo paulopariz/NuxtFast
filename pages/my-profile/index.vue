@@ -3,17 +3,13 @@
 
   <div v-else class="w-screen">
     <section class="container w-full m-auto">
-      <header
-        class="border-2 border-x-0 border-t-0 pb-10 border-gray-200 dark:border-zinc-900"
-      >
-        <Title title="Meu perfil" />
-        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 w-3/5">
-          Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
-          perfil clicando em "Editar perfil" abaixo e deletar sua conta.
-        </p>
-      </header>
+      <BaseHeader
+        title="Meu perfil"
+        desc='Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
+          perfil clicando em "Editar perfil" abaixo e deletar sua conta.'
+      />
 
-      <div class="mt-10 flex justify-between items-start">
+      <div class="flex justify-between items-start">
         <div
           class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
