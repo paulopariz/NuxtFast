@@ -1,6 +1,7 @@
 <template>
   <div class="flex transition-all">
-    <aside class="fixed transition-all z-20 -left-20" id="aside">
+    <!--DESKTOP-->
+    <aside class="fixed transition-all z-20 -left-20 max-sm:hidden" id="aside">
       <div
         class="flex transition-al h-screen w-16 flex-col justify-between border-e border-gray-200 bg-N-light dark:bg-N-dark dark:border-zinc-900"
       >
@@ -10,7 +11,11 @@
             v-if="user"
             @click="consoleUser"
           >
-            <div v-if="user.photoURL && user.photoURL !== 'https://github.com/.png'">
+            <div
+              v-if="
+                user.photoURL && user.photoURL !== 'https://github.com/.png'
+              "
+            >
               <img
                 :src="user.photoURL"
                 :alt="'Imagem de perfil do usuário: ' + user.displayName"
@@ -24,7 +29,9 @@
               class="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
               :title="user.displayName"
             >
-              <h1 class="text-xs text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+              <h1 class="text-xs text-gray-600 dark:text-gray-200">
+                {{ firstLetter }}
+              </h1>
             </div>
           </div>
           <div>
@@ -80,7 +87,10 @@
                     @click="themeLight"
                     class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none"
                   >
-                    <img src="@/assets/img/icons/iconLight.svg" alt="Tema light" />
+                    <img
+                      src="@/assets/img/icons/iconLight.svg"
+                      alt="Tema light"
+                    />
                     <span
                       class="absolute transition-all start-full top-1/2 ms-2 text-N-light border border-transparent dark:border-zinc-900 -translate-y-1/2 rounded-sm bg-N-dark px-2 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 whitespace-nowrap"
                     >
@@ -92,7 +102,10 @@
                     @click="themeDark"
                     class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none"
                   >
-                    <img src="@/assets/img/icons/iconDark.svg" alt="Tema dark" />
+                    <img
+                      src="@/assets/img/icons/iconDark.svg"
+                      alt="Tema dark"
+                    />
                     <span
                       class="absolute transition-all start-full top-1/2 ms-2 text-N-light border border-transparent dark:border-zinc-900 -translate-y-1/2 rounded-sm bg-N-dark px-2 py-1.5 text-xs font-medium opacity-0 group-hover:opacity-100 whitespace-nowrap"
                     >
@@ -146,6 +159,8 @@
       </div>
     </aside>
 
+    <!--MOBILE-->
+    <MenuMobile class="" />
     <div>
       <Nuxt class="px-64 py-12" />
     </div>

@@ -13,9 +13,11 @@
           <a
             :href="user.html_url"
             target="_blank"
-            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between w-44 py-2 px-4 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+            class="flex items-center transition-all bg-gray-200/30 dark:bg-zinc-900/20 justify-between w-44 py-2 px-4 border border-gray-200 dark:border-zinc-900 rounded-full hover:bg-transparent hover:dark:bg-transparent cursor-pointer"
           >
-            <h1 class="font-semibold text-sm dark:text-gray-200 tracking-wide">
+            <h1
+              class="font-semibold text-sm text-zinc-900 dark:text-gray-200 tracking-wide"
+            >
               {{ user.name }}
             </h1>
             <img
@@ -31,21 +33,21 @@
               <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
                 {{ user.following }}
               </h2>
-              <p class="text-gray-300">Seguindo</p>
+              <p class="text-N-dark dark:text-gray-300">Seguindo</p>
             </li>
 
             <li class="flex items-end gap-3">
               <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
                 {{ user.followers }}
               </h2>
-              <p class="text-gray-300">Seguidores</p>
+              <p class="text-N-dark dark:text-gray-300">Seguidores</p>
             </li>
 
             <li class="flex items-end gap-3">
               <h2 class="text-xl font-semibold text-N-dark dark:text-N-light">
                 {{ user.public_repos }}
               </h2>
-              <p class="text-gray-300">Repositórios</p>
+              <p class="text-N-dark dark:text-gray-300">Repositórios</p>
             </li>
           </ul>
         </div>
@@ -53,28 +55,41 @@
           <a
             href="https://www.instagram.com/parizpaulo_/"
             target="_blank"
-            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+            class="flex items-center transition-all bg-gray-200/30 dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border border-gray-200 dark:border-zinc-900 rounded-full hover:bg-transparent hover:dark:bg-transparent cursor-pointer"
           >
-            <img src="@/assets/img/icons/iconInstagram.svg" alt="Icon Instagram" />
-            <h1 class="text-gray-300">@parizpaulo_</h1>
+            <img
+              src="@/assets/img/icons/iconInstagram.svg"
+              class="text-N-dark invert dark:invert-0"
+              alt="Icon Instagram"
+            />
+            <h1 class="text-N-dark dark:text-gray-300">@parizpaulo_</h1>
           </a>
 
           <a
             href="https://www.linkedin.com/in/paulopariz/"
             target="_blank"
-            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+            class="flex items-center transition-all bg-gray-200/30 dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border border-gray-200 dark:border-zinc-900 rounded-full hover:bg-transparent hover:dark:bg-transparent cursor-pointer"
           >
-            <img src="@/assets/img/icons/iconLinkedin.svg" alt="Icon Linkedin" />
-            <h1 class="text-gray-300">in/paulopariz</h1>
+            <img
+              src="@/assets/img/icons/iconLinkedin.svg"
+              class="text-N-dark invert dark:invert-0"
+              alt="Icon Linkedin"
+            />
+            <h1 class="text-N-dark dark:text-gray-300">in/paulopariz</h1>
           </a>
 
           <a
             href="https://paulopariz.vercel.app/"
             target="_blank"
-            class="flex items-center transition-all dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border dark:border-zinc-900 rounded-full hover:dark:bg-transparent cursor-pointer"
+            class="flex items-center transition-all bg-gray-200/30 dark:bg-zinc-900/20 justify-between gap-2 h-14 py-1 pl-5 pr-8 border border-gray-200 dark:border-zinc-900 rounded-full hover:bg-transparent hover:dark:bg-transparent cursor-pointer"
           >
-            <img src="@/assets/img/icons/iconPortfolio.svg" alt="Icon Dev" />
-            <h1 class="text-gray-300">paulopariz.app</h1>
+            <img
+              src="@/assets/img/icons/iconPortfolio.svg"
+              alt="Icon Dev"
+              class="text-N-dark invert dark:invert-0"
+            />
+
+            <h1 class="text-N-dark dark:text-gray-300">paulopariz.app</h1>
           </a>
         </div>
       </div>
