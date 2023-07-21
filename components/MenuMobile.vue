@@ -21,20 +21,75 @@
       </div>
     </nav>
 
-    <section
-      class="hidden w-screen h-screen fixed z-40 bg-N-light dark:bg-N-dark max-sm:grid grid-cols-2 py-32 px-7"
+    <div
+      class="hidden max-sm:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40"
     >
-      <buttonsMenuMobile />
-    </section>
+      <section
+        class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-6 py-32 px-7"
+      >
+        <ButtonsMenuMobile
+          route="/"
+          :icon="iconHome"
+          alt-icon="Página inicial"
+          nameRoute="Página inicial"
+          :class="{ active: $route.path === '/' }"
+        />
+        <ButtonsMenuMobile
+          route="/content"
+          :icon="iconContent"
+          alt-icon="Conteúdo"
+          nameRoute="Conteúdo"
+          :class="{ active: $route.path === '/content' }"
+        />
+        <ButtonsMenuMobile
+          route="/my-profile"
+          :icon="iconUser"
+          alt-icon="Meu perfil"
+          nameRoute="Meu perfil"
+          :class="{
+            active: $route.path === '/my-profile' || $route.path === '/my-profile/edit',
+          }"
+        />
+        <ButtonsMenuMobile
+          route="/credits"
+          :icon="iconCredits"
+          alt-icon="Créditos"
+          nameRoute="Créditos"
+          :class="{ active: $route.path === '/credits' }"
+        />
+        <button
+          class="w h-16 rounded-md bg-gray-200/30 dark:bg-zinc-900/20 flex items-center px-7 gap-5 border border-gray-200 dark:border-zinc-900 hover:bg-N-green/10 hover:border-N-green dark:hover:bg-red-600/10 dark:hover:border-red-600 transition-all shadow-xl shadow-gray-200/30 dark:shadow-zinc-900/10"
+        >
+          <img :src="iconSignout" alt="Sair" />
+          <span class="text-base font-semibold tracking-wide">Sair</span>
+        </button>
+      </section>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "MenuMobile",
+
+  data() {
+    return {
+      iconHome: require("../assets/img/icons/menu-mobile/iconHome.svg"),
+      iconContent: require("../assets/img/icons/menu-mobile/iconContent.svg"),
+      iconUser: require("../assets/img/icons/menu-mobile/iconUser.svg"),
+      iconCredits: require("../assets/img/icons/menu-mobile/iconCredits.svg"),
+      iconSignin: require("../assets/img/icons/menu-mobile/iconSignin.svg"),
+      iconSignup: require("../assets/img/icons/menu-mobile/iconSignup.svg"),
+      iconSignout: require("../assets/img/icons/menu-mobile/iconSignout.svg"),
+    };
+  },
 };
 </script>
 
 <style scoped>
+.active {
+  background-color: rgba(0, 220, 130, 0.1);
+  border-color: #00dc82;
+}
 .menu {
   display: flex;
   align-items: center;
