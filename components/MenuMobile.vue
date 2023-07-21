@@ -22,8 +22,10 @@
     </nav>
 
     <section
-      class="hidden w-screen h-screen fixed z-40 bg-N-light dark:bg-N-dark max-sm:flex"
-    ></section>
+      class="hidden w-screen h-screen fixed z-40 bg-N-light dark:bg-N-dark max-sm:grid grid-cols-2 py-32 px-7"
+    >
+      <buttonsMenuMobile />
+    </section>
   </div>
 </template>
 <script>
