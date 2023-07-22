@@ -2,14 +2,14 @@
   <Loading v-if="loading" />
 
   <div v-else class="w-screen">
-    <section class="container w-full m-auto">
+    <section class="md:container w-full m-auto">
       <BaseHeader
         title="Editar perfil"
         desc="Edite os dados do seu perfil abaixo. Se você estiver conectado ao GitHub e ao
           Google, só poderá alterar seu nome."
       />
 
-      <div class="flex justify-between items-start">
+      <div class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10">
         <div
           class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
@@ -175,11 +175,11 @@
             :src="user.photoURL"
             :alt="'Imagem de perfil do usuário: ' + user.displayName"
             :title="user.displayName"
-            class="w-36 h-36 rounded-lg"
+            class="w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-lg"
           />
           <div
             v-else
-            class="grid w-36 h-36 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
+            class="grid w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
             :title="user.displayName"
           >
             <h1 class="text-4xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>

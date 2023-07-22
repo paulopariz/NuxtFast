@@ -2,14 +2,14 @@
   <Loading v-if="loading" />
 
   <div v-else class="w-screen">
-    <section class="container w-full m-auto">
+    <section class="md:container w-full m-auto">
       <BaseHeader
         title="Meu perfil"
         desc='Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
           perfil clicando em "Editar perfil" abaixo e deletar sua conta.'
       />
 
-      <div class="flex justify-between items-start">
+      <div class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10">
         <div
           class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
@@ -58,12 +58,12 @@
               :src="infoUser.photoURL"
               :alt="'Imagem de perfil do usuário: ' + infoUser.displayName"
               :title="infoUser.displayName"
-              class="w-36 h-36 rounded-lg"
+              class="w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-lg"
             />
           </div>
           <div
             v-else
-            class="grid h-36 w-36 place-content-center rounded-lg bg-gray-100 t dark:bg-zinc-900"
+            class="grid h-36 w-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
             :title="user.displayName"
           >
             <h1 class="text-3xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
@@ -82,7 +82,7 @@
       />
     </div>
 
-    <div class="fixed bottom-12 right-12 flex items-center gap-6">
+    <div class="fixed bottom-12 right-12 flex items-center gap-6 max-md:right-4">
       <NuxtLink
         to="/my-profile/edit"
         class="font-semibold tracking-wide decoration-1 hover:underline"
