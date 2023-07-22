@@ -2,7 +2,7 @@
   <div>
     <nav
       id="nav"
-      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-4 max-sm:flex z-50"
+      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-14 max-sm:px-4 max-md:flex z-50"
     >
       <NuxtLink to="/">
         <img src="@/assets/img/NuxtGreen.svg" alt="Logo Nuxt.js" class="w-9" />
@@ -15,8 +15,8 @@
             type="checkbox"
           />
           <div>
-            <span></span>
-            <span></span>
+            <span class="dark:bg-N-light bg-N-dark"></span>
+            <span class="dark:bg-N-light bg-N-dark"></span>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
     <div
       v-show="menuView"
       id="menuView"
-      class="hidden max-sm:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40 transition-all"
+      class="hidden max-md:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40 transition-all"
     >
       <section
         class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-2 px-4 mt-32"
@@ -205,7 +205,6 @@ export default {
     display: block;
     width: 100%;
     height: 2px;
-    background-color: var(--bar-bg, #fff);
     border-radius: 1px;
     transition: all 0.2s cubic-bezier(0.1, 0.82, 0.76, 0.965);
 
@@ -215,6 +214,10 @@ export default {
     &:last-of-type {
       bottom: 0;
     }
+  }
+
+  .dark span {
+    background-color: #ac0a0a !important;
   }
   &.active,
   .menu-icon__cheeckbox:checked + div {
