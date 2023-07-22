@@ -1,13 +1,14 @@
 <template>
   <div>
     <nav
-      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-7 max-sm:flex z-50"
+      id="nav"
+      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-4 max-sm:flex z-50"
     >
       <NuxtLink to="/">
         <img src="@/assets/img/NuxtGreen.svg" alt="Logo Nuxt.js" class="w-9" />
       </NuxtLink>
 
-      <div class="menu">
+      <div class="menu" @click="showMenu">
         <div class="menu-icon">
           <input
             class="menu-icon__cheeckbox outline-none focus:bg-transparent active:bg-transparent"
@@ -22,10 +23,12 @@
     </nav>
 
     <div
-      class="hidden max-sm:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40"
+      v-show="menuView"
+      id="menuView"
+      class="hidden max-sm:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40 transition-all"
     >
       <section
-        class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-6 py-32 px-7"
+        class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-2 px-4 mt-32"
       >
         <ButtonsMenuMobile
           route="/"
@@ -47,9 +50,7 @@
           alt-icon="Meu perfil"
           nameRoute="Meu perfil"
           :class="{
-            active:
-              $route.path === '/my-profile' ||
-              $route.path === '/my-profile/edit',
+            active: $route.path === '/my-profile' || $route.path === '/my-profile/edit',
           }"
         />
         <ButtonsMenuMobile
@@ -62,11 +63,26 @@
         <button
           v-if="user"
           @click="signout"
-          class="w h-16 rounded-md bg-gray-200/30 dark:bg-zinc-900/20 flex items-center px-7 gap-5 border border-gray-200 dark:border-zinc-900 hover:bg-N-green/10 hover:border-N-green dark:hover:bg-red-600/10 dark:hover:border-red-600 transition-all shadow-xl shadow-gray-200/30 dark:shadow-zinc-900/10"
+          class="w h-16 rounded-md bg-gray-200/30 dark:bg-zinc-900/20 flex items-center px-5 gap-4 border border-gray-200 dark:border-zinc-900 hover:bg-N-green/10 hover:border-N-green dark:hover:bg-red-600/10 dark:hover:border-red-600 transition-all shadow-xl shadow-gray-200/30 dark:shadow-zinc-900/10"
         >
           <img :src="iconSignout" alt="Sair" />
           <span class="text-base font-semibold tracking-wide">Sair</span>
         </button>
+
+        <ButtonsMenuMobile
+          v-if="!user"
+          route="/auth/login"
+          :icon="iconSignin"
+          alt-icon="Entrar"
+          nameRoute="Entrar"
+        />
+        <ButtonsMenuMobile
+          v-if="!user"
+          route="/auth/signup"
+          :icon="iconSignup"
+          alt-icon="Cadastrar"
+          nameRoute="Cadastrar"
+        />
       </section>
     </div>
   </div>
@@ -80,6 +96,7 @@ export default {
   data() {
     return {
       user: "",
+      menuView: false,
 
       iconHome: require("../assets/img/icons/menu-mobile/iconHome.svg"),
       iconContent: require("../assets/img/icons/menu-mobile/iconContent.svg"),
@@ -95,9 +112,18 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
-        console.log(user);
       }
     });
+  },
+
+  watch: {
+    menuView(border) {
+      if (border) {
+        document.getElementById("nav").style.borderColor = "#ffffff00";
+      } else {
+        document.getElementById("nav").style.borderColor = "";
+      }
+    },
   },
 
   methods: {
@@ -112,11 +138,27 @@ export default {
           });
       }, 1200);
     },
+    showMenu() {
+      this.menuView = !this.menuView;
+    },
   },
 };
 </script>
 
 <style scoped>
+#menuView {
+  animation: menuView 0.3s;
+  transition: all 0.3s;
+}
+
+@keyframes menuView {
+  0% {
+    top: -1000px;
+  }
+  100% {
+    top: 0;
+  }
+}
 .active {
   background-color: rgba(0, 220, 130, 0.1);
   border-color: #00dc82;
