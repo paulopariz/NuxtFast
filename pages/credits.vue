@@ -2,13 +2,15 @@
   <Loading v-if="loading" />
 
   <div v-else class="w-screen">
-    <section class="container w-full m-auto">
+    <section class="md:container w-full m-auto">
       <BaseHeader
         title="Crétidos"
         desc="O conteúdo do NuxtFast foi criado com base na documentação fornecida pelo Nuxt.js, feito por Paulo Pariz."
       />
 
-      <div class="flex items-center justify-between">
+      <div
+        class="flex items-center justify-between max-mn:flex-col max-mn:items-start max-sm:gap-10"
+      >
         <div class="flex flex-col gap-6">
           <a
             :href="user.html_url"

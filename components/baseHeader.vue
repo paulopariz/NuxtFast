@@ -8,7 +8,7 @@
       {{ title }}
     </h1>
     <p
-      class="tracking-wide leading-7 text-N-dark dark:text-gray-200 w-3/5 mt-3 max-sm:text-[15px]"
+      class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 mt-3 max-lg:text-sm max-md:text-base max-sm:text-[15px]"
     >
       {{ desc }}
     </p>
