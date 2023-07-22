@@ -23,23 +23,6 @@
             </p>
           </div>
 
-          <div v-if="!user" class="flex flex-col">
-            <h1 class="text-xl font-semibold">Acesso</h1>
-            <p>
-              Você não está autenticado! Usuários não autenticados têm acesso a apenas
-              {{ aulasApi.filter((item) => item.isLogged === false).length }} dos
-              {{ aulasApi.length }} conteúdos.
-              <NuxtLink to="/auth/login" class="text-N-green underline decoration-1"
-                >Conecte-se</NuxtLink
-              >
-              à sua conta para ter acesso completo ou
-              <NuxtLink to="/auth/signup" class="text-N-green underline decoration-1"
-                >inscreva-se</NuxtLink
-              >
-              se ainda não tem uma conta.
-            </p>
-          </div>
-
           <div class="flex items-center gap-3">
             <img src="../assets/img/icons/iconTimer.svg" class="w-6" alt="Icon Timer" />
             <h1 class="text-zinc-900 dark:text-gray-200 text-sm tracking-wide">
@@ -69,7 +52,30 @@
         </div>
       </header>
 
-      <section class="mt-16 flex justify-start flex-col w-3/4 max-md:w-full">
+      <div
+        v-if="!user"
+        class="flex flex-col mt-16 w-full bg-red-600/10 border-red-600 py-3 px-5 rounded-md border-2"
+      >
+        <div class="flex items-center gap-3">
+          <h1 class="font-semibold text-xl">Acesso</h1>
+          <img src="../assets/img/icons/iconAttention.svg" alt="Icon Attention" />
+        </div>
+        <p class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 text-sm">
+          Você não está autenticado! Usuários não autenticados têm acesso a apenas
+          {{ aulasApi.filter((item) => item.isLogged === false).length }} dos
+          {{ aulasApi.length }} conteúdos.
+          <NuxtLink to="/auth/login" class="font-semibold underline decoration-1"
+            >Conecte-se</NuxtLink
+          >
+          à sua conta para ter acesso completo ou
+          <NuxtLink to="/auth/signup" class="font-semibold underline decoration-1"
+            >inscreva-se</NuxtLink
+          >
+          se ainda não tem uma conta.
+        </p>
+      </div>
+
+      <section class="mt-16 flex justify-start flex-col w-3/4 max-lg:w-full">
         <h1 class="text-xl font-semibold">Conteúdo</h1>
         <p
           class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 max-sm:text-sm"

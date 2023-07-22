@@ -16,14 +16,14 @@
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl text-N-green font-semibold">Nome</h1>
-            <p class="ml-2 font-semibold">{{ infoUser.displayName }}</p>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Nome</h1>
+            <p class="ml-2 max-sm:text-sm font-semibold">{{ infoUser.displayName }}</p>
           </div>
 
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl text-N-green font-semibold">Email</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Email</h1>
             <p
               v-if="infoUser.providerData[0].providerId !== 'password'"
               class="text-zinc-900 dark:text-gray-200 text-sm"
@@ -41,14 +41,16 @@
               >
               !
             </p>
-            <p class="ml-2 font-semibold">{{ infoUser.email }}</p>
+            <p class="ml-2 max-sm:text-sm font-semibold">{{ infoUser.email }}</p>
           </div>
 
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl text-N-green font-semibold">Perfil criado em</h1>
-            <p class="ml-2 font-semibold">{{ creationDate }}</p>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Perfil criado em
+            </h1>
+            <p class="ml-2 max-sm:text-sm font-semibold">{{ creationDate }}</p>
           </div>
         </div>
 
@@ -82,16 +84,18 @@
       />
     </div>
 
-    <div class="fixed bottom-12 right-12 flex items-center gap-6 max-md:right-4">
+    <div
+      class="fixed max-sm:absolute bottom-12 max-sm:bottom-6 right-12 flex items-center gap-6 max-md:right-4"
+    >
       <NuxtLink
         to="/my-profile/edit"
-        class="font-semibold tracking-wide decoration-1 hover:underline"
+        class="font-semibold tracking-wide decoration-1 hover:underline max-sm:text-sm"
         >Editar perfil</NuxtLink
       >
       <div class="h-7 w-0.5 bg-gray-200 dark:bg-zinc-900" />
       <button
         @click="deactivateOpenModal"
-        class="font-semibold tracking-wide text-red-600 underline decoration-1"
+        class="font-semibold tracking-wide text-red-600 underline max-sm:text-sm decoration-1"
       >
         Desativar conta
       </button>

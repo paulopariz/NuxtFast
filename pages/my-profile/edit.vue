@@ -18,7 +18,7 @@
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl text-N-green font-semibold">Nome</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Nome</h1>
             <div class="flex flex-col gap-3 ml-2">
               <div class="flex items-center mt-4">
                 <label
@@ -30,7 +30,7 @@
                     name="Nome"
                     placeholder="Novo nome"
                     v-model="$v.newName.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none max-sm:text-sm"
                   />
                   <span
                     class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
@@ -69,7 +69,7 @@
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
             :class="{ 'opacity-50': disabledInputAndButton == true }"
           >
-            <h1 class="text-xl text-N-green font-semibold">Email</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Email</h1>
 
             <div class="flex flex-col gap-3 ml-2">
               <div class="flex items-center mt-4">
@@ -84,7 +84,7 @@
                     name="Email"
                     placeholder="Novo email"
                     v-model="$v.newEmail.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
                   />
                   <span
                     class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
@@ -120,7 +120,7 @@
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
             :class="{ 'opacity-50': disabledInputAndButton == true }"
           >
-            <h1 class="text-xl text-N-green font-semibold">Senha</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Senha</h1>
 
             <div class="flex flex-col gap-3 ml-2">
               <div class="flex items-center mt-4">
@@ -135,7 +135,7 @@
                     name="Senha"
                     placeholder="Nova senha"
                     v-model="$v.newPassword.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed"
+                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
                   />
                   <span
                     class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"

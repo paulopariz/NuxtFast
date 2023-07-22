@@ -9,7 +9,7 @@
       />
 
       <div
-        class="flex items-center justify-between max-mn:flex-col max-mn:items-start max-sm:gap-10"
+        class="flex items-center justify-between max-sm:flex-col max-sm:items-start max-sm:gap-10"
       >
         <div class="flex flex-col gap-6">
           <a
