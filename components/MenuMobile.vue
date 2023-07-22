@@ -47,7 +47,9 @@
           alt-icon="Meu perfil"
           nameRoute="Meu perfil"
           :class="{
-            active: $route.path === '/my-profile' || $route.path === '/my-profile/edit',
+            active:
+              $route.path === '/my-profile' ||
+              $route.path === '/my-profile/edit',
           }"
         />
         <ButtonsMenuMobile
@@ -58,6 +60,8 @@
           :class="{ active: $route.path === '/credits' }"
         />
         <button
+          v-if="user"
+          @click="signout"
           class="w h-16 rounded-md bg-gray-200/30 dark:bg-zinc-900/20 flex items-center px-7 gap-5 border border-gray-200 dark:border-zinc-900 hover:bg-N-green/10 hover:border-N-green dark:hover:bg-red-600/10 dark:hover:border-red-600 transition-all shadow-xl shadow-gray-200/30 dark:shadow-zinc-900/10"
         >
           <img :src="iconSignout" alt="Sair" />
@@ -68,11 +72,15 @@
   </div>
 </template>
 <script>
+import firebase from "~/plugins/firebase";
+
 export default {
   name: "MenuMobile",
 
   data() {
     return {
+      user: "",
+
       iconHome: require("../assets/img/icons/menu-mobile/iconHome.svg"),
       iconContent: require("../assets/img/icons/menu-mobile/iconContent.svg"),
       iconUser: require("../assets/img/icons/menu-mobile/iconUser.svg"),
@@ -81,6 +89,29 @@ export default {
       iconSignup: require("../assets/img/icons/menu-mobile/iconSignup.svg"),
       iconSignout: require("../assets/img/icons/menu-mobile/iconSignout.svg"),
     };
+  },
+
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user;
+        console.log(user);
+      }
+    });
+  },
+
+  methods: {
+    signout() {
+      setTimeout(() => {
+        firebase
+          .auth()
+          .signOut()
+          .then((result) => {
+            this.user = "";
+            this.$router.push("/auth/login");
+          });
+      }, 1200);
+    },
   },
 };
 </script>
