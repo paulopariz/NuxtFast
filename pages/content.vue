@@ -4,7 +4,7 @@
   <div v-else class="absolute left-1/2 w-full -translate-x-1/2">
     <div class="md:container w-full m-auto">
       <header
-        class="flex items-start justify-between border-2 border-x-0 border-t-0 pb-10 max-sm:pb-6 border-gray-200 dark:border-zinc-900 max-md:flex-col max-md:justify-center max-md:items-center"
+        class="flex items-start justify-between border border-x-0 border-t-0 pb-10 max-sm:pb-6 border-gray-200 dark:border-zinc-900 max-md:flex-col max-md:justify-center max-md:items-center"
       >
         <div class="flex flex-col gap-6 w-1/2 max-xl:w-3/5 max-md:w-full max-md:gap-4">
           <div class="flex flex-col">
@@ -14,7 +14,7 @@
               O que você irá aprender:
             </h1>
             <p
-              class="tracking-wide leading-7 text-zinc-900 dark:text-gray-200 mt-3 max-lg:text-sm max-md:text-base max-sm:text-[15px]"
+              class="tracking-wide transition-all leading-7 text-zinc-900 dark:text-gray-200 mt-3 max-lg:text-sm max-md:text-base max-sm:text-[15px]"
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum laboriosam
               est quasi quam, nam beatae officiis neque officia, fugiat maxime,

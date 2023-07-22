@@ -1,6 +1,6 @@
 <template>
   <header
-    class="border-2 border-x-0 border-t-0 pb-10 max-sm:pb-6 border-gray-200 dark:border-zinc-900 mb-10"
+    class="border border-x-0 border-t-0 pb-10 max-sm:pb-6 border-gray-200 dark:border-zinc-900 mb-10"
   >
     <h1
       class="text-2xl dark:text-white text-N-dark font-bold tracking-wide before:w-3 before:h-3 before:rounded-sm before:-ml-1 before:-z-10 before:bg-N-green/70 before:border before:border-N-green before:absolute before:mt-3.5 before:shadow-md before:shadow-N-green/30"

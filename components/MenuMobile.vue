@@ -1,22 +1,48 @@
 <template>
-  <div>
+  <div class="">
     <nav
       id="nav"
-      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-14 max-sm:px-4 max-md:flex z-50"
+      class="hidden w-full h-20 border border-x-0 border-t-0 dark:border-zinc-900 border-gray-200 items-center justify-between fixed top-0 bg-N-light dark:bg-N-dark px-14 max-sm:px-4 max-md:flex z-50 transition-all"
     >
       <NuxtLink to="/">
         <img src="@/assets/img/NuxtGreen.svg" alt="Logo Nuxt.js" class="w-9" />
       </NuxtLink>
 
-      <div class="menu" @click="showMenu">
-        <div class="menu-icon">
-          <input
-            class="menu-icon__cheeckbox outline-none focus:bg-transparent active:bg-transparent"
-            type="checkbox"
+      <div class="flex items-center gap-3">
+        <button
+          v-if="menuView == true"
+          v-show="showIconThemeLight"
+          @click="themeLight"
+          class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none btn-theme"
+        >
+          <img
+            src="@/assets/img/icons/menu-mobile/iconLight.svg"
+            alt="Tema light"
+            class="dark:invert invert-"
           />
-          <div>
-            <span class="dark:bg-N-light bg-N-dark"></span>
-            <span class="dark:bg-N-light bg-N-dark"></span>
+        </button>
+        <button
+          v-if="menuView == true"
+          v-show="showIconThemeDark"
+          @click="themeDark"
+          class="group relative transition-all flex justify-center items-center rounded-sm border-0 border-y-0 border-r-0 border-transparent py-1.5 select-none btn-theme"
+        >
+          <img
+            src="@/assets/img/icons/menu-mobile/iconDark.svg"
+            alt="Tema dark"
+            class="dark:invert invert-"
+          />
+        </button>
+        <div class="menu" @click="showMenu">
+          <div class="menu-icon">
+            <input
+              class="menu-icon__cheeckbox outline-none focus:bg-transparent active:bg-transparent"
+              type="checkbox"
+            />
+            <div>
+              <span class="dark:bg-N-light bg-N-dark"></span>
+              <span class="dark:bg-N-light bg-N-dark"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -28,7 +54,7 @@
       class="hidden max-md:block h-screen bg-N-light dark:bg-N-dark w-screen fixed z-40 transition-all"
     >
       <section
-        class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-2 px-4 mt-32"
+        class="w-screen bg-N-light dark:bg-N-dark grid grid-cols-2 gap-2 px-4 mt-32 transition-all"
       >
         <ButtonsMenuMobile
           route="/"
@@ -97,6 +123,8 @@ export default {
     return {
       user: "",
       menuView: false,
+      showIconThemeLight: true,
+      showIconThemeDark: false,
 
       iconHome: require("../assets/img/icons/menu-mobile/iconHome.svg"),
       iconContent: require("../assets/img/icons/menu-mobile/iconContent.svg"),
@@ -114,6 +142,7 @@ export default {
         this.user = user;
       }
     });
+    this.setSavedTheme();
   },
 
   watch: {
@@ -141,14 +170,38 @@ export default {
     showMenu() {
       this.menuView = !this.menuView;
     },
+    setSavedTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+        this.showIconThemeDark = false;
+        this.showIconThemeLight = true;
+      } else {
+        document.documentElement.classList.remove("dark");
+        this.showIconThemeDark = true;
+        this.showIconThemeLight = false;
+      }
+    },
+    themeLight() {
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove("dark");
+      this.showIconThemeDark = true;
+      this.showIconThemeLight = false;
+    },
+    themeDark() {
+      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add("dark");
+      this.showIconThemeDark = false;
+      this.showIconThemeLight = true;
+    },
   },
 };
 </script>
 
 <style scoped>
-#menuView {
+#menuView,
+.btn-theme {
   animation: menuView 0.3s;
-  transition: all 0.3s;
 }
 
 @keyframes menuView {
