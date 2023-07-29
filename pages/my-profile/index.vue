@@ -17,7 +17,11 @@
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
             <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Nome</h1>
-            <p class="ml-2 max-sm:text-sm font-semibold">{{ infoUser.displayName }}</p>
+            <p
+              class="ml-2 max-sm:text-sm font-semibold w-96 whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+              {{ infoUser.displayName }}
+            </p>
           </div>
 
           <div
@@ -41,7 +45,11 @@
               >
               !
             </p>
-            <p class="ml-2 max-sm:text-sm font-semibold">{{ infoUser.email }}</p>
+            <p
+              class="ml-2 max-sm:text-sm font-semibold w-96 whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+              {{ infoUser.email }}
+            </p>
           </div>
 
           <div
