@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: "ModalDeleteUser",
 
   props: [
     "titleModal",

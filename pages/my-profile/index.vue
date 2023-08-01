@@ -82,24 +82,20 @@
       </div>
     </section>
 
-    <div v-show="viewModal">
-      <Modal
-        titleModal="Desativar conta"
-        :descModal="descModal"
-        textConfirmModal="Desativar"
-        :clickConfirmModal="deactivateAccount"
-        :clickCancelModal="cancel"
-      />
-    </div>
-
     <div
       class="fixed max-sm:absolute bottom-12 max-sm:bottom-6 right-12 flex items-center gap-6 max-md:right-4"
     >
-      <NuxtLink
+      <!-- <NuxtLink
         to="/my-profile/edit"
         class="font-semibold tracking-wide decoration-1 hover:underline max-sm:text-sm"
         >Editar perfil</NuxtLink
+      > -->
+      <button
+        @click="openModalEdit"
+        class="font-semibold tracking-wide decoration-1 hover:underline max-sm:text-sm"
       >
+        Editar perfil
+      </button>
       <div class="h-7 w-0.5 bg-gray-200 dark:bg-zinc-900" />
       <button
         @click="deactivateOpenModal"
@@ -108,6 +104,23 @@
         Desativar conta
       </button>
     </div>
+
+    <ModalDeleteUser
+      v-show="viewModal"
+      titleModal="Desativar conta"
+      :descModal="descModal"
+      textConfirmModal="Desativar"
+      :clickConfirmModal="deactivateAccount"
+      :clickCancelModal="cancel"
+    />
+
+    <ModalEditUser
+      v-show="viewModalEdit"
+      titleModal="Editar perfil"
+      textConfirmModal="Confirmar alterações"
+      :clickConfirmModal="deactivateAccount"
+      :clickCancelModal="cancel"
+    />
   </div>
 </template>
 
@@ -134,6 +147,7 @@ export default {
         "Tem certeza de que deseja desativar sua conta? Todos os seus dados serão removidos permanentemente. Essa ação não pode ser desfeita.",
 
       viewModal: false,
+      viewModalEdit: false,
     };
   },
 
@@ -150,9 +164,11 @@ export default {
     if (user) {
       this.infoUser = user;
 
+      require("moment/locale/pt-br");
+
       const creationDate = user.metadata.creationTime;
 
-      const formatDateCreation = moment(creationDate).format("DD-MM-YYYY h:mm A");
+      const formatDateCreation = moment(creationDate).format("D MMMM, YYYY [às] HH:mm");
 
       this.creationDate = formatDateCreation;
     }
@@ -162,6 +178,12 @@ export default {
     deactivateOpenModal() {
       setTimeout(() => {
         this.viewModal = true;
+      }, 200);
+    },
+
+    openModalEdit() {
+      setTimeout(() => {
+        this.viewModalEdit = true;
       }, 200);
     },
 
