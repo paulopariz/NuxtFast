@@ -3,8 +3,8 @@
     <div class="mb-8 flex justify-center flex-col items-center gap-3">
       <h1 class="tracking-wide text-3xl font-bold">Bem-vindo(a)</h1>
       <p class="text-sm text-center tracking-wide">
-        Crie sua conta usando e-mail e senha ou faça login com sua conta do Google ou
-        Github. Se já possui uma conta, clique em "Conecte-se".
+        Crie sua conta usando e-mail e senha ou faça login com sua conta do
+        Google ou Github. Se já possui uma conta, clique em "Conecte-se".
       </p>
     </div>
 
@@ -17,12 +17,14 @@
           <input
             type="text"
             name="Nome"
+            ref="inputName"
             placeholder="Nome"
             v-model="$v.name.$model"
             class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
           />
 
           <span
+            @click="focusName"
             class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
           >
             Nome
@@ -54,12 +56,14 @@
           <input
             type="text"
             name="E-mail"
+            ref="inputEmail"
             placeholder="E-mail"
             v-model="$v.email.$model"
             class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
           />
 
           <span
+            @click="focusEmail"
             class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
           >
             E-mail
@@ -86,12 +90,14 @@
           <input
             type="password"
             name="Senha"
+            ref="inputPassword"
             placeholder="Senha"
             v-model="$v.password.$model"
             class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
           />
 
           <span
+            @click="focusPassword"
             class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
           >
             Senha
@@ -125,7 +131,9 @@
 
     <div class="flex items-center gap-1 mt-7 justify-center">
       <p class="text-sm">Já possui uma conta?</p>
-      <NuxtLink to="/auth/login" class="text-sm text-N-green underline decoration-1"
+      <NuxtLink
+        to="/auth/login"
+        class="text-sm text-N-green underline decoration-1"
         >Conecte-se</NuxtLink
       >
     </div>
@@ -156,7 +164,12 @@
 
 <script>
 import firebase from "~/plugins/firebase";
-import { required, email, maxLength, minLength } from "vuelidate/lib/validators";
+import {
+  required,
+  email,
+  maxLength,
+  minLength,
+} from "vuelidate/lib/validators";
 
 export default {
   layout: "authentication",
@@ -193,6 +206,21 @@ export default {
   },
 
   methods: {
+    focusEmail() {
+      this.$nextTick(() => {
+        this.$refs.inputEmail.focus();
+      });
+    },
+    focusPassword() {
+      this.$nextTick(() => {
+        this.$refs.inputPassword.focus();
+      });
+    },
+    focusName() {
+      this.$nextTick(() => {
+        this.$refs.inputName.focus();
+      });
+    },
     // criar usuario com email e senha
     createUser() {
       //validacão
@@ -216,7 +244,10 @@ export default {
             })
             .catch((error) => {
               this.errors = error;
-              this.$alert("Algo deu errado. Tente novamente.", this.iconErrorAlert);
+              this.$alert(
+                "Algo deu errado. Tente novamente.",
+                this.iconErrorAlert
+              );
             });
         })
         .catch((error) => {

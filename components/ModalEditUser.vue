@@ -51,10 +51,12 @@
                 <input
                   type="text"
                   name="Nome"
+                  ref="inputName"
                   placeholder="Novo nome"
                   class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none max-sm:text-sm"
                 />
                 <span
+                  @click="focusName"
                   class="absolute ml-4 text-N-dark dark:text-gray-200 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
                 >
                   Novo nome
@@ -72,10 +74,12 @@
                   :disabled="disabledInputAndButton"
                   type="text"
                   name="Email"
+                  ref="inputEmail"
                   placeholder="Novo email"
                   class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
                 />
                 <span
+                  @click="focusEmail"
                   class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
                 >
                   Novo email
@@ -93,10 +97,12 @@
                   :disabled="disabledInputAndButton"
                   type="password"
                   name="Senha"
+                  ref="inputPassword"
                   placeholder="Nova senha"
                   class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
                 />
                 <span
+                  @click="focusPassword"
                   class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
                 >
                   Nova senha
@@ -138,6 +144,24 @@ export default {
     "textConfirmModal",
     "clickCancelModal",
   ],
+
+  methods: {
+    focusName() {
+      this.$nextTick(() => {
+        this.$refs.inputName.focus();
+      });
+    },
+    focusEmail() {
+      this.$nextTick(() => {
+        this.$refs.inputEmail.focus();
+      });
+    },
+    focusPassword() {
+      this.$nextTick(() => {
+        this.$refs.inputPassword.focus();
+      });
+    },
+  },
 };
 </script>
 

@@ -16,12 +16,14 @@
         <input
           type="text"
           name="E-mail"
+          ref="inputEmail"
           placeholder="E-mail"
           v-model="email"
           class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
         />
 
         <span
+          @click="focusEmail"
           class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
         >
           E-mail
@@ -35,12 +37,14 @@
         <input
           type="password"
           name="Senha"
+          ref="inputPassword"
           placeholder="Senha"
           v-model="password"
           class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
         />
 
         <span
+          @click="focusPassword"
           class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
         >
           Senha
@@ -107,6 +111,16 @@ export default {
   },
 
   methods: {
+    focusEmail() {
+      this.$nextTick(() => {
+        this.$refs.inputEmail.focus();
+      });
+    },
+    focusPassword() {
+      this.$nextTick(() => {
+        this.$refs.inputPassword.focus();
+      });
+    },
     async signIn() {
       try {
         await firebase
