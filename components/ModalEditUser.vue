@@ -1,6 +1,7 @@
 <template>
   <div class="relative z-20">
     <div
+      id="BG-EDIT"
       class="fixed inset-0 bg-gray-600 dark:bg-zinc-900/40 bg-opacity-75 backdrop-blur-sm transition-opacity"
     ></div>
 
@@ -10,6 +11,7 @@
       >
         <div
           class="relative transform overflow-hidden rounded-lg bg-N-light dark:bg-N-dark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:mx-10"
+          id="Modal-Edit"
         >
           <div class="bg-N-light dark:bg-N-dark px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
@@ -35,8 +37,8 @@
                 </h3>
                 <div class="mt-2">
                   <p class="text-sm text-zinc-800 dark:text-gray-400">
-                    Edite os dados do seu perfil abaixo. Se você estiver conectado ao
-                    GitHub e ao Google, só poderá alterar seu nome.
+                    Edite os dados do seu perfil abaixo. Se você estiver
+                    conectado ao GitHub e ao Google, só poderá alterar seu nome.
                   </p>
                 </div>
               </div>
@@ -62,7 +64,9 @@
               <label
                 for="Novo email"
                 class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
-                :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
+                :class="{
+                  'cursor-not-allowed': disabledInputAndButton == true,
+                }"
               >
                 <input
                   :disabled="disabledInputAndButton"
@@ -81,7 +85,9 @@
               <label
                 for="Nova senha"
                 class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
-                :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
+                :class="{
+                  'cursor-not-allowed': disabledInputAndButton == true,
+                }"
               >
                 <input
                   :disabled="disabledInputAndButton"
@@ -134,3 +140,33 @@ export default {
   ],
 };
 </script>
+
+<style scoped>
+#BG-EDIT {
+  animation: BG-EDIT 0.3s;
+  transition: all 0.5s;
+}
+@keyframes BG-EDIT {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#Modal-Edit {
+  animation: Modal-Edit 0.3s;
+  transition: all 0.5s;
+}
+
+@keyframes Modal-Edit {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>

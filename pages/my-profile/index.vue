@@ -9,14 +9,18 @@
           perfil clicando em "Editar perfil" abaixo e deletar sua conta.'
       />
 
-      <div class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10">
+      <div
+        class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10"
+      >
         <div
           class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Nome</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Nome
+            </h1>
             <p
               class="ml-2 max-sm:text-sm font-semibold w-96 whitespace-nowrap overflow-hidden text-ellipsis"
             >
@@ -27,7 +31,9 @@
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Email</h1>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Email
+            </h1>
             <p
               v-if="infoUser.providerData[0].providerId !== 'password'"
               class="text-zinc-900 dark:text-gray-200 text-sm"
@@ -76,7 +82,9 @@
             class="grid h-36 w-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
             :title="user.displayName"
           >
-            <h1 class="text-3xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
+            <h1 class="text-3xl text-gray-600 dark:text-gray-200">
+              {{ firstLetter }}
+            </h1>
           </div>
         </div>
       </div>
@@ -118,7 +126,7 @@
       v-show="viewModalEdit"
       titleModal="Editar perfil"
       textConfirmModal="Confirmar alterações"
-      :clickConfirmModal="deactivateAccount"
+      :clickConfirmModal="updateProfile"
       :clickCancelModal="cancel"
     />
   </div>
@@ -168,7 +176,9 @@ export default {
 
       const creationDate = user.metadata.creationTime;
 
-      const formatDateCreation = moment(creationDate).format("D MMMM, YYYY [às] HH:mm");
+      const formatDateCreation = moment(creationDate).format(
+        "D MMMM, YYYY [às] HH:mm"
+      );
 
       this.creationDate = formatDateCreation;
     }
@@ -201,7 +211,10 @@ export default {
               .delete()
               .then(() => {
                 this.$router.push("/");
-                this.$alert("Usuário excluído com sucesso!", this.iconCheckAlert);
+                this.$alert(
+                  "Usuário excluído com sucesso!",
+                  this.iconCheckAlert
+                );
                 setTimeout(() => {
                   this.$router.go();
                 }, 2100);
@@ -217,6 +230,7 @@ export default {
     },
     cancel() {
       this.viewModal = false;
+      this.viewModalEdit = false;
     },
   },
 };

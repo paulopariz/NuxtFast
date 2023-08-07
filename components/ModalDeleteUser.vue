@@ -1,6 +1,7 @@
 <template>
   <div class="relative z-20">
     <div
+      id="BG-DELETE"
       class="fixed inset-0 bg-gray-600 dark:bg-zinc-900/40 bg-opacity-75 backdrop-blur-sm transition-opacity"
     ></div>
 
@@ -9,6 +10,7 @@
         class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
       >
         <div
+          id="Modal-Delete"
           class="relative transform overflow-hidden rounded-lg bg-N-light dark:bg-N-dark text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
         >
           <div class="bg-N-light dark:bg-N-dark px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
@@ -80,3 +82,32 @@ export default {
   ],
 };
 </script>
+<style scoped>
+#BG-DELETE {
+  animation: BG-DELETE 0.3s;
+  transition: all 0.5s;
+}
+@keyframes BG-DELETE {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+#Modal-Delete {
+  animation: Modal-Delete 0.3s;
+  transition: all 0.5s;
+}
+
+@keyframes Modal-Delete {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>
