@@ -4,200 +4,169 @@
   <div v-else class="w-screen">
     <section class="md:container w-full m-auto">
       <BaseHeader
-        title="Editar perfil"
-        desc="Edite os dados do seu perfil abaixo. Se você estiver conectado ao GitHub e ao
-          Google, só poderá alterar seu nome."
+        title="Meu perfil"
+        desc='Esta é a seção do seu perfil. Aqui você pode ver seus dados, atualizar seu
+          perfil clicando em "Editar perfil" abaixo e deletar sua conta.'
       />
 
-      <div class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10">
+      <div
+        class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10"
+      >
         <div
           class="flex flex-col gap-9 border-2 border-y-0 border-r-0 border-green-200 dark:border-zinc-900"
         >
-          <!--ATUALIZAR NOME-->
-
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Nome</h1>
-            <div class="flex flex-col gap-3 ml-2">
-              <div class="flex items-center mt-4">
-                <label
-                  for="Novo nome"
-                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
-                >
-                  <input
-                    type="text"
-                    name="Nome"
-                    placeholder="Novo nome"
-                    v-model="$v.newName.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none max-sm:text-sm"
-                  />
-                  <span
-                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
-                  >
-                    Novo nome
-                  </span>
-                </label>
-                <button
-                  @click="updateName"
-                  class="bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
-                >
-                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
-                </button>
-              </div>
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newName.required && $v.newName.$dirty"
-                >Campo obrigatório.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newName.maxLength && $v.newName.$dirty"
-                >Nome deve ter no máximo 50 caracteres.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newName.minLength && $v.newName.$dirty"
-                >Nome deve ter pelo menos 3 caracteres.</span
-              >
-            </div>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Nome
+            </h1>
+            <p
+              class="ml-2 max-sm:text-sm font-semibold w-96 whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+              {{ infoUser.displayName }}
+            </p>
           </div>
 
-          <!--ATUALIZAR EMAIL-->
-
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
-            :class="{ 'opacity-50': disabledInputAndButton == true }"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Email</h1>
-
-            <div class="flex flex-col gap-3 ml-2">
-              <div class="flex items-center mt-4">
-                <label
-                  for="Novo email"
-                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
-                  :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
-                >
-                  <input
-                    :disabled="disabledInputAndButton"
-                    type="text"
-                    name="Email"
-                    placeholder="Novo email"
-                    v-model="$v.newEmail.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
-                  />
-                  <span
-                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
-                  >
-                    Novo email
-                  </span>
-                </label>
-
-                <button
-                  :disabled="disabledInputAndButton"
-                  @click="updateEmail()"
-                  class="disabled:cursor-not-allowed bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
-                >
-                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
-                </button>
-              </div>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Email
+            </h1>
+            <p
+              v-if="infoUser.providerData[0].providerId !== 'password'"
+              class="text-zinc-900 dark:text-gray-200 text-sm"
+            >
+              Esse email é referente a sua conta
               <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newEmail.required && $v.newEmail.$dirty"
-                >Campo Obrigatorio</span
+                class="text-N-green"
+                v-if="infoUser.providerData[0].providerId === 'google.com'"
+                >Google</span
               >
               <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newEmail.email && $v.newEmail.$dirty"
-                >E-mail inválido</span
+                class="text-N-green"
+                v-if="infoUser.providerData[0].providerId === 'github.com'"
+                >Github</span
               >
-            </div>
+              !
+            </p>
+            <p
+              class="ml-2 max-sm:text-sm font-semibold w-96 whitespace-nowrap overflow-hidden text-ellipsis"
+            >
+              {{ infoUser.email }}
+            </p>
           </div>
 
-          <!--ATUALIZAR SENHA-->
-
           <div
             class="flex flex-col border-2 -ml-0.5 border-y-0 border-r-0 pl-3 border-N-green"
-            :class="{ 'opacity-50': disabledInputAndButton == true }"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">Senha</h1>
-
-            <div class="flex flex-col gap-3 ml-2">
-              <div class="flex items-center mt-4">
-                <label
-                  for="Nova senha"
-                  class="relative block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
-                  :class="{ 'cursor-not-allowed': disabledInputAndButton == true }"
-                >
-                  <input
-                    :disabled="disabledInputAndButton"
-                    type="password"
-                    name="Senha"
-                    placeholder="Nova senha"
-                    v-model="$v.newPassword.$model"
-                    class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
-                  />
-                  <span
-                    class="absolute ml-4 bg-N-light start-0 px-1 -top-0.5 -translate-y-1/2 text-base transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:-top-0.5 dark:bg-N-dark"
-                  >
-                    Nova senha
-                  </span>
-                </label>
-                <button
-                  :disabled="disabledInputAndButton"
-                  @click="updatePassword()"
-                  class="disabled:cursor-not-allowed bg-N-green hover:bg-N-green/90 transition-all rounded-sm rounded-l-none py-2.5 px-4 h-14 -ml-1 z-50"
-                >
-                  <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
-                </button>
-              </div>
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.required && $v.newPassword.$dirty"
-                >Campo obrigatório.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
-                >A senha deve ter pelo menos 6 caracteres.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
-                >A senha deve ter no máximo 30 caracteres.</span
-              >
-            </div>
+            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
+              Perfil criado em
+            </h1>
+            <p class="ml-2 max-sm:text-sm font-semibold">{{ creationDate }}</p>
           </div>
         </div>
+
         <div>
-          <img
-            v-if="user.photoURL"
-            :src="user.photoURL"
-            :alt="'Imagem de perfil do usuário: ' + user.displayName"
-            :title="user.displayName"
-            class="w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-lg"
-          />
-          <div
+          <div v-if="infoUser.photoURL">
+            <img
+              :src="infoUser.photoURL"
+              :alt="'Imagem de perfil do usuário: ' + infoUser.displayName"
+              :title="infoUser.displayName"
+              class="w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-lg"
+            />
+          </div>
+          <!-- <div
             v-else
-            class="grid w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
+            class="grid h-36 w-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
             :title="user.displayName"
           >
-            <h1 class="text-4xl text-gray-600 dark:text-gray-200">{{ firstLetter }}</h1>
-          </div>
+            <h1 class="text-3xl text-gray-600 dark:text-gray-200">
+              {{ firstLetter }}
+            </h1>
+          </div> -->
         </div>
       </div>
     </section>
+
+    <div
+      class="fixed max-sm:absolute bottom-12 max-sm:bottom-6 right-12 flex items-center gap-6 max-md:right-4"
+    >
+      <!-- <NuxtLink
+        to="/my-profile/edit"
+        class="font-semibold tracking-wide decoration-1 hover:underline max-sm:text-sm"
+        >Editar perfil</NuxtLink
+      > -->
+      <button
+        @click="openModalEdit"
+        class="font-semibold tracking-wide decoration-1 hover:underline max-sm:text-sm"
+      >
+        Editar perfil
+      </button>
+      <div class="h-7 w-0.5 bg-gray-200 dark:bg-zinc-900" />
+      <button
+        @click="deactivateOpenModal"
+        class="font-semibold tracking-wide text-red-600 underline max-sm:text-sm decoration-1"
+      >
+        Desativar conta
+      </button>
+    </div>
+
+    <ModalDeleteUser
+      v-show="viewModal"
+      titleModal="Desativar conta"
+      :descModal="descModal"
+      textConfirmModal="Desativar"
+      :clickConfirmModal="deactivateAccount"
+      :clickCancelModal="cancel"
+    />
+
+    <ModalEditUser
+      v-show="viewModalEdit"
+      titleModal="Editar perfil"
+      textConfirmModal="Confirmar alterações"
+      :clickConfirmModal="updateProfile"
+      :clickCancelModal="cancel"
+      :newName="newName"
+      :newEmail="newEmail"
+      :newPassword="newPassword"
+    />
   </div>
 </template>
 
 <script>
 import firebase from "~/plugins/firebase";
+import { db } from "~/utils/api";
+import moment from "moment";
 import { mapState } from "vuex";
-import { required, email, maxLength, minLength } from "vuelidate/lib/validators";
+import auth from "~/mixins/auth";
+import {
+  required,
+  email,
+  maxLength,
+  minLength,
+} from "vuelidate/lib/validators";
 
 export default {
+  name: "my-profile",
+  mixins: [auth],
+
   data() {
     return {
+      infoUser: "",
+      creationDate: "",
+
+      iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
+      iconCheckAlert: require("~/assets/img/icons/iconCheck.svg"),
+
+      descModal:
+        "Tem certeza de que deseja desativar sua conta? Todos os seus dados serão removidos permanentemente. Essa ação não pode ser desfeita.",
+
+      viewModal: false,
+      viewModalEdit: false,
+
+      //edit
       newName: "",
       newEmail: "",
       newPassword: "",
@@ -234,40 +203,86 @@ export default {
   computed: {
     ...mapState(["loading"]),
 
-    //capturar a primeira letra do nome do usuario para imagem
-    firstLetter() {
-      return this.user.displayName.charAt(0).toLocaleUpperCase();
-    },
+    // firstLetter() {
+    //   return this.user.displayName.charAt(0).toLocaleUpperCase();
+    // },
   },
 
   mounted() {
-    firebase.auth().onAuthStateChanged((userInfos) => {
-      if (userInfos) {
-        this.user = userInfos;
-        this.newName = userInfos.displayName;
-        this.newEmail = userInfos.email;
-      } else {
-        this.$router.push({ path: "/auth/login" });
-      }
-      this.$store.commit("SET_LOADING", false);
+    const user = firebase.auth().currentUser;
+    if (user) {
+      this.infoUser = user;
 
-      if (userInfos) {
-        const providerId = userInfos.providerData[0].providerId;
+      require("moment/locale/pt-br");
 
-        if (providerId === "github.com" || providerId === "google.com") {
-          this.disabledInputAndButton = true;
-        }
-      }
-    });
+      const creationDate = user.metadata.creationTime;
+
+      const formatDateCreation = moment(creationDate).format(
+        "D MMMM, YYYY [às] HH:mm"
+      );
+
+      this.creationDate = formatDateCreation;
+    }
   },
 
   methods: {
-    async updateName() {
-      this.$v.newName.$touch();
+    deactivateOpenModal() {
+      setTimeout(() => {
+        this.viewModal = true;
+      }, 200);
+    },
 
-      if (this.$v.newName.$invalid) {
-        return;
+    openModalEdit() {
+      setTimeout(() => {
+        this.viewModalEdit = true;
+      }, 200);
+    },
+
+    deactivateAccount() {
+      const user = firebase.auth().currentUser;
+
+      if (user) {
+        // excluir dados do firestore
+        db.collection("checkboxes")
+          .doc(user.uid)
+          .delete()
+          .then(() => {
+            // excluir usuário do firebase authentication
+            user
+              .delete()
+              .then(() => {
+                this.$router.push("/");
+                this.$alert(
+                  "Usuário excluído com sucesso!",
+                  this.iconCheckAlert
+                );
+                setTimeout(() => {
+                  this.$router.go();
+                }, 2100);
+              })
+              .catch((error) => {
+                this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
+              });
+          })
+          .catch((error) => {
+            this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
+          });
       }
+    },
+    cancel() {
+      this.viewModal = false;
+      this.viewModalEdit = false;
+    },
+
+    updateProfile() {
+      console.log("up");
+      this.updateName();
+      this.updateEmail();
+      this.updatePassword();
+    },
+
+    async updateName() {
+      console.log("updateName");
       try {
         const user = firebase.auth().currentUser;
 
@@ -285,7 +300,10 @@ export default {
             );
           }
         } else {
-          this.$alert("Não foi possível atualizar o nome!", this.iconErrorAlert);
+          this.$alert(
+            "Não foi possível atualizar o nome!",
+            this.iconErrorAlert
+          );
         }
       } catch (error) {
         this.$alert("Não foi possível atualizar o nome!", this.iconErrorAlert);
@@ -293,11 +311,7 @@ export default {
     },
 
     async updateEmail() {
-      this.$v.newEmail.$touch();
-
-      if (this.$v.newEmail.$invalid) {
-        return;
-      }
+      console.log("updateEmail");
       try {
         const user = firebase.auth().currentUser;
 
@@ -316,7 +330,10 @@ export default {
             );
           }
         } else {
-          this.$alert("Não foi possível atualizar o e-mail!", this.iconErrorAlert);
+          this.$alert(
+            "Não foi possível atualizar o e-mail!",
+            this.iconErrorAlert
+          );
         }
       } catch (error) {
         this.$alert(
@@ -327,11 +344,7 @@ export default {
     },
 
     async updatePassword() {
-      this.$v.newPassword.$touch();
-
-      if (this.$v.newPassword.$invalid) {
-        return;
-      }
+      console.log("updatePassword");
       try {
         const user = firebase.auth().currentUser;
 
@@ -346,7 +359,10 @@ export default {
             this.$router.go();
           }, 2100);
         } else {
-          this.$alert("Não foi possível atualizar a senha!", this.iconErrorAlert);
+          this.$alert(
+            "Não foi possível atualizar a senha!",
+            this.iconErrorAlert
+          );
         }
       } catch (error) {
         this.$alert("Não foi possível atualizar a senha!", this.iconErrorAlert);

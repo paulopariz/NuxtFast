@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-20">
+  <div class="relative z-50">
     <div
       id="BG-EDIT"
       class="fixed inset-0 bg-gray-600 dark:bg-zinc-900/40 bg-opacity-75 backdrop-blur-sm transition-opacity"
@@ -43,12 +43,15 @@
                 </div>
               </div>
             </div>
-            <div class="w-full grid grid-cols-2 gap-5 mt-14 mb-14">
+            <div
+              class="w-full grid grid-cols-2 gap-5 mt-14 mb-14 max-sm:grid-cols-1"
+            >
               <label
                 for="Novo nome"
                 class="relative w-full block border rounded-sm border-gray-200 dark:border-zinc-900 bg-transparent py-2.5 transition-all focus-within:border-N-green dark:focus-within:border-N-green h-14"
               >
                 <input
+                  :v-model="newName"
                   type="text"
                   name="Nome"
                   ref="inputName"
@@ -71,6 +74,7 @@
                 }"
               >
                 <input
+                  :v-model="newEmail"
                   :disabled="disabledInputAndButton"
                   type="text"
                   name="Email"
@@ -94,6 +98,7 @@
                 }"
               >
                 <input
+                  :v-model="newPassword"
                   :disabled="disabledInputAndButton"
                   type="password"
                   name="Senha"
@@ -115,7 +120,7 @@
             <button
               @click="clickConfirmModal"
               type="button"
-              class="inline-flex w-full justify-center rounded-sm bg-N-green/20 border border-N-green px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-N-green/30 transition-all sm:ml-3 sm:w-auto"
+              class="inline-flex w-full justify-center rounded-sm bg-N-green dark:bg-N-green/20 border border-N-green px-3 py-2 text-sm font-semibold text-N-light shadow-sm hover:bg-N-green/90 dark:hover:bg-N-green/30 transition-all sm:ml-3 sm:w-auto"
             >
               {{ textConfirmModal }}
             </button>
@@ -143,6 +148,10 @@ export default {
     "clickConfirmModal",
     "textConfirmModal",
     "clickCancelModal",
+    "newName",
+    "newEmail",
+    "newPassword",
+    "disabledInputAndButton",
   ],
 
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute w-screen h-screen z-[9999] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-N-light dark:bg-N-dark"
+    class="absolute w-screen h-screen z-[99999999999] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 bg-N-light dark:bg-N-dark"
   >
     <h1
       class="error-404 text-zinc-900 dark:text-N-dark absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-[325px] max-lg:text-[300px] max-sm:text-[160px] -tracking-widest max-sm:tracking-tight"
