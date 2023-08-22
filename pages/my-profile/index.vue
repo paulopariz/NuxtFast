@@ -34,10 +34,8 @@
             />
 
             <div
-              class="mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
-            ></div>
-
-            <div class="flex items-center justify-between pt-6">
+              class="flex items-center justify-between pt-6 mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
+            >
               <div>
                 <h1
                   v-if="!$v.newName.$error"
@@ -75,39 +73,68 @@
           <!--ATUALIZAR EMAIL-->
 
           <div
-            class="flex flex-col pl-3"
-            :class="{ 'opacity-50': disabledInputAndButton == true }"
+            class="w-full p-6 border border-gray-200 dark:border-zinc-900 rounded-md transition-all bg-gray-200/20 dark:bg-zinc-900/20 flex flex-col"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
-              Email
-            </h1>
+            <h1 class="text-xl max-sm:text-lg font-semibold">Editar e-mail</h1>
+            <p
+              class="text-base max-sm:text-sm text-zinc-900 dark:text-gray-200 my-3.5"
+            >
+              Por favor, edite aqui o seu novo email.
+            </p>
 
-            <div class="flex flex-col gap-3 ml-2">
+            <div class="flex items-center gap-5">
               <input
                 :disabled="disabledInputAndButton"
                 type="text"
                 name="Email"
                 placeholder="Novo email"
                 v-model="$v.newEmail.$model"
-                class="peer h-8 w-full transition-all border-none bg-transparent px-4 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 outline-none disabled:cursor-not-allowed max-sm:text-sm"
+                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green"
                 :class="{
                   'cursor-not-allowed': disabledInputAndButton == true,
+                  'form-group--error': $v.newEmail.$error,
+                  'opacity-50': disabledInputAndButton == true,
                 }"
               />
+              <Tooltip
+                v-if="disabledInputAndButton == true"
+                :text="tooltipEmail"
+              />
+            </div>
 
-              <button :disabled="disabledInputAndButton" @click="updateEmail()">
-                <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
+            <div
+              class="flex items-center justify-between pt-6 mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
+            >
+              <div>
+                <h1
+                  v-if="!$v.newEmail.$error"
+                  class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                >
+                  Para editar, utilize um e-mail válido.
+                </h1>
+                <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newEmail.required && $v.newEmail.$dirty"
+                  >Campo Obrigatorio</span
+                >
+                <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newEmail.email && $v.newEmail.$dirty"
+                  >E-mail inválido</span
+                >
+              </div>
+
+              <button
+                @click="updateEmail"
+                :disabled="disabledInputAndButton"
+                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                :class="{
+                  'cursor-not-allowed': disabledInputAndButton == true,
+                  'opacity-50': disabledInputAndButton == true,
+                }"
+              >
+                Salvar
               </button>
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newEmail.required && $v.newEmail.$dirty"
-                >Campo Obrigatorio</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newEmail.email && $v.newEmail.$dirty"
-                >E-mail inválido</span
-              >
             </div>
           </div>
 
@@ -121,39 +148,37 @@
               Senha
             </h1>
 
-            <div class="flex flex-col gap-3 ml-2">
-              <input
-                :disabled="disabledInputAndButton"
-                type="password"
-                name="Senha"
-                placeholder="Nova senha"
-                v-model="$v.newPassword.$model"
-                :class="{
-                  'cursor-not-allowed': disabledInputAndButton == true,
-                }"
-              />
-              <button
-                :disabled="disabledInputAndButton"
-                @click="updatePassword()"
-              >
-                <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
-              </button>
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.required && $v.newPassword.$dirty"
-                >Campo obrigatório.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
-                >A senha deve ter pelo menos 6 caracteres.</span
-              >
-              <span
-                class="text-xs tracking-wide text-red-600"
-                v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
-                >A senha deve ter no máximo 30 caracteres.</span
-              >
-            </div>
+            <input
+              :disabled="disabledInputAndButton"
+              type="password"
+              name="Senha"
+              placeholder="Nova senha"
+              v-model="$v.newPassword.$model"
+              :class="{
+                'cursor-not-allowed': disabledInputAndButton == true,
+              }"
+            />
+            <button
+              :disabled="disabledInputAndButton"
+              @click="updatePassword()"
+            >
+              <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
+            </button>
+            <span
+              class="text-xs tracking-wide text-red-600"
+              v-if="!$v.newPassword.required && $v.newPassword.$dirty"
+              >Campo obrigatório.</span
+            >
+            <span
+              class="text-xs tracking-wide text-red-600"
+              v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
+              >A senha deve ter pelo menos 6 caracteres.</span
+            >
+            <span
+              class="text-xs tracking-wide text-red-600"
+              v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
+              >A senha deve ter no máximo 30 caracteres.</span
+            >
           </div>
         </div>
         <!-- <div>
@@ -205,6 +230,8 @@ export default {
       iconErrorAlert: require("~/assets/img/icons/iconError.svg"),
       iconCheckAlert: require("~/assets/img/icons/iconCheck.svg"),
       iconAttentionAlert: require("~/assets/img/icons/iconAttention.svg"),
+
+      tooltipEmail: "",
     };
   },
 
@@ -251,6 +278,14 @@ export default {
         if (providerId === "github.com" || providerId === "google.com") {
           this.disabledInputAndButton = true;
         }
+
+        if (providerId === "github.com") {
+          this.tooltipEmail = `Não é possível editar, você esta, autenticado com o Github`;
+        } else if (providerId === "google.com") {
+          this.tooltipEmail = `Não é possível editar, você esta, autenticado com o Google`;
+        } else {
+          this.tooltipEmail = "";
+        }
       }
     });
   },
@@ -289,6 +324,7 @@ export default {
           );
         }
       } catch (error) {
+        this.$store.commit("SET_LOADING", false);
         this.$alert("Não foi possível atualizar o nome!", this.iconErrorAlert);
       }
     },
@@ -299,6 +335,8 @@ export default {
       if (this.$v.newEmail.$invalid) {
         return;
       }
+      this.$store.commit("SET_LOADING", true);
+
       try {
         const user = firebase.auth().currentUser;
 
@@ -309,20 +347,24 @@ export default {
         ) {
           if (this.newEmail !== user.email) {
             await user.updateEmail(this.newEmail);
+            this.$store.commit("SET_LOADING", false);
             this.$alert("E-mail atualizado com sucesso!", this.iconCheckAlert);
           } else {
+            this.$store.commit("SET_LOADING", false);
             this.$alert(
               "Por favor, utilize um e-mail diferente do atual.",
               this.iconAttentionAlert
             );
           }
         } else {
+          this.$store.commit("SET_LOADING", false);
           this.$alert(
             "Não foi possível atualizar o e-mail!",
             this.iconErrorAlert
           );
         }
       } catch (error) {
+        this.$store.commit("SET_LOADING", false);
         this.$alert(
           "Algo deu errado. Tente outro e-mail ou volte mais tarde.",
           this.iconErrorAlert
