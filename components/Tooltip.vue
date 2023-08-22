@@ -18,7 +18,7 @@
         class="relative z-10 p-2.5 text-xs text-center rounded-md leading-none text-N-light whitespace-no-wrap bg-black shadow-lg w-[350px]"
         >{{ text }}</span
       >
-      <div class="w-3 h-3 -mt-2 rotate-45 ml-1.5 bg-black"></div>
+      <div class="w-3 h-3 -mt-2.5 rotate-45 ml-1.5 bg-black"></div>
     </div>
   </div>
 </template>

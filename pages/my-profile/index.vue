@@ -141,44 +141,73 @@
           <!--ATUALIZAR SENHA-->
 
           <div
-            class="flex flex-col pl-3"
-            :class="{ 'opacity-50': disabledInputAndButton == true }"
+            class="w-full p-6 border border-gray-200 dark:border-zinc-900 rounded-md transition-all bg-gray-200/20 dark:bg-zinc-900/20 flex flex-col"
           >
-            <h1 class="text-xl max-sm:text-lg text-N-green font-semibold">
-              Senha
-            </h1>
+            <h1 class="text-xl max-sm:text-lg font-semibold">Editar e-mail</h1>
+            <p
+              class="text-base max-sm:text-sm text-zinc-900 dark:text-gray-200 my-3.5"
+            >
+              Por favor, edite aqui a sua nova senha de acesso.
+            </p>
 
-            <input
-              :disabled="disabledInputAndButton"
-              type="password"
-              name="Senha"
-              placeholder="Nova senha"
-              v-model="$v.newPassword.$model"
-              :class="{
-                'cursor-not-allowed': disabledInputAndButton == true,
-              }"
-            />
-            <button
-              :disabled="disabledInputAndButton"
-              @click="updatePassword()"
+            <div class="flex items-center gap-5">
+              <input
+                :disabled="disabledInputAndButton"
+                type="password"
+                name="Senha"
+                placeholder="Nova senha"
+                v-model="$v.newPassword.$model"
+                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green"
+                :class="{
+                  'cursor-not-allowed': disabledInputAndButton == true,
+                  'form-group--error': $v.newPassword.$error,
+                  'opacity-50': disabledInputAndButton == true,
+                }"
+              />
+              <Tooltip
+                v-if="disabledInputAndButton == true"
+                :text="tooltipPassword"
+              />
+            </div>
+            <div
+              class="flex items-center justify-between pt-6 mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
             >
-              <img src="@/assets/img/icons/iconSave.svg" alt="Icon Save" />
-            </button>
-            <span
-              class="text-xs tracking-wide text-red-600"
-              v-if="!$v.newPassword.required && $v.newPassword.$dirty"
-              >Campo obrigatório.</span
-            >
-            <span
-              class="text-xs tracking-wide text-red-600"
-              v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
-              >A senha deve ter pelo menos 6 caracteres.</span
-            >
-            <span
-              class="text-xs tracking-wide text-red-600"
-              v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
-              >A senha deve ter no máximo 30 caracteres.</span
-            >
+              <div>
+                <h1
+                  v-if="!$v.newPassword.$error"
+                  class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                >
+                  Utilize uma senha forte e lembre-se sempre dela.
+                </h1>
+                <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newPassword.required && $v.newPassword.$dirty"
+                  >Campo obrigatório.</span
+                >
+                <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newPassword.minLength && $v.newPassword.$dirty"
+                  >A senha deve ter pelo menos 6 caracteres.</span
+                >
+                <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newPassword.maxLength && $v.newPassword.$dirty"
+                  >A senha deve ter no máximo 30 caracteres.</span
+                >
+              </div>
+
+              <button
+                @click="updatePassword"
+                :disabled="disabledInputAndButton"
+                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                :class="{
+                  'cursor-not-allowed': disabledInputAndButton == true,
+                  'opacity-50': disabledInputAndButton == true,
+                }"
+              >
+                Salvar
+              </button>
+            </div>
           </div>
         </div>
         <!-- <div>
@@ -232,6 +261,7 @@ export default {
       iconAttentionAlert: require("~/assets/img/icons/iconAttention.svg"),
 
       tooltipEmail: "",
+      tooltipPassword: "",
     };
   },
 
@@ -281,10 +311,13 @@ export default {
 
         if (providerId === "github.com") {
           this.tooltipEmail = `Não é possível editar, você esta, autenticado com o Github`;
+          this.tooltipPassword = `Não é possível editar, você esta, autenticado com o Github`;
         } else if (providerId === "google.com") {
           this.tooltipEmail = `Não é possível editar, você esta, autenticado com o Google`;
+          this.tooltipPassword = `Não é possível editar, você esta, autenticado com o Google`;
         } else {
           this.tooltipEmail = "";
+          this.tooltipPassword = "";
         }
       }
     });
@@ -378,6 +411,8 @@ export default {
       if (this.$v.newPassword.$invalid) {
         return;
       }
+      this.$store.commit("SET_LOADING", true);
+
       try {
         const user = firebase.auth().currentUser;
 
@@ -387,17 +422,21 @@ export default {
           user.providerData[0].providerId !== "github.com"
         ) {
           await user.updatePassword(this.newPassword);
+
+          this.newPassword = "";
+          this.$v.newPassword.$reset();
+
+          this.$store.commit("SET_LOADING", false);
           this.$alert("Senha atualizada com sucesso!", this.iconCheckAlert);
-          setTimeout(() => {
-            this.$router.go();
-          }, 2100);
         } else {
+          this.$store.commit("SET_LOADING", false);
           this.$alert(
             "Não foi possível atualizar a senha!",
             this.iconErrorAlert
           );
         }
       } catch (error) {
+        this.$store.commit("SET_LOADING", false);
         this.$alert("Não foi possível atualizar a senha!", this.iconErrorAlert);
       }
     },
