@@ -69,23 +69,27 @@
               name="Nome"
               placeholder="Nova foto"
               class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green truncate"
+              :class="{
+                invalidPhoto: isValidPhotoUrl === false && newPhoto,
+              }"
               v-model="newPhoto"
             />
             <div
               class="flex items-center justify-between pt-6 mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
             >
               <div>
-                <h1
+                <span
                   class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                  :class="{
+                    photoInvalidColor: isValidPhotoUrl === false && newPhoto,
+                  }"
                 >
-                  Utilize uma URL de imagem válida.
-                </h1>
-
-                <!-- <span
-                  class="text-base tracking-wide text-red-600"
-                  v-if="!$v.newName.required && $v.newName.$dirty"
-                  >Campo obrigatório.</span
-                > -->
+                  {{
+                    isValidPhotoUrl === false && newPhoto
+                      ? "Apenas imagens PNG, JPEG e WebP são válidas."
+                      : "Utilize uma URL de imagem válida."
+                  }}
+                </span>
               </div>
 
               <button
@@ -331,6 +335,7 @@ export default {
       tooltipPassword: "",
 
       showEditPhoto: false,
+      isValidPhotoUrl: false,
     };
   },
 
@@ -357,6 +362,38 @@ export default {
     //capturar a primeira letra do nome do usuario para imagem
     firstLetter() {
       return this.user.displayName.charAt(0).toLocaleUpperCase();
+    },
+  },
+
+  watch: {
+    newPhoto(newValue) {
+      if (this.showEditPhoto === true) {
+        console.log("e", newValue);
+        var url = this.newPhoto;
+
+        // verifica se a existe url
+        if (url) {
+          // verifica se a url começa com "https://"
+          if (url.startsWith("https://")) {
+            // verifica os tipos da imagem4
+            if (url.includes(".png")) {
+              this.isValidPhotoUrl = true;
+            } else if (url.includes(".webp")) {
+              this.isValidPhotoUrl = true;
+            } else if (url.includes("avatars.")) {
+              this.isValidPhotoUrl = true;
+            } else if (url.includes(".jpg") || url.includes(".jpeg")) {
+              this.isValidPhotoUrl = true;
+            } else {
+              this.isValidPhotoUrl = false;
+            }
+          } else {
+            this.isValidPhotoUrl = false;
+          }
+        } else {
+          this.isValidPhotoUrl = false;
+        }
+      }
     },
   },
 
@@ -556,7 +593,11 @@ export default {
 </script>
 
 <style scoped>
-.form-group--error {
+.form-group--error,
+.invalidPhoto {
   border: 1px #dc2626 solid !important;
+}
+.photoInvalidColor {
+  color: #dc2626;
 }
 </style>
