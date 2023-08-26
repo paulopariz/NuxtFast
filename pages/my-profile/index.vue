@@ -129,8 +129,13 @@
                 <h1
                   v-if="!$v.newName.$error"
                   class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                  :class="{ nameValid: user.displayName !== newName }"
                 >
-                  Utilize no mínimo 3 caracteres e no máximo 50.
+                  {{
+                    user.displayName === newName
+                      ? "Utilize no mínimo 3 caracteres e no máximo 50."
+                      : "Nome válido."
+                  }}
                 </h1>
 
                 <span
@@ -198,8 +203,13 @@
                 <h1
                   v-if="!$v.newEmail.$error"
                   class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                  :class="{ emailValid: user.email !== newEmail }"
                 >
-                  Para editar, utilize um e-mail válido.
+                  {{
+                    user.email === newEmail
+                      ? "Para editar, utilize um e-mail válido."
+                      : "Email válido."
+                  }}
                 </h1>
                 <span
                   class="text-base tracking-wide text-red-600"
@@ -337,6 +347,8 @@ export default {
 
       showEditPhoto: false,
       isValidPhotoUrl: false,
+
+      verificNewName: true,
     };
   },
 
@@ -603,5 +615,9 @@ export default {
 }
 .photoInvalidColor {
   color: #dc2626;
+}
+.nameValid,
+.emailValid {
+  color: #00dc82;
 }
 </style>
