@@ -1,5 +1,5 @@
 <template>
-  <div class="flex transition-all">
+  <div class="flex transition-all overflow-x-hidden">
     <!--DESKTOP-->
     <aside class="fixed transition-all z-20 -left-20 max-md:hidden" id="aside">
       <div
@@ -11,7 +11,11 @@
             v-if="user"
             @click="consoleUser"
           >
-            <div v-if="user.photoURL && user.photoURL !== 'https://github.com/.png'">
+            <div
+              v-if="
+                user.photoURL && user.photoURL !== 'https://github.com/.png'
+              "
+            >
               <img
                 :src="user.photoURL"
                 :alt="'Imagem de perfil do usuário: ' + user.displayName"
@@ -164,7 +168,9 @@
     <!--MOBILE-->
     <MenuMobile class="" />
     <div>
-      <Nuxt class="px-64 py-12 max-xl:px-32 max-md:px-14 max-md:pt-28 max-sm:px-4" />
+      <Nuxt
+        class="px-64 py-12 max-xl:px-32 max-md:px-14 max-md:pt-28 max-sm:px-4"
+      />
     </div>
   </div>
 </template>

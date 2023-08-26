@@ -13,6 +13,90 @@
         class="flex justify-between items-start max-md:flex-col-reverse max-md:gap-10"
       >
         <div class="flex flex-col gap-9 w-full">
+          <!--ATUALIZAR FOTO DE PERFIL-->
+          <div
+            class="w-full p-6 border border-gray-200 dark:border-zinc-900 rounded-md transition-all bg-gray-200/20 dark:bg-zinc-900/20 flex flex-col"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <h1 class="text-xl max-sm:text-lg font-semibold">
+                  Editar foto de perfil
+                </h1>
+                <p
+                  class="text-base max-sm:text-sm text-zinc-900 dark:text-gray-200 mt-3.5"
+                >
+                  Clique em sua foto para poder edita-la.
+                </p>
+                <p
+                  class="text-base max-sm:text-sm text-zinc-900 dark:text-gray-200 mb-3.5"
+                >
+                  Tente utilizar a URL da imagem do seu perfil do GitHub,
+                  LinkedIn, Instagram, etc.
+                </p>
+              </div>
+
+              <div>
+                <img
+                  @click="openEditPhoto"
+                  v-if="user.photoURL"
+                  :src="user.photoURL"
+                  :alt="'Imagem de perfil do usuário: ' + user.displayName"
+                  :title="user.displayName"
+                  class="w-24 h-24 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-full border border-gray-200 dark:border-zinc-900 hover:border-2 hover:opacity-30 transition-all absolute z-50 cursor-pointer"
+                />
+                <div
+                  @click="openEditPhoto"
+                  v-if="!user.photoURL"
+                  class="grid w-24 h-24 border border-gray-200 dark:border-zinc-800 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-full bg-gray-100 dark:bg-zinc-900 hover:border-2 hover:opacity-20 transition-all absolute z-50 cursor-pointer"
+                  :title="user.displayName"
+                >
+                  <h1 class="text-4xl text-gray-600 dark:text-gray-200">
+                    {{ firstLetter }}
+                  </h1>
+                </div>
+                <div
+                  class="w-24 h-24 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-full relative cursor-pointer flex justify-center items-center"
+                >
+                  <span class="text-sm text-center font-bold tracking-wide"
+                    >Editar</span
+                  >
+                </div>
+              </div>
+            </div>
+            <input
+              v-if="showEditPhoto"
+              type="text"
+              name="Nome"
+              placeholder="Nova foto"
+              class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green truncate"
+              v-model="newPhoto"
+            />
+            <div
+              class="flex items-center justify-between pt-6 mt-6 border-x-0 border-b-0 border-t border-gray-200 dark:border-zinc-900 w-full"
+            >
+              <div>
+                <h1
+                  class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
+                >
+                  Utilize uma URL de imagem válida.
+                </h1>
+
+                <!-- <span
+                  class="text-base tracking-wide text-red-600"
+                  v-if="!$v.newName.required && $v.newName.$dirty"
+                  >Campo obrigatório.</span
+                > -->
+              </div>
+
+              <button
+                v-if="showEditPhoto"
+                @click="updatePhoto"
+                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+              >
+                Salvar
+              </button>
+            </div>
+          </div>
           <!--ATUALIZAR NOME-->
 
           <div
@@ -28,7 +112,7 @@
               type="text"
               name="Nome"
               placeholder="Novo nome"
-              class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green"
+              class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green truncate"
               :class="{ 'form-group--error': $v.newName.$error }"
               v-model="$v.newName.$model"
             />
@@ -89,7 +173,7 @@
                 name="Email"
                 placeholder="Novo email"
                 v-model="$v.newEmail.$model"
-                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green"
+                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green truncate"
                 :class="{
                   'cursor-not-allowed': disabledInputAndButton == true,
                   'form-group--error': $v.newEmail.$error,
@@ -130,7 +214,7 @@
                 class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
                 :class="{
                   'cursor-not-allowed': disabledInputAndButton == true,
-                  'opacity-50': disabledInputAndButton == true,
+                  'dark:opacity-50 opacity-75': disabledInputAndButton == true,
                 }"
               >
                 Salvar
@@ -157,7 +241,7 @@
                 name="Senha"
                 placeholder="Nova senha"
                 v-model="$v.newPassword.$model"
-                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green"
+                class="form-group w-80 bg-N-light dark:bg-N-dark p-3 border rounded-md border-gray-200 dark:border-zinc-900 dark:hover:border-N-green dark:focus:border-N-green transition-all outline-none hover:border-N-green focus:border-N-green truncate"
                 :class="{
                   'cursor-not-allowed': disabledInputAndButton == true,
                   'form-group--error': $v.newPassword.$error,
@@ -202,7 +286,7 @@
                 class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
                 :class="{
                   'cursor-not-allowed': disabledInputAndButton == true,
-                  'opacity-50': disabledInputAndButton == true,
+                  'dark:opacity-50 opacity-75': disabledInputAndButton == true,
                 }"
               >
                 Salvar
@@ -210,24 +294,6 @@
             </div>
           </div>
         </div>
-        <!-- <div>
-          <img
-            v-if="user.photoURL"
-            :src="user.photoURL"
-            :alt="'Imagem de perfil do usuário: ' + user.displayName"
-            :title="user.displayName"
-            class="w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 rounded-lg"
-          />
-          <div
-            v-else
-            class="grid w-36 h-36 max-md:w-28 max-md:h-28 max-sm:w-24 max-sm:h-24 place-content-center rounded-lg bg-gray-100 dark:bg-zinc-900"
-            :title="user.displayName"
-          >
-            <h1 class="text-4xl text-gray-600 dark:text-gray-200">
-              {{ firstLetter }}
-            </h1>
-          </div>
-        </div> -->
       </div>
     </section>
   </div>
@@ -246,6 +312,7 @@ import {
 export default {
   data() {
     return {
+      newPhoto: "",
       newName: "",
       newEmail: "",
       newPassword: "",
@@ -262,6 +329,8 @@ export default {
 
       tooltipEmail: "",
       tooltipPassword: "",
+
+      showEditPhoto: false,
     };
   },
 
@@ -297,6 +366,7 @@ export default {
         this.user = userInfos;
         this.newName = userInfos.displayName;
         this.newEmail = userInfos.email;
+        this.newPhoto = userInfos.photoURL;
       } else {
         this.$router.push({ path: "/auth/login" });
       }
@@ -324,6 +394,47 @@ export default {
   },
 
   methods: {
+    openEditPhoto() {
+      console.log("openEditPhoto");
+      this.showEditPhoto = true;
+    },
+
+    async updatePhoto() {
+      this.$store.commit("SET_LOADING", true);
+      try {
+        const user = firebase.auth().currentUser;
+
+        if (user !== null && user !== undefined) {
+          if (user.photoURL !== this.newPhoto) {
+            await user.updateProfile({
+              photoURL: this.newPhoto,
+            });
+            this.$store.commit("SET_LOADING", false);
+
+            this.$alert("Foto atualizada com sucesso!", this.iconCheckAlert);
+          } else {
+            this.$store.commit("SET_LOADING", false);
+            this.$alert(
+              "Para editar, utilize uma URL válida!",
+              this.iconAttentionAlert
+            );
+          }
+        } else {
+          this.$store.commit("SET_LOADING", false);
+          this.$alert(
+            "Não foi possível atualizar sua foto!",
+            this.iconErrorAlert
+          );
+        }
+      } catch (error) {
+        this.$store.commit("SET_LOADING", false);
+        this.$alert(
+          "Não foi possível atualizar sua foto!",
+          this.iconErrorAlert
+        );
+      }
+    },
+
     async updateName() {
       this.$v.newName.$touch();
 
