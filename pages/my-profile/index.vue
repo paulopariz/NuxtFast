@@ -81,13 +81,14 @@
                 <span
                   class="text-base tracking-wide text-zinc-900 dark:text-gray-200"
                   :class="{
-                    photoInvalidColor: isValidPhotoUrl === false && newPhoto,
+                    photoInvalidColor:
+                      isValidPhotoUrl === false && newPhoto && showEditPhoto,
                   }"
                 >
                   {{
-                    isValidPhotoUrl === false && newPhoto
+                    isValidPhotoUrl === false && newPhoto && showEditPhoto
                       ? "Apenas imagens PNG, JPEG e WebP são válidas."
-                      : "Utilize uma URL de imagem válida."
+                      : "Utilize uma URL de imagem válida.",
                   }}
                 </span>
               </div>
@@ -432,8 +433,11 @@ export default {
 
   methods: {
     openEditPhoto() {
-      console.log("openEditPhoto");
       this.showEditPhoto = true;
+      if (this.newPhoto) {
+        this.isValidPhotoUrl = true;
+        console.log(this.newPhoto);
+      }
     },
 
     async updatePhoto() {
@@ -442,12 +446,12 @@ export default {
         const user = firebase.auth().currentUser;
 
         if (user !== null && user !== undefined) {
-          if (user.photoURL !== this.newPhoto) {
+          if (this.isValidPhotoUrl === true || this.newPhoto == "") {
             await user.updateProfile({
               photoURL: this.newPhoto,
             });
+            this.showEditPhoto = false;
             this.$store.commit("SET_LOADING", false);
-
             this.$alert("Foto atualizada com sucesso!", this.iconCheckAlert);
           } else {
             this.$store.commit("SET_LOADING", false);
