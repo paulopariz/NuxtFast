@@ -155,12 +155,21 @@
                 >
               </div>
 
-              <button
-                @click="updateName"
-                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
-              >
-                Salvar
-              </button>
+              <div class="flex items-center gap-2">
+                <button
+                  v-if="user.displayName !== newName"
+                  @click="cancelUpdate('name')"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 border border-red-600 px-3 py-2 text-sm font-bold text-N-light shadow-sm hover:bg-red-600/90 transition-all sm:w-auto"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="updateName"
+                  class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
           </div>
 
@@ -223,17 +232,27 @@
                 >
               </div>
 
-              <button
-                @click="updateEmail"
-                :disabled="disabledInputAndButton"
-                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
-                :class="{
-                  'cursor-not-allowed': disabledInputAndButton == true,
-                  'dark:opacity-50 opacity-75': disabledInputAndButton == true,
-                }"
-              >
-                Salvar
-              </button>
+              <div class="flex items-center gap-2">
+                <button
+                  v-if="user.email !== newEmail"
+                  @click="cancelUpdate('email')"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 border border-red-600 px-3 py-2 text-sm font-bold text-N-light shadow-sm hover:bg-red-600/90 transition-all sm:w-auto"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="updateEmail"
+                  :disabled="disabledInputAndButton"
+                  class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                  :class="{
+                    'cursor-not-allowed': disabledInputAndButton == true,
+                    'dark:opacity-50 opacity-75':
+                      disabledInputAndButton == true,
+                  }"
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
           </div>
 
@@ -295,17 +314,27 @@
                 >
               </div>
 
-              <button
-                @click="updatePassword"
-                :disabled="disabledInputAndButton"
-                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
-                :class="{
-                  'cursor-not-allowed': disabledInputAndButton == true,
-                  'dark:opacity-50 opacity-75': disabledInputAndButton == true,
-                }"
-              >
-                Salvar
-              </button>
+              <div class="flex items-center gap-2">
+                <button
+                  v-if="newPassword !== ''"
+                  @click="cancelUpdate('password')"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 border border-red-600 px-3 py-2 text-sm font-bold text-N-light shadow-sm hover:bg-red-600/90 transition-all sm:w-auto"
+                >
+                  Cancelar
+                </button>
+                <button
+                  @click="updatePassword"
+                  :disabled="disabledInputAndButton"
+                  class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                  :class="{
+                    'cursor-not-allowed': disabledInputAndButton == true,
+                    'dark:opacity-50 opacity-75':
+                      disabledInputAndButton == true,
+                  }"
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -395,6 +424,8 @@ export default {
               this.isValidPhotoUrl = true;
             } else if (url.includes("avatars.")) {
               this.isValidPhotoUrl = true;
+            } else if (url.includes(".googleusercontent")) {
+              this.isValidPhotoUrl = true;
             } else if (url.includes(".jpg") || url.includes(".jpeg")) {
               this.isValidPhotoUrl = true;
             } else {
@@ -444,6 +475,15 @@ export default {
   },
 
   methods: {
+    cancelUpdate(update) {
+      if (update === "name") {
+        this.newName = this.user.displayName;
+      } else if (update === "email") {
+        this.newEmail = this.user.email;
+      } else {
+        this.newPassword = "";
+      }
+    },
     openEditPhoto() {
       this.showEditPhoto = true;
       if (this.newPhoto) {
