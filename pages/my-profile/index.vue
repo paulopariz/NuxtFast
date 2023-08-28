@@ -93,13 +93,22 @@
                 </span>
               </div>
 
-              <button
-                v-if="showEditPhoto"
-                @click="updatePhoto"
-                class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
-              >
-                Salvar
-              </button>
+              <div class="flex items-center gap-2">
+                <button
+                  v-if="user.photoURL !== newPhoto"
+                  @click="cancelUpdate('photo')"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 border border-red-600 px-3 py-2 text-sm font-bold text-N-light shadow-sm hover:bg-red-600/90 transition-all sm:w-auto"
+                >
+                  Cancelar
+                </button>
+                <button
+                  v-if="showEditPhoto"
+                  @click="updatePhoto"
+                  class="inline-flex w-full justify-center rounded-md bg-N-dark dark:bg-N-light border border-N-dark dark:border-N-light px-3 py-2 text-sm font-bold text-N-light dark:text-N-dark shadow-sm hover:bg-N-dark/95 dark:hover:bg-N-light/95 transition-all sm:w-auto"
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
           </div>
           <!--ATUALIZAR NOME-->
@@ -383,6 +392,8 @@
 <script>
 import firebase from "~/plugins/firebase";
 import { mapState } from "vuex";
+import { db } from "~/utils/api";
+
 import {
   required,
   email,
@@ -560,6 +571,8 @@ export default {
         this.newName = this.user.displayName;
       } else if (update === "email") {
         this.newEmail = this.user.email;
+      } else if (update === "photo") {
+        this.newPhoto = this.user.photoURL;
       } else {
         this.newPassword = "";
       }
