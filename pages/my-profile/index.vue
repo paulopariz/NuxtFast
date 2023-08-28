@@ -261,7 +261,7 @@
           <div
             class="w-full p-6 border border-gray-200 dark:border-zinc-900 rounded-md transition-all bg-gray-200/20 dark:bg-zinc-900/20 flex flex-col"
           >
-            <h1 class="text-xl max-sm:text-lg font-semibold">Editar e-mail</h1>
+            <h1 class="text-xl max-sm:text-lg font-semibold">Editar Senha</h1>
             <p
               class="text-base max-sm:text-sm text-zinc-900 dark:text-gray-200 my-3.5"
             >
@@ -337,9 +337,46 @@
               </div>
             </div>
           </div>
+
+          <!--DELETAR CONTA-->
+
+          <div
+            class="w-full border bg-transparent dark:bg-red-900/10 border-red-300 dark:border-red-600 rounded-md transition-all flex flex-col"
+          >
+            <h1 class="text-xl max-sm:text-lg font-semibold pt-6 px-6">
+              Deletar conta
+            </h1>
+            <p
+              class="text-base max-sm:text-sm text-zinc-900 px-6 dark:text-gray-200 my-3.5"
+            >
+              Tem certeza disso? Essa ação resultará na exclusão permanente da
+              sua conta.
+            </p>
+
+            <div
+              class="flex items-center justify-between pt-3 mt-6 border-x-0 border-b-0 border-t border-red-300 dark:border-red-600 w-full bg-red-400/10 dark:bg-red-800/30"
+            >
+              <div class="px-6 pb-3 flex items-end justify-end w-full">
+                <button
+                  @click="deactivateOpenModal"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 border border-red-600 px-3 py-2 text-sm font-bold text-N-light shadow-sm hover:bg-red-600/90 transition-all sm:w-auto float-right"
+                >
+                  Deletar minha conta
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+    <ModalDeleteUser
+      v-show="viewModal"
+      titleModal="Desativar conta"
+      :descModal="descModal"
+      textConfirmModal="Desativar"
+      :clickConfirmModal="deactivateAccount"
+      :clickCancelModal="cancel"
+    />
   </div>
 </template>
 
@@ -356,6 +393,10 @@ import {
 export default {
   data() {
     return {
+      viewModal: false,
+      descModal:
+        "Tem certeza de que deseja desativar sua conta? Todos os seus dados serão removidos permanentemente. Essa ação não pode ser desfeita.",
+
       newPhoto: "",
       newName: "",
       newEmail: "",
@@ -475,6 +516,45 @@ export default {
   },
 
   methods: {
+    deactivateOpenModal() {
+      setTimeout(() => {
+        this.viewModal = true;
+      }, 200);
+    },
+    cancel() {
+      this.viewModal = false;
+    },
+    deactivateAccount() {
+      const user = firebase.auth().currentUser;
+
+      if (user) {
+        // excluir dados do firestore
+        db.collection("checkboxes")
+          .doc(user.uid)
+          .delete()
+          .then(() => {
+            // excluir usuário do firebase authentication
+            user
+              .delete()
+              .then(() => {
+                this.$router.push("/");
+                this.$alert(
+                  "Usuário excluído com sucesso!",
+                  this.iconCheckAlert
+                );
+                setTimeout(() => {
+                  this.$router.go();
+                }, 2100);
+              })
+              .catch((error) => {
+                this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
+              });
+          })
+          .catch((error) => {
+            this.$alert("Erro ao excluir o usuário!", this.iconErrorAlert);
+          });
+      }
+    },
     cancelUpdate(update) {
       if (update === "name") {
         this.newName = this.user.displayName;
