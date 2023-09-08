@@ -4,9 +4,10 @@
   <div v-else class="w-screen">
     <section class="md:container w-full m-auto">
       <BaseHeader
-        title="Editar perfil"
+        title="Meu perfil"
         desc="Edite os dados do seu perfil abaixo. Se você estiver conectado ao GitHub e ao
           Google, só poderá alterar seu nome."
+        :breadcrumb="breadcrumb"
       />
 
       <div
@@ -404,6 +405,12 @@ import {
 export default {
   data() {
     return {
+      breadcrumb: [
+        {
+          name: "Meu perfil",
+          route: "/my-profile",
+        },
+      ],
       viewModal: false,
       descModal:
         "Tem certeza de que deseja desativar sua conta? Todos os seus dados serão removidos permanentemente. Essa ação não pode ser desfeita.",

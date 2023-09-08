@@ -6,6 +6,7 @@
       <BaseHeader
         title="Crétidos"
         desc="O conteúdo do NuxtFast foi criado com base na documentação fornecida pelo Nuxt.js, feito por Paulo Pariz."
+        :breadcrumb="breadcrumb"
       />
 
       <div
@@ -105,6 +106,12 @@ export default {
   name: "Credits",
   data() {
     return {
+      breadcrumb: [
+        {
+          name: "Crétidos",
+          route: "/credits",
+        },
+      ],
       user: [],
     };
   },

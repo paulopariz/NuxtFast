@@ -8,6 +8,13 @@ body {
   font-family: 'Nunito', sans-serif;
   color: #0B0B0C;
 }
+::-moz-selection { /* Code for Firefox */
+  background: #00dc803c;
+}
+
+::selection {
+  background: #00dc803c;
+}
 ::-webkit-scrollbar {
   width: 10px;
 }
