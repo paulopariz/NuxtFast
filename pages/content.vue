@@ -339,7 +339,7 @@ export default {
 <style scoped>
 .progressBar {
   transition: width 0.5s ease;
-  box-shadow: 0px 0px 18px 1px #00dc80c5;
+  box-shadow: 0px 0px 18px 1px rgb(0 220 128 / 39%);
 }
 .borderCheck {
   /* background: radial-gradient(

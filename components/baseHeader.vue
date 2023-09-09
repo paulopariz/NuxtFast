@@ -16,7 +16,7 @@
       <li class="flex gap-2 items-center" v-if="breadcrumb">
         <router-link
           to="/"
-          class="opacity-50 text-sm text-[#c7c7c7] font-semibold hover:opacity-80 transition-all"
+          class="opacity-50 text-sm dark:text-[#c7c7c7] font-semibold hover:opacity-80 transition-all"
           >Página Incial</router-link
         >
       </li>
@@ -29,14 +29,14 @@
         <img
           src="../assets/img/icons/iconBackRoute.svg"
           alt="Arrow"
-          class="opacity-50"
+          class="opacity-50 dark:invert-0 invert"
         />
         <router-link
           :class="{
             active: $route.path === route.route,
           }"
           :to="route.route"
-          class="opacity-50 text-sm text-[#c7c7c7] font-semibold hover:opacity-80 transition-all"
+          class="opacity-50 text-sm dark:text-[#c7c7c7] font-semibold hover:opacity-80 transition-all"
           >{{ route.name }}</router-link
         >
       </li>
@@ -55,11 +55,15 @@ export default {
 };
 </script>
 <style scoped>
-.active {
+.dark .active {
   color: #fff;
   opacity: 0.8;
 }
-.before {
+.active {
+  color: #000;
+  opacity: 0.8;
+}
+.dark .before {
   background: hsla(155, 100%, 43%, 1);
 
   background: linear-gradient(
@@ -81,5 +85,29 @@ export default {
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00DC82", endColorstr="#0B0B0C", GradientType=1 );
+}
+
+.before {
+  background: hsla(155, 100%, 43%, 1);
+
+  background: linear-gradient(
+    360deg,
+    hsla(155, 100%, 43%, 1) 0%,
+    rgb(255, 255, 255) 93%
+  );
+
+  background: -moz-linear-gradient(
+    360deg,
+    hsla(155, 100%, 43%, 1) 0%,
+    rgb(255, 255, 255) 93%
+  );
+
+  background: -webkit-linear-gradient(
+    360deg,
+    hsla(155, 100%, 43%, 1) 0%,
+    rgb(255, 255, 255) 93%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00DC82", endColorstr="#fff", GradientType=1 );
 }
 </style>
